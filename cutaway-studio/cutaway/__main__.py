@@ -157,11 +157,17 @@ def run_checks(log=print):
     v = sys.version_info
     line(v >= (3, 9), "Python", f"{v.major}.{v.minor}" + ("" if v >= (3, 9) else " (need 3.9+: brew install python)"))
     if shutil.which("ffmpeg"):
-        import subprocess
-        filters = subprocess.run(["ffmpeg", "-hide_banner", "-filters"], capture_output=True, text=True).stdout
-        has_subs = " subtitles " in filters
-        line(has_subs, "ffmpeg", "installed, can burn in captions" if has_subs else
-             "installed but without libass (captions): brew reinstall ffmpeg")
+        caps = asm.ffmpeg_caps()
+        method = asm.caption_method()
+        if method == "subtitles":
+            line(True, "ffmpeg captions", "full support (libass)")
+        elif method == "drawtext":
+            line(True, "ffmpeg captions", "OK using drawtext with " + asm.find_font())
+        else:
+            line(None, "ffmpeg captions", "can't draw text: videos come out without burned-in captions plus an "
+                                          ".srt file for CapCut. For built-in captions: brew install ffmpeg-full")
+        enc = "libx264" if caps["libx264"] else ("Apple VideoToolbox" if caps["videotoolbox"] else "mpeg4 (basic)")
+        line(True, "ffmpeg encoder", enc)
     else:
         line(False, "ffmpeg", "missing: brew install ffmpeg")
     try:
@@ -189,17 +195,20 @@ def run_checks(log=print):
             else:
                 line(False, "Higgsfield", f"unexpected reply {e.status}: {e.detail}")
     if config.has_key("ELEVENLABS_API_KEY"):
+        el_headers = {"xi-api-key": config.get_key("ELEVENLABS_API_KEY")}
         try:
-            sub = http.request_json("GET", "https://api.elevenlabs.io/v1/user/subscription",
-                                    headers={"xi-api-key": config.get_key("ELEVENLABS_API_KEY")}, retries=1)
-            left = sub.get("character_limit", 0) - sub.get("character_count", 0)
-            line(True, "ElevenLabs", f"key accepted, plan '{sub.get('tier')}', {left:,} characters left "
-                                     f"(~{left // 1700} videos)")
+            http.request("GET", "https://api.elevenlabs.io/v1/voices", headers=el_headers, retries=1)
+            line(True, "ElevenLabs", "key accepted (can list voices)")
+            try:
+                sub = http.request_json("GET", "https://api.elevenlabs.io/v1/user/subscription",
+                                        headers=el_headers, retries=1)
+                left = sub.get("character_limit", 0) - sub.get("character_count", 0)
+                line(True, "ElevenLabs plan", f"'{sub.get('tier')}', {left:,} characters left (~{left // 1700} videos)")
+            except http.ApiError:
+                line(None, "ElevenLabs plan", "not readable with this key (fine; check characters on the website)")
         except http.ApiError as e:
-            if e.status == 401:
-                line(False, "ElevenLabs", "key rejected (401). Re-copy it from your ElevenLabs profile.")
-            else:
-                line(None, "ElevenLabs", f"couldn't read plan ({e.status}); the key may lack 'user' permission")
+            line(False, "ElevenLabs", f"rejected ({e.status}): {e.detail}. If it mentions permissions, edit the "
+                                      "key on elevenlabs.io and allow Text to Speech and Voices (read).")
     if config.has_key("GEMINI_API_KEY"):
         try:
             http.request("GET", "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1",

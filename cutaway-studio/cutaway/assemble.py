@@ -10,11 +10,63 @@ import json
 import re
 import shutil
 import subprocess
+from pathlib import Path
 
 from . import timing
 from .project import frame_map
 
 CAPTION_CLEAN = re.compile(r"[^\w'’!?-]+")
+
+
+FONT_CANDIDATES = (
+    "/System/Library/Fonts/Supplemental/Arial Black.ttf",
+    "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+    "/Library/Fonts/Arial Bold.ttf",
+    "/System/Library/Fonts/Supplemental/Impact.ttf",
+    "/System/Library/Fonts/Helvetica.ttc",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+    "C:/Windows/Fonts/ariblk.ttf",
+)
+_CAPS = {}
+
+
+def ffmpeg_caps():
+    """What this ffmpeg build can do (Homebrew's slim ffmpeg lacks libass)."""
+    if not _CAPS:
+        filters = subprocess.run(["ffmpeg", "-hide_banner", "-filters"], capture_output=True, text=True).stdout
+        encoders = subprocess.run(["ffmpeg", "-hide_banner", "-encoders"], capture_output=True, text=True).stdout
+        _CAPS["subtitles"] = " subtitles " in filters
+        _CAPS["drawtext"] = " drawtext " in filters
+        _CAPS["libx264"] = " libx264 " in encoders
+        _CAPS["videotoolbox"] = " h264_videotoolbox " in encoders
+    return _CAPS
+
+
+def find_font(preferred=None):
+    for f in ([preferred] if preferred else []) + list(FONT_CANDIDATES):
+        if f and Path(f).exists():
+            return f
+    return None
+
+
+def caption_method(fontfile=None):
+    caps = ffmpeg_caps()
+    if caps["subtitles"]:
+        return "subtitles"
+    if caps["drawtext"] and find_font(fontfile):
+        return "drawtext"
+    return None
+
+
+def video_codec(quality="final"):
+    caps = ffmpeg_caps()
+    if caps["libx264"]:
+        crf = "19" if quality == "final" else "20"
+        return ["-c:v", "libx264", "-preset", "medium" if quality == "final" else "veryfast", "-crf", crf]
+    if caps["videotoolbox"]:  # Apple hardware encoder, present in every macOS build
+        return ["-c:v", "h264_videotoolbox", "-b:v", "10M" if quality == "final" else "8M"]
+    return ["-c:v", "mpeg4", "-q:v", "3"]
 
 
 def _run(cmd):
@@ -47,7 +99,7 @@ def _fit_filter(clip_secs, seg_secs, w, h, fps):
 def _segment_from_clip(src, dst, seg_secs, w, h, fps):
     vf = _fit_filter(probe_duration(src), seg_secs, w, h, fps)
     _run(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-vf", vf, "-t", f"{seg_secs:.3f}", "-an",
-          "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p", str(dst)])
+          *video_codec("draft"), "-pix_fmt", "yuv420p", str(dst)])
 
 
 def _segment_from_still(img, dst, seg_secs, w, h, fps):
@@ -56,14 +108,13 @@ def _segment_from_still(img, dst, seg_secs, w, h, fps):
           f"zoompan=z='min(1+0.10*on/{frames},1.10)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
           f":d=1:s={w}x{h}:fps={fps}")
     _run(["ffmpeg", "-y", "-v", "error", "-loop", "1", "-framerate", str(fps), "-i", str(img),
-          "-vf", vf, "-frames:v", str(frames), "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
-          "-pix_fmt", "yuv420p", str(dst)])
+          "-vf", vf, "-frames:v", str(frames), *video_codec("draft"), "-pix_fmt", "yuv420p", str(dst)])
 
 
 def _placeholder(dst, seg_secs, w, h, fps, label):
     base = ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
             f"color=c=0x1d2533:s={w}x{h}:r={fps}:d={seg_secs:.3f}"]
-    tail = ["-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p", str(dst)]
+    tail = [*video_codec("draft"), "-pix_fmt", "yuv420p", str(dst)]
     try:
         _run(base + ["-vf", f"drawtext=text='{label}':fontcolor=white:fontsize=64:"
                             "x=(w-text_w)/2:y=(h-text_h)/2"] + tail)
@@ -101,6 +152,45 @@ def captions_ass(words, w, h, font, size, upper=True):
         events.append(f"Dialogue: 0,{_ass_time(wd['s'])},{_ass_time(end)},Word,,0,0,0,,"
                       f"{text.upper() if upper else text}")
     return head + "\n".join(events) + "\n"
+
+
+def _caption_words(words, upper=True):
+    out = []
+    for i, wd in enumerate(words):
+        text = CAPTION_CLEAN.sub("", wd["w"]).strip("-")
+        if not text:
+            continue
+        end = words[i + 1]["s"] if i + 1 < len(words) else wd["e"] + 0.4
+        out.append({"t": text.upper() if upper else text, "s": wd["s"], "e": max(end, wd["s"] + 0.08)})
+    return out
+
+
+def drawtext_chain(cwords, w, h, fontfile, size):
+    """One drawtext per word, each shown only while it's spoken (works without libass)."""
+    font = fontfile.replace("\\", "/").replace(":", "\\:").replace("'", "")
+    y = int(h * 0.64)
+    parts = []
+    for cw in cwords:
+        text = cw["t"].replace("'", "\u2019").replace("%", "")
+        parts.append(
+            f"drawtext=fontfile='{font}':text='{text}':fontsize={size}:fontcolor=white:"
+            f"borderw=7:bordercolor=black:shadowx=3:shadowy=3:x=(w-text_w)/2:y={y}-text_h:"
+            f"enable='between(t,{cw['s']:.3f},{cw['e']:.3f})'"
+        )
+    return ",".join(parts) if parts else "null"
+
+
+def _srt_time(t):
+    ms = int(round(max(t, 0) * 1000))
+    h, ms = divmod(ms, 3600000)
+    m, ms = divmod(ms, 60000)
+    s, ms = divmod(ms, 1000)
+    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+
+
+def captions_srt(cwords):
+    return "".join(f"{i}\n{_srt_time(c['s'])} --> {_srt_time(c['e'])}\n{c['t']}\n\n"
+                   for i, c in enumerate(cwords, 1))
 
 
 def assemble(project, data, draft=False, log=print):
@@ -164,7 +254,17 @@ def assemble(project, data, draft=False, log=print):
         mix.append("[m]")
         idx += 1
 
-    vf = f"[0:v]subtitles={ass.name}[v]"
+    caption_words = _caption_words(words, project.setting(data, "caption_uppercase"))
+    method = caption_method(data.get("settings", {}).get("caption_fontfile"))
+    if method == "subtitles":
+        vf = f"[0:v]subtitles={ass.name}[v]"
+    elif method == "drawtext":
+        font = find_font(data.get("settings", {}).get("caption_fontfile"))
+        vf = "[0:v]" + drawtext_chain(caption_words, w, h, font, project.setting(data, "caption_size")) + "[v]"
+    else:
+        vf = "[0:v]null[v]"
+        log("This ffmpeg can't draw text: video made without burned-in captions. "
+            "Import the .srt next to it in CapCut, or install a full ffmpeg (brew install ffmpeg-full).")
     if mix:
         filters.append(f"{''.join(mix)}amix=inputs={len(mix)}:normalize=0:duration=first[a]")
     graph = ";".join([vf] + filters)
@@ -172,12 +272,15 @@ def assemble(project, data, draft=False, log=print):
     cmd = ["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", graph, "-map", "[v]"]
     if mix:
         cmd += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
-    cmd += ["-t", f"{total:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",
+    cmd += ["-t", f"{total:.3f}", *video_codec("final"), "-pix_fmt", "yuv420p",
             "-movflags", "+faststart", str(final)]
     proc = subprocess.run(cmd, capture_output=True, text=True, cwd=build)
     if proc.returncode != 0:
         raise RuntimeError(f"final render failed:\n{proc.stderr[-1500:]}")
-    report = {"file": str(final), "seconds": total, "timing": source, **used}
+    srt = final.with_suffix(".srt")
+    srt.write_text(captions_srt(caption_words))
+    report = {"file": str(final), "seconds": total, "timing": source, "captions": method or "none (see .srt)",
+              "srt": str(srt), **used}
     (build / "report.json").write_text(json.dumps(report, indent=2))
     return report
 

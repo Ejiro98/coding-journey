@@ -335,3 +335,39 @@ class CheckTests(unittest.TestCase):
             self.assertIn("secret part is missing", str(ctx.exception))
         finally:
             os.environ.pop("HF_KEY", None)
+
+
+@unittest.skipUnless(HAS_FFMPEG, "ffmpeg not installed")
+class SlimFfmpegTests(unittest.TestCase):
+    """Homebrew's slim ffmpeg has no libass; make sure we still produce a video."""
+
+    def _render(self, caps):
+        p, d = make_project()
+        d["lines"] = d["lines"][:2]
+        d["clips"] = [{"id": "C01", "lines": ["1"], "from": "F01", "to": None, "motion": "x"},
+                      {"id": "C02", "lines": ["2"], "from": "F01", "to": None, "motion": "x"}]
+        d["settings"] = {"video_width": 360, "video_height": 640, "caption_size": 32}
+        p.save(d)
+        _png(p.path("frames", "F01.png"))
+        real = dict(assemble.ffmpeg_caps())
+        assemble._CAPS.clear()
+        assemble._CAPS.update({**real, **caps})
+        try:
+            rep = assemble.assemble(p, d, log=lambda *_: None)
+        finally:
+            assemble._CAPS.clear()
+        self.assertTrue(Path(rep["file"]).exists())
+        self.assertTrue(Path(rep["srt"]).read_text().startswith("1\n00:00:00,000 --> "))
+        return rep
+
+    def test_drawtext_fallback(self):
+        rep = self._render({"subtitles": False, "drawtext": True})
+        self.assertEqual(rep["captions"], "drawtext")
+
+    def test_no_text_at_all_still_makes_video_and_srt(self):
+        rep = self._render({"subtitles": False, "drawtext": False})
+        self.assertEqual(rep["captions"], "none (see .srt)")
+
+    def test_encoder_fallback_without_libx264(self):
+        rep = self._render({"subtitles": False, "drawtext": False, "libx264": False, "videotoolbox": False})
+        self.assertTrue(Path(rep["file"]).stat().st_size > 1000)
