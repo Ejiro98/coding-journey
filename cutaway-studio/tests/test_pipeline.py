@@ -1,0 +1,291 @@
+"""Offline tests: no real API is called and nothing is paid for.
+
+Run from the cutaway-studio folder:  python3 -m unittest discover -s tests -v
+"""
+
+import base64
+import copy
+import json
+import os
+import shutil
+import subprocess
+import tempfile
+import unittest
+from pathlib import Path
+
+STUDIO = Path(__file__).resolve().parent.parent
+os.environ["CUTAWAY_HOME"] = tempfile.mkdtemp(prefix="cutaway-home-")
+
+from cutaway import (assemble, clips, elevenlabs, frames, higgsfield as hf, http,  # noqa: E402
+                     ledger, lint, quota, timing)
+from cutaway.project import Project, ProjectError, validate  # noqa: E402
+
+ELEVATOR = json.loads((STUDIO / "projects" / "elevator" / "video.json").read_text())
+HAS_FFMPEG = shutil.which("ffmpeg") is not None
+
+
+def make_project(data=None):
+    root = Path(tempfile.mkdtemp(prefix="cutaway-proj-"))
+    p = Project("t", root=root)
+    d = copy.deepcopy(data or ELEVATOR)
+    d["slug"] = "t"
+    p.save(d)
+    return p, d
+
+
+class LintTests(unittest.TestCase):
+    def test_elevator_script_passes(self):
+        report = lint.check(ELEVATOR)
+        self.assertFalse(lint.has_errors(report), lint.format_report(report))
+
+    def test_part_used_before_built_is_an_error(self):
+        d = copy.deepcopy(ELEVATOR)
+        # The original draft-1 mistake: the motor appears before anything builds it.
+        d["lines"][3]["text"] = "But now the motor has to lift the whole box on every trip."
+        report = lint.check(d)
+        self.assertTrue(lint.has_errors(report))
+        self.assertIn("before it is built", lint.format_report(report))
+
+    def test_slow_hook_and_story_opening_are_errors(self):
+        d = copy.deepcopy(ELEVATOR)
+        d["lines"][0]["text"] = ("Someone keeps stealing parcels from the doorstep of a very old building "
+                                 "every single morning before work, so the owner buys an elevator.")
+        report = lint.format_report(lint.check(d))
+        self.assertIn("must open with 'If you", report)
+        self.assertIn("First 'But' comes after", report)
+
+    def test_regional_word_warning(self):
+        d = copy.deepcopy(ELEVATOR)
+        d["lines"][2]["text"] = "So pour tarmac over it and take the lift instead."
+        report = lint.format_report(lint.check(d))
+        self.assertIn("tarmac", report)
+        self.assertIn("the lift", report)
+
+
+class ProjectTests(unittest.TestCase):
+    def test_clips_must_cover_lines_in_order(self):
+        d = copy.deepcopy(ELEVATOR)
+        d["clips"][0]["lines"] = ["2"]
+        with self.assertRaises(ProjectError):
+            validate(d)
+
+    def test_unknown_frame_reference(self):
+        d = copy.deepcopy(ELEVATOR)
+        d["clips"][0]["from"] = "F99"
+        with self.assertRaises(ProjectError):
+            validate(d)
+
+
+class BudgetTests(unittest.TestCase):
+    def test_guard_needs_approval_and_respects_cap(self):
+        p, d = make_project()
+        with self.assertRaises(ledger.BudgetError):
+            ledger.guard(p, d, 3.0, None)                 # no approval
+        with self.assertRaises(ledger.BudgetError):
+            ledger.guard(p, d, 3.0, 2.0)                  # estimate above approval
+        self.assertTrue(ledger.guard(p, d, 3.0, 3.0))
+        ledger.append(p, "spend", "higgsfield", "C01", 11.0)
+        with self.assertRaises(ledger.BudgetError):
+            ledger.guard(p, d, 3.0, 5.0)                  # would pass the $12 cap
+        self.assertEqual(ledger.spent(p), 11.0)
+
+
+class QuotaTests(unittest.TestCase):
+    def test_counter_learns_real_limit(self):
+        start = quota.status()["used"]
+        quota.add(3)
+        self.assertEqual(quota.status()["used"], start + 3)
+        quota.limit_hit()
+        self.assertEqual(quota.status()["limit"], start + 3)
+        self.assertEqual(quota.status()["left"], 0)
+
+
+class TimingTests(unittest.TestCase):
+    def test_alignment_to_words(self):
+        text = "If you pull"
+        align = {"characters": list(text),
+                 "character_start_times_seconds": [i * 0.1 for i in range(len(text))],
+                 "character_end_times_seconds": [i * 0.1 + 0.08 for i in range(len(text))]}
+        words = elevenlabs.words_from_alignment(align)
+        self.assertEqual([w["w"] for w in words], ["If", "you", "pull"])
+        self.assertAlmostEqual(words[1]["s"], 0.3)
+        self.assertAlmostEqual(words[2]["e"], 1.08)
+
+    def test_segments_cover_whole_voice(self):
+        words = timing.estimated_words(ELEVATOR, 230)
+        segs, total = timing.segments(ELEVATOR, words, 0.8)
+        self.assertEqual(len(segs), len(ELEVATOR["clips"]))
+        self.assertEqual(segs[0]["start"], 0.0)
+        self.assertAlmostEqual(segs[-1]["end"], total)
+        for a, b in zip(segs, segs[1:]):
+            self.assertAlmostEqual(a["end"], b["start"])
+        self.assertTrue(70 < total < 95, total)
+
+
+class FakeHiggsfield:
+    """Stands in for the HTTP transport and records every call."""
+
+    def __init__(self, video_bytes=b"FAKEMP4", final_status="completed"):
+        self.calls = []
+        self.video_bytes = video_bytes
+        self.final_status = final_status
+        self.polls = {}
+
+    def __call__(self, method, url, headers, body, timeout):
+        self.calls.append((method, url, headers, body))
+        js = lambda o: (200, {}, json.dumps(o).encode())  # noqa: E731
+        if url.endswith("/files/generate-upload-url"):
+            n = len([c for c in self.calls if c[1].endswith("generate-upload-url")])
+            return js({"public_url": f"https://cdn.test/f{n}.png", "upload_url": f"https://s3.test/put{n}",
+                       "upload_headers": {"Content-Type": "image/png"}})
+        if url.startswith("https://s3.test/"):
+            assert "Authorization" not in headers, "credentials must not go to presigned URL"
+            return 200, {}, b""
+        if "/estimate/" in url:
+            return js({"usd": "0.20"})
+        if url.startswith("https://api.higgsfield.ai/requests/"):
+            rid = url.split("/")[-2]
+            self.polls[rid] = self.polls.get(rid, 0) + 1
+            if self.polls[rid] < 2:
+                return js({"status": "in_progress", "request_id": rid})
+            out = {"status": self.final_status, "request_id": rid}
+            if self.final_status == "completed":
+                out["video"] = {"url": f"https://out.test/{rid}.mp4"}
+            return js(out)
+        if url.startswith("https://out.test/"):
+            return 200, {}, self.video_bytes
+        if method == "POST" and url.startswith("https://api.higgsfield.ai/"):
+            rid = f"r{len([c for c in self.calls if c[0] == 'POST' and 'estimate' not in c[1] and 'upload' not in c[1]])}"
+            return js({"status": "queued", "request_id": rid,
+                       "status_url": f"https://api.higgsfield.ai/requests/{rid}/status"})
+        raise AssertionError(f"unexpected call {method} {url}")
+
+
+def _png(path, color="0x3366aa"):
+    if HAS_FFMPEG:
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", f"color=c={color}:s=576x1024",
+                        "-frames:v", "1", str(path)], check=True)
+    else:
+        path.write_bytes(base64.b64decode(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="))
+
+
+class ClipRunTests(unittest.TestCase):
+    def setUp(self):
+        self.fake = FakeHiggsfield()
+        self._old = http.transport
+        http.transport = self.fake
+
+    def tearDown(self):
+        http.transport = self._old
+
+    def test_estimate_guard_submit_poll_download(self):
+        p, d = make_project()
+        for fid in ("F01", "F02"):
+            _png(p.path("frames", f"{fid}.png"))
+        client = hf.Client("id", "secret", sleep=lambda s: None)
+        with self.assertRaises(ledger.BudgetError):
+            clips.run(p, d, client, approve_usd=None, only="C01,C02,C03", log=lambda *_: None)
+        made = clips.run(p, d, client, approve_usd=0.60, only="C01,C02,C03", log=lambda *_: None)
+        self.assertEqual(made, ["C01", "C02", "C03"])
+        self.assertEqual(p.clip_file("C03").read_bytes(), b"FAKEMP4")
+        self.assertAlmostEqual(ledger.spent(p), 0.60)
+        subs = [c for c in self.fake.calls
+                if c[0] == "POST" and c[1].endswith("image-to-video") and "/estimate/" not in c[1]]
+        self.assertEqual(len(subs), 3)
+        body = json.loads(subs[2][3])
+        self.assertIn("end_image_url", body)                  # C03 joins F01 -> F02
+        self.assertFalse(body["generate_audio"])
+        self.assertEqual(body["aspect_ratio"], "9:16")
+        self.assertTrue(all("Idempotency-Key" in c[2] for c in subs))
+        # Re-running makes nothing new and pays nothing more.
+        again = clips.run(p, d, client, approve_usd=0.60, only="C01,C02,C03", log=lambda *_: None)
+        self.assertEqual(again, [])
+        self.assertAlmostEqual(ledger.spent(p), 0.60)
+
+    def test_failed_clip_is_not_recorded_as_spend(self):
+        self.fake.final_status = "failed"
+        p, d = make_project()
+        _png(p.path("frames", "F01.png"))
+        made = clips.run(p, d, hf.Client("id", "s", sleep=lambda s: None), approve_usd=1.0, only="C01", log=lambda *_: None)
+        self.assertEqual(made, [])
+        self.assertEqual(ledger.spent(p), 0.0)
+
+    def test_missing_frame_stops_before_anything_is_called(self):
+        p, d = make_project()
+        with self.assertRaises(ValueError):
+            clips.run(p, d, hf.Client("id", "s", sleep=lambda s: None), approve_usd=5, only="C03", log=lambda *_: None)
+        self.assertEqual(self.fake.calls, [])
+
+
+
+
+class BodyTests(unittest.TestCase):
+    def test_kling_uses_its_own_field_names(self):
+        b = hf.clip_body("kling-o3", "https://a", "https://b", "move", 2.2)
+        self.assertEqual(b["first_frame_url"], "https://a")
+        self.assertEqual(b["last_frame_url"], "https://b")
+        self.assertEqual(b["duration"], 3)                       # clamped to Kling's minimum
+        self.assertNotIn("image_url", b)
+
+    def test_duration_clamped_for_seedance(self):
+        self.assertEqual(hf.clip_duration("seedance2", 2.4), 4)
+        self.assertEqual(hf.clip_duration("seedance2", 40), 15)
+
+
+@unittest.skipUnless(HAS_FFMPEG, "ffmpeg not installed")
+class AssembleTests(unittest.TestCase):
+    def test_draft_and_final_render(self):
+        p, d = make_project()
+        # Short 3-clip version so the test is fast.
+        d["lines"] = d["lines"][:3]
+        d["clips"] = [{"id": "C01", "lines": ["1"], "from": "F01", "to": None, "motion": "x"},
+                      {"id": "C02", "lines": ["2"], "from": "F01", "to": None, "motion": "x"},
+                      {"id": "C03", "lines": ["3"], "from": "F01", "to": "F02", "motion": "x"}]
+        d["settings"] = {"video_width": 360, "video_height": 640}
+        p.save(d)
+        _png(p.path("frames", "F01.png"))
+        _png(p.path("frames", "F02.png"), "0xaa6633")
+        # fake voice: a tone as long as the estimated words
+        words = timing.estimated_words(d, 230)
+        p.words_file().write_text(json.dumps(words))
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
+                        f"sine=frequency=220:duration={words[-1]['e'] + 0.5}",
+                        str(p.path("audio", "voice.mp3"))], check=True)
+        # one real clip, two from stills
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "testsrc=s=576x1024:r=24:d=5",
+                        "-pix_fmt", "yuv420p", str(p.path("clips", "C02.mp4"))], check=True)
+        rep = assemble.assemble(p, d)
+        self.assertEqual(rep["clip"], 1)
+        self.assertEqual(rep["still"], 2)
+        out = Path(rep["file"])
+        self.assertTrue(out.exists())
+        self.assertAlmostEqual(assemble.probe_duration(out), rep["seconds"], delta=0.25)
+        ass = (p.dir / "build" / "captions.ass").read_text()
+        self.assertIn("Dialogue:", ass)
+        self.assertIn(",IF", ass)
+
+    def test_caption_words_are_cleaned(self):
+        ass = assemble.captions_ass([{"w": "rope,", "s": 0, "e": 0.3}, {"w": "snaps?", "s": 0.3, "e": 0.6}],
+                                    1080, 1920, "Arial", 96)
+        self.assertIn(",ROPE\n", ass)
+        self.assertIn(",SNAPS?", ass)
+
+
+class FramesTests(unittest.TestCase):
+    def test_plan_and_import_counts_flow_usage(self):
+        p, d = make_project()
+        plan = frames.plan(p, d)
+        self.assertTrue(plan[0]["ready"])
+        self.assertFalse(plan[1]["ready"])
+        before = quota.status()["used"]
+        src = Path(tempfile.mkdtemp()) / "download.png"
+        _png(src)
+        frames.import_frame(p, "F01", src)
+        self.assertEqual(quota.status()["used"], before + 1)
+        self.assertTrue(frames.plan(p, d)[1]["ready"])
+        self.assertIn("Change ONLY the following", frames.plan(p, d)[1]["prompt"])
+
+
+if __name__ == "__main__":
+    unittest.main()

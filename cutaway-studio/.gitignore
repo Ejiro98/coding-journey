@@ -1,0 +1,14 @@
+# Generated media and per-run state stay on the machine that made them.
+projects/*/frames/
+projects/*/clips/
+projects/*/audio/
+projects/*/timing/
+projects/*/final/
+projects/*/build/
+projects/*/sfx/
+projects/*/state.json
+projects/*/ledger.jsonl
+__pycache__/
+*.pyc
+.env
+keys.env
