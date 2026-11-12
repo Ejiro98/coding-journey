@@ -1,0 +1,479 @@
+{
+  "slug": "elevator-v3",
+  "title": "What Stops an Elevator From Falling?",
+  "caption": "What Stops an Elevator From Falling? 🛗",
+  "hashtags": [
+    "#HowThingsWork",
+    "#Engineering",
+    "#LearnOnTikTok",
+    "#Elevator",
+    "#3DAnimation"
+  ],
+  "budget": {
+    "cap_usd": 7.0
+  },
+  "voice": {
+    "provider": "elevenlabs",
+    "voice_id": null,
+    "model_id": "eleven_multilingual_v2",
+    "speed": 1.1,
+    "stability": 0.45,
+    "similarity_boost": 0.75
+  },
+  "video": {
+    "model": "wan3",
+    "resolution": "720p",
+    "chain": true
+  },
+  "style": "Vertical 9:16 realistic 3D engineering cutaway illustration of one scene: a five-storey modern apartment building on a sunny city street, with neighbouring red-brick buildings on both sides, leafy trees, parked cars and a few people on the street. The front wall of the building is removed to show the floors and a tall elevator shaft running from a machine room on the roof down to a concrete pit, and the ground below street level is cut away to show brown soil around the pit. On each floor a short corridor leads to the shaft. A few residents are visible in the apartments: a woman reading on a sofa on the second floor and a man cooking on the fourth floor. Warm natural daylight, blue sky, elevated three-quarter view from across the street, physically realistic proportions and materials, crisp detail. No text, no labels, no arrows, no watermark.",
+  "rules": [
+    "Only physically possible events: nothing rewinds, teleports, glows, morphs or appears from nowhere; new parts are lowered, slid or bolted into place.",
+    "The counterweight always moves in the opposite direction to the box at the same speed: box up means counterweight down, box down means counterweight up.",
+    "Everything already built stays exactly in place and never disappears or changes shape.",
+    "This is one continuous shot of the same building and street; the camera only glides, pushes in or pulls back.",
+    "People move naturally and continuously; the street, neighbouring buildings and residents stay the same."
+  ],
+  "lines": [
+    {
+      "id": "1",
+      "role": "HOOK",
+      "text": "If you pull a box up on a rope, you've built an elevator."
+    },
+    {
+      "id": "2",
+      "role": "PROBLEM",
+      "text": "But if that rope ever snaps, the box drops all the way to the bottom of the shaft."
+    },
+    {
+      "id": "3",
+      "role": "FIX",
+      "text": "So hang it from six thick steel ropes instead."
+    },
+    {
+      "id": "4",
+      "role": "PROBLEM",
+      "text": "But now it's far too heavy to pull up by hand."
+    },
+    {
+      "id": "5",
+      "role": "FIX",
+      "text": "So wind the ropes around a drum at the top and turn it with an electric motor."
+    },
+    {
+      "id": "6",
+      "role": "PROBLEM",
+      "text": "But the motor lifts the whole box every trip, and that burns a lot of power."
+    },
+    {
+      "id": "7",
+      "role": "FIX + NAME",
+      "text": "So hang a heavy weight from the other side of the drum. The box goes up, the weight comes down, and the motor only lifts the difference. This is a counterweight."
+    },
+    {
+      "id": "8",
+      "role": "PROBLEM",
+      "text": "But hanging on ropes, the box sways and bangs into the shaft walls."
+    },
+    {
+      "id": "9",
+      "role": "FIX",
+      "text": "So bolt steel rails up both sides and fit the box with guides that slide along them."
+    },
+    {
+      "id": "10",
+      "role": "RESULT",
+      "text": "Now it can only move straight up and down."
+    },
+    {
+      "id": "11",
+      "role": "PROBLEM",
+      "text": "But every floor still opens onto the shaft, and someone looking at their phone could walk right in."
+    },
+    {
+      "id": "12",
+      "role": "FIX + REVEAL",
+      "text": "So put doors on every floor that stay locked unless the box is right behind them. That's why elevator doors never open onto an empty shaft."
+    },
+    {
+      "id": "13",
+      "role": "RESULT",
+      "text": "Now press the button. The box rises, the counterweight sinks, and the doors open at the top."
+    },
+    {
+      "id": "14",
+      "role": "PROBLEM",
+      "text": "But what if every rope snaps at once?"
+    },
+    {
+      "id": "15",
+      "role": "FIX",
+      "text": "So loop a thin rope between a wheel at the top and one at the bottom, clipped to the box."
+    },
+    {
+      "id": "16",
+      "role": "FIX",
+      "text": "If the box falls too fast, the top wheel spins too fast. Weights inside it swing out and lock it, and the thin rope stops."
+    },
+    {
+      "id": "17",
+      "role": "FIX + NAME",
+      "text": "That yanks a lever on the falling box, two steel wedges jam into the rails, and the box stops. This is a governor."
+    },
+    {
+      "id": "18",
+      "role": "ENDING",
+      "text": "Congratulations! You've built an elevator that catches itself, even if every rope snaps."
+    },
+    {
+      "id": "19",
+      "role": "SHARE",
+      "text": "Send this to someone who's scared of elevators."
+    }
+  ],
+  "parts": {
+    "steel ropes": {
+      "aliases": [
+        "steel ropes"
+      ],
+      "built_in": "3",
+      "looks": "thick steel ropes on the box (only one plain rope before this)"
+    },
+    "drum and motor": {
+      "aliases": [
+        "drum",
+        "motor"
+      ],
+      "built_in": "5",
+      "looks": "the large rope drum and electric motor in the machine room at the top (only a small simple pulley there before this)"
+    },
+    "counterweight": {
+      "aliases": [
+        "counterweight",
+        "weight"
+      ],
+      "built_in": "7",
+      "looks": "the counterweight: a stack of iron weights hanging on the far side of the shaft"
+    },
+    "rails and guides": {
+      "aliases": [
+        "rail",
+        "rails",
+        "guides"
+      ],
+      "built_in": "9",
+      "looks": "vertical steel guide rails on the shaft walls and guide shoes on the box"
+    },
+    "doors": {
+      "aliases": [
+        "door",
+        "doors"
+      ],
+      "built_in": "12",
+      "looks": "elevator doors (before this, each floor's corridor ends in an open gap onto the shaft)"
+    },
+    "governor": {
+      "aliases": [
+        "governor",
+        "thin rope"
+      ],
+      "built_in": "15",
+      "looks": "the governor: a small wheel in the machine room, a wheel at the bottom of the pit and a thin rope loop between them"
+    },
+    "wedges": {
+      "aliases": [
+        "wedge",
+        "wedges"
+      ],
+      "built_in": "17",
+      "looks": "steel safety wedges gripping the rails"
+    }
+  },
+  "frames": [
+    {
+      "id": "F01",
+      "state": "1",
+      "wide": true,
+      "refs": [],
+      "shows": "Inside the open shaft, a plain grey steel box hangs at the second floor from a single rope. The rope runs up over a small simple pulley fixed at the top of the shaft and back down to a construction worker in a hard hat and orange vest standing in the ground-floor corridor beside the shaft, pulling the rope hand over hand."
+    },
+    {
+      "id": "F02",
+      "state": "3",
+      "wide": true,
+      "refs": [
+        "F01"
+      ],
+      "shows": "The box rests on the floor of the pit at the bottom of the shaft, dented, with a little dust settling. Six thick steel ropes are now fixed to the top of the box and run up over the small pulley and back down to the same worker, who grips them with both hands."
+    },
+    {
+      "id": "F03",
+      "state": "5",
+      "wide": true,
+      "refs": [
+        "F02",
+        "F01"
+      ],
+      "shows": "The small pulley has been replaced by a large steel rope drum with an electric motor beside it in the machine room on the roof; the six steel ropes are wound around the drum. The worker is gone. The box hangs level with the ground floor."
+    },
+    {
+      "id": "F04",
+      "state": "7",
+      "wide": true,
+      "refs": [
+        "F03",
+        "F01"
+      ],
+      "shows": "A tall stack of dark iron weights hangs from ropes wound the opposite way on the drum, on the far side of the shaft. The box is at the fourth floor and the counterweight is down at the first floor."
+    },
+    {
+      "id": "F05",
+      "state": "9",
+      "wide": true,
+      "refs": [
+        "F04",
+        "F01"
+      ],
+      "shows": "Two vertical steel guide rails are bolted to the shaft walls from top to bottom on both sides of the box, and steel guide shoes on the box wrap around the rails. The box is at the second floor and the counterweight is at the third floor."
+    },
+    {
+      "id": "F05c",
+      "state": "9",
+      "refs": [
+        "F05"
+      ],
+      "shows": "Camera pushed in close to one side of the box: a steel guide shoe on the box wraps around the vertical guide rail, and the bolts fixing the rail into the concrete wall are clearly visible. Same materials and lighting."
+    },
+    {
+      "id": "F06a",
+      "state": "10",
+      "refs": [
+        "F05",
+        "F01"
+      ],
+      "shows": "Camera pushed in on the third floor: a corridor with a wooden floor ends in an open gap with no doors onto the empty shaft. A young man with a backpack is one step from the edge, stopped with a startled jolt, looking down into the shaft. The box is down at the first floor."
+    },
+    {
+      "id": "F06",
+      "state": "12",
+      "refs": [
+        "F06a"
+      ],
+      "shows": "The same third-floor view: brushed-steel elevator doors now close the gap, with a lit call button beside them. The box has arrived behind the doors, the doors are open, and the young man is stepping into the box."
+    },
+    {
+      "id": "F07",
+      "state": "13",
+      "wide": true,
+      "refs": [
+        "F05",
+        "F01"
+      ],
+      "shows": "Wide view of the whole building. Closed elevator doors on every floor. The box has arrived at the top floor with its doors open and the young man stepping out; the counterweight is down at the bottom of the shaft."
+    },
+    {
+      "id": "F08",
+      "state": "15",
+      "wide": true,
+      "refs": [
+        "F07",
+        "F01"
+      ],
+      "shows": "Same wide view. Added: a small steel wheel in the machine room beside the drum, a second wheel at the bottom of the pit, and a thin steel rope running in a loop between the two wheels, clipped to a lever on the side of the box. The box is at the top floor and empty."
+    },
+    {
+      "id": "G1",
+      "state": "16",
+      "refs": [
+        "F08"
+      ],
+      "shows": "Camera pushed in on the small governor wheel in the machine room: two weighted arms inside it have swung outward and caught on a notched steel ring, locking the wheel; the thin rope over it is stopped. Same materials and lighting."
+    },
+    {
+      "id": "G2",
+      "state": "17",
+      "refs": [
+        "F08"
+      ],
+      "shows": "Medium shot of the box stopped between the third and fourth floors: two steel wedges on its sides are jammed against the guide rails with a few fading sparks, the lever on the box is pulled up by the taut thin rope, and the six broken main ropes hang slack above it. Same street, materials and lighting."
+    },
+    {
+      "id": "F09",
+      "state": "17",
+      "wide": true,
+      "refs": [
+        "G2",
+        "F08"
+      ],
+      "shows": "Wide view of the whole building and street: the box hangs safely between the third and fourth floors, held on the rails by the wedges, broken ropes slack above it; residents look out curiously; everything else unchanged."
+    }
+  ],
+  "clips": [
+    {
+      "id": "C01",
+      "lines": [
+        "1"
+      ],
+      "from": "F01",
+      "to": null,
+      "motion": "The worker pulls the rope hand over hand and the box rises steadily from the second floor toward the third floor. The camera pushes in slowly."
+    },
+    {
+      "id": "C02",
+      "lines": [
+        "2"
+      ],
+      "cue": "snaps",
+      "from": "F01",
+      "to": null,
+      "motion": "The single rope snaps at the pulley. The box drops straight down the shaft and hits the floor of the pit with a cloud of dust. The worker jumps back."
+    },
+    {
+      "id": "C03",
+      "lines": [
+        "3"
+      ],
+      "from": "F01",
+      "to": "F02",
+      "motion": "The dust settles around the dented box in the pit. Six thick steel ropes are lowered down the shaft and fixed to the top of the box one after another, and the worker takes hold of them."
+    },
+    {
+      "id": "C04",
+      "lines": [
+        "4"
+      ],
+      "from": "F02",
+      "to": null,
+      "motion": "The worker leans back and pulls on the steel ropes with all his strength. The ropes go tight but the box does not lift at all."
+    },
+    {
+      "id": "C05",
+      "lines": [
+        "5"
+      ],
+      "from": "F02",
+      "to": "F03",
+      "motion": "The worker steps away. The camera glides up the shaft to the machine room, where a large steel drum and an electric motor are lowered into place and bolted down. The steel ropes wind onto the drum and the motor starts, slowly lifting the box up to the ground floor."
+    },
+    {
+      "id": "C06",
+      "lines": [
+        "6"
+      ],
+      "cue": "lifts",
+      "from": "F03",
+      "to": null,
+      "motion": "The motor hums loudly and vibrates as it slowly winds the heavy box upward one floor, straining under the full load."
+    },
+    {
+      "id": "C07",
+      "lines": [
+        "7"
+      ],
+      "from": "F03",
+      "to": "F04",
+      "motion": "A tall stack of iron weights is lowered into the far side of the shaft on ropes wound the opposite way around the drum. Then the drum turns: the box rises smoothly to the fourth floor while the counterweight sinks to the first floor at the same speed, and the motor runs quietly."
+    },
+    {
+      "id": "C08",
+      "lines": [
+        "8"
+      ],
+      "cue": "sways",
+      "from": "F04",
+      "to": null,
+      "motion": "The box travels down (the counterweight travels up). As it moves it sways from side to side on its ropes and knocks against the concrete shaft walls, chipping off small pieces."
+    },
+    {
+      "id": "C09",
+      "lines": [
+        "9"
+      ],
+      "from": "F04",
+      "to": "F05",
+      "motion": "Steel guide rails are slid up both shaft walls and bolted to the concrete one bolt at a time, and steel guide shoes are fitted to the sides of the box so they wrap around the rails. The swaying stops."
+    },
+    {
+      "id": "C10",
+      "lines": [
+        "10"
+      ],
+      "from": "F05",
+      "to": "F05c",
+      "motion": "The camera pushes in to the side of the box as it glides straight up, the guide shoe sliding smoothly along the rail with no swaying at all."
+    },
+    {
+      "id": "C11",
+      "lines": [
+        "11"
+      ],
+      "from": "F05c",
+      "to": "F06a",
+      "motion": "The camera glides across to the third-floor corridor. A young man with a backpack walks steadily toward the open gap in the wall, eyes on his phone, never looking up, and stops with a jolt one step before the edge, looking down into the empty shaft."
+    },
+    {
+      "id": "C12",
+      "lines": [
+        "12"
+      ],
+      "from": "F06a",
+      "to": "F06",
+      "motion": "The young man steps back. Brushed-steel doors slide across the gap and lock with a click. The box rises up the shaft and stops right behind the doors, the doors slide open, and he steps inside."
+    },
+    {
+      "id": "C13",
+      "lines": [
+        "13"
+      ],
+      "from": "F06",
+      "to": "F07",
+      "motion": "The camera pulls back to the whole building. Inside the box the young man presses a button; the box rises smoothly to the top floor while the counterweight sinks to the bottom of the shaft at the same speed, and the doors open at the top floor and he steps out."
+    },
+    {
+      "id": "C14",
+      "lines": [
+        "14"
+      ],
+      "from": "F07",
+      "to": null,
+      "motion": "The camera pushes in toward the six steel ropes above the now-empty box at the top floor. The ropes creak and a few outer wire strands start to fray. They have not snapped yet."
+    },
+    {
+      "id": "C15",
+      "lines": [
+        "15"
+      ],
+      "from": "F07",
+      "to": "F08",
+      "motion": "The camera pulls back. A small wheel is bolted into the machine room beside the drum, a second wheel is fixed at the bottom of the pit, and a thin steel rope is threaded in a loop between them and clipped to a lever on the side of the box."
+    },
+    {
+      "id": "C16",
+      "lines": [
+        "16"
+      ],
+      "from": "F08",
+      "to": "G1",
+      "motion": "All six main ropes snap at the same moment and the empty box starts to fall, pulling the thin rope with it. The camera rises to the small wheel in the machine room as it spins faster and faster, until two weighted arms inside it swing outward and catch on a notched ring, locking the wheel. The thin rope stops dead."
+    },
+    {
+      "id": "C17",
+      "lines": [
+        "17"
+      ],
+      "from": "G1",
+      "to": "G2",
+      "motion": "The camera follows the stopped thin rope down to the falling box. The rope pulls the lever up, two steel wedges on the box jam against the rails with a burst of sparks, and the box slides to a stop between the third and fourth floors and hangs there."
+    },
+    {
+      "id": "C18",
+      "lines": [
+        "18",
+        "19"
+      ],
+      "from": "G2",
+      "to": "F09",
+      "motion": "The camera slowly pulls back to the whole building and street. The box hangs safely on the rails, the broken ropes slack above it, and residents lean out to look. Hold still."
+    }
+  ],
+  "sfx": []
+}

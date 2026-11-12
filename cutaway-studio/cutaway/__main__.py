@@ -124,14 +124,14 @@ def cmd_clips(p, args):
     data = p.load()
     client = hf.Client()
     if args.action == "estimate":
-        rows, total, notes = clp.estimate(p, data, client, args.model, args.only)
+        rows, total, notes = clp.estimate(p, data, client, args.model, args.only, args.next)
         for n in notes:
             print(f"note: {n}")
         for r in rows:
             print(f"{r['clip_id']}: {r['duration']}s on {r['model']} ({r['why']})  ${r['usd']:.3f}")
         print(f"TOTAL ${total:.2f}  (spent so far ${ledger.spent(p):.2f}, cap ${data['budget']['cap_usd']:.2f})")
         return 0
-    made = clp.run(p, data, client, args.approve_usd, args.model, args.only)
+    made = clp.run(p, data, client, args.approve_usd, args.model, args.only, next_n=args.next)
     print(f"Made {len(made)} clip(s). {ledger.summary(p, data)}")
     return 0
 
@@ -272,6 +272,7 @@ def main(argv=None):
     sp.add_argument("slug")
     sp.add_argument("--model", choices=sorted(hf.VIDEO_MODELS))
     sp.add_argument("--only", help="comma-separated clip ids, e.g. C01,C02")
+    sp.add_argument("--next", type=int, help="make only the next N clips in order (review, then continue)")
     sp.add_argument("--approve-usd", type=float)
     sp = with_slug("assemble", "build the MP4")
     sp.add_argument("--draft", action="store_true", help="ignore clips; stills only (free preview)")

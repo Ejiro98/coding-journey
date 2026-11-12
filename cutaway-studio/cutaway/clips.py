@@ -58,7 +58,7 @@ def _start_image(project, data, clips, idx):
     return project.frame_file(clip["from"]), f"keyframe {clip['from']}"
 
 
-def plan(project, data, model=None, only=None, words=None):
+def plan(project, data, model=None, only=None, words=None, next_n=None):
     """Work out which clips must be (re)made, in order. Returns list of dicts."""
     model = model or data.get("video", {}).get("model", "wan3")
     if model not in hf.VIDEO_MODELS:
@@ -93,6 +93,8 @@ def plan(project, data, model=None, only=None, words=None):
             dirty = dirty or not exists
             continue
         if need:
+            if next_n and len(todo) >= int(next_n):
+                break
             for fid in [clip["from"]] + ([clip["to"]] if clip.get("to") else []):
                 if not project.frame_file(fid):
                     raise ValueError(f"Clip {cid} needs keyframe {fid}; make it first.")
@@ -135,8 +137,8 @@ def _body(project, data, client, state, item, start_img):
     return hf.clip_body(item["model"], start, end, clip_prompt(data, clip), item["seconds"], res)
 
 
-def estimate(project, data, client, model=None, only=None):
-    todo, notes = plan(project, data, model, only)
+def estimate(project, data, client, model=None, only=None, next_n=None):
+    todo, notes = plan(project, data, model, only, next_n=next_n)
     state = project.load_state()
     rows, total = [], 0.0
     for item in todo:
@@ -150,8 +152,8 @@ def estimate(project, data, client, model=None, only=None):
     return rows, round(total, 4), notes
 
 
-def run(project, data, client, approve_usd, model=None, only=None, log=print):
-    rows, total, notes = estimate(project, data, client, model, only)
+def run(project, data, client, approve_usd, model=None, only=None, log=print, next_n=None):
+    rows, total, notes = estimate(project, data, client, model, only, next_n)
     for n in notes:
         log(f"note: {n}")
     if not rows:

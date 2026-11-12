@@ -39,7 +39,8 @@ four approvals per video: script, voice, frames, spend.
 | `python3 -m cutaway frames gemini <slug> F05 --approve-usd 0.15` | Paid fallback frame | ~$0.15 (check pricing) |
 | `python3 -m cutaway assemble <slug> --draft` | Whole video from stills (preview) | free |
 | `python3 -m cutaway clips estimate <slug>` | Exact Higgsfield cost for the remaining clips | free |
-| `python3 -m cutaway clips run <slug> --approve-usd X` | Makes the clips (refuses above X or the cap) | Higgsfield balance |
+| `python3 -m cutaway clips estimate <slug> --next 2` | Cost of just the next 2 clips | free |
+| `python3 -m cutaway clips run <slug> --next 2 --approve-usd X` | Makes the next 2 clips, in order (refuses above X or the cap) | Higgsfield balance |
 | `python3 -m cutaway assemble <slug>` | Final MP4 | free |
 | `python3 -m cutaway quota [add N / limit-hit]` | Flow free-image counter | free |
 
@@ -55,7 +56,8 @@ The `/estimate` endpoint is always used for the real number before anything is p
 
 ## Money safety
 - Paid commands need `--approve-usd` and stop if the estimate is higher or the video's
-  `budget.cap_usd` (default $12) would be passed. Every estimate and spend is logged in
+  `budget.cap_usd` ($7 per video including retries) would be passed. Clips are made two at a
+  time after the free draft is approved, so a rejected clip never wastes the ones after it. Every estimate and spend is logged in
   `projects/<slug>/ledger.jsonl`.
 - Re-running is safe: finished clips are skipped; idempotency keys prevent double charges.
 - Failed and NSFW generations are not charged by Higgsfield.

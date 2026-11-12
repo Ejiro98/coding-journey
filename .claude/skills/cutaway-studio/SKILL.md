@@ -9,13 +9,17 @@ The tool lives in `cutaway-studio/` in this repo. Run every command from that fo
 `python3 -m cutaway <command> <slug>`. Each video is `cutaway-studio/projects/<slug>/video.json`.
 Start every session with `python3 -m cutaway status <slug>`: it says where the video is up to.
 
-## Four approvals: never skip them
+## Five approvals: never skip them
 1. **Script**: the viewer approves the script (after `lint` passes and facts are checked).
 2. **Voice**: the viewer listens to `audio/voice.mp3` once on a phone and approves it.
 3. **Frames**: the viewer approves the keyframes (contact sheet) before any clip is paid for.
-4. **Spend**: before any paid call, show the exact estimate and wait for "yes". Then pass that
-   amount with `--approve-usd`. The tool refuses without it and refuses anything over the
-   video's `budget.cap_usd`. Never raise the cap without the viewer saying so.
+4. **Free draft**: the viewer watches the FREE draft (stills + real voice + captions) and approves
+   the story, timing and pictures. **No money is spent on clips before this.**
+5. **Spend, in small steps**: clips are made 2 at a time (`--next 2`), checked, then continued.
+   Before each step show the exact estimate and wait for "yes"; pass it with `--approve-usd`.
+   The tool refuses without it and refuses anything over the video's `budget.cap_usd`
+   (default $7: the viewer's limit per video INCLUDING retries). Never raise the cap without
+   the viewer saying so.
 
 Keep checkpoint messages short (the viewer is often on their phone): decision first, then
 "Reply **approve** or tell me what to change".
@@ -34,15 +38,25 @@ water-related first. Avoid pure fantasy escalation ("my house becomes a castle")
 Audience is US/UK (Creator Rewards pays most there): no region-only words.
 
 ## Step 2: Script (approval 1)
-Write `video.json` (copy `projects/elevator-v2/video.json` as the template). The formula:
+Write `video.json` (copy `projects/elevator-v3/video.json` as the template). **Narrate like the
+proven videos, not a new style** (read `cutaway-studio/README.md` and the transcripts first). The formula:
 - Line 1: **"If you [one crude physical action], you have a [thing]."** Words a 10-year-old knows.
 - First **"But"** within 16 words (~3.5 s), with an everyday trigger ("as soon as it rains",
   "by morning") and a problem you can picture, ideally about YOU ("you drop five floors").
-- 6-8 **But → So** pairs. Each fix causes the next problem. Each problem is vivid or funny.
+- 6-8 **But → So** pairs. Each fix causes the next problem. Problems come from **real forces**
+  (rain, gravity, wind, weight, people) and their real consequences, never cartoon events.
+- **"Now…" result lines** after key fixes, exactly like the proven scripts ("Now the water moves.",
+  "Now the rain runs around the chimney.", "Now it can only move straight up and down."): the
+  viewer must SEE each fix working before the next problem.
+- Humour only from vivid true consequences ("your street becomes a swimming pool", "your drain
+  becomes a fountain"), never invented gags (glowing motors, meters spinning, people falling over).
 - **Every part is built by a "So" line before any line uses it** (list them in `parts`).
 - Name real parts: "This is a counterweight." / "These are buffers."
 - One or two **everyday reveals**: "That's why…", "And that beep…? The elevator is weighing you."
-- End: **"Congratulations! You've built a [thing] that…"** then a share line.
+- End: run the whole system once ("Bury the pipes, pave the road, and let it rain." / "Now press
+  the button…"), then **"Congratulations! You've built a [thing] that…"** and a share line.
+- **Facts must survive a check**: every claim is physically true or a fair simplification; prefer
+  the real mechanism (a drum or a counterweight is needed before a grooved wheel can lift anything).
 - 290-315 words (~78-85 s at their speed; over 60 s for Creator Rewards). Short sentences.
 - **Every problem has a visible cause first** (the box can't swing until we've said nothing holds it
   steady). **Every mechanism with two ends shows both ends** (the governor rope is a loop between a
@@ -56,9 +70,13 @@ show the viewer a table of claims (true / simplified). Present the script, wait 
 - **Parts can't appear early**: give every frame a `state` (the line whose result it shows) and every
   part a `looks` description; the prompt then lists everything NOT BUILT YET as "do not draw".
   Mark wide frames `"wide": true` so built parts are listed as must-be-visible.
-- **One continuous build**: `video.chain` is on, so each clip starts from the previous clip's last
-  frame. Use `"cut": true` only for a real change of place (shaft → hallway → inside the car).
+- **One continuous scene, like the proven videos**: everything happens in the same cutaway; the
+  camera only glides, pushes in or pulls back (no cuts to separate rooms). `video.chain` is on,
+  so each clip starts from the previous clip's last frame; `"cut": true` is a last resort.
   Use `to` keyframes to anchor each build step's end state.
+- **Physically possible only**: nothing rewinds, teleports, glows or appears from nowhere; parts
+  are lowered, slid or bolted in. If the story breaks the machine (ropes snap), put that test LAST
+  so nothing has to be magically repaired. Put "only physically possible events" in `rules`.
 - **Action on the word**: give problem clips a `cue` word ("snaps", "swings") so the cut and the
   action land on that word, and the prompt says the action starts immediately. Don't use a cue if
   it leaves the clip under ~2 s (check `timing`).
@@ -100,24 +118,30 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
 - Show the viewer one contact sheet of all frames; wait for approval.
 - If Flow refuses a frame on policy grounds, soften the picture (never the facts) and retry twice.
 
-## Step 5: Free draft
-`python3 -m cutaway assemble <slug> --draft` builds the whole video from stills with slow push-ins,
-the real voice and one-word captions. Watch it for timing and "say it, see it": the thing named
-must be on screen when its word is spoken. Fix frames or clip line-grouping now, while it's free.
+## Step 5: Free draft (approval 4) - nothing is paid for before this is approved
+`python3 -m cutaway assemble <slug> --draft` builds the whole video from the keyframes with slow
+push-ins, the real voice and one-word captions. Before showing the viewer, check it yourself:
+"say it, see it" (the thing named is on screen when its word is spoken), every keyframe obeys its
+NOT BUILT YET list, the setting is a real place, the counterweight is always opposite the box.
+Then send it and ask: **"Reply approve, or tell me what to change. No money has been spent yet."**
+Fix frames, motion text or line grouping now, while it's free.
 
-## Step 6: Clips on Higgsfield (approval 4: spend)
+## Step 6: Clips on Higgsfield (approval 5: spend, two clips at a time)
 `python3 -m cutaway timing <slug>` shows each clip's length and a planning cost.
-**Model test (when trying a new model):** run just `--only C01` (it starts from a keyframe) on each
-model, show them side by side, let the viewer pick; set `video.model` in video.json.
-Then: `python3 -m cutaway clips estimate <slug>` → tell the viewer the TOTAL → on "yes":
-`python3 -m cutaway clips run <slug> --approve-usd <TOTAL>`.
-- Clips are made **in order** (each starts from the previous clip's last frame), so a run takes a while.
-- **Check each clip as it lands**: the action happens on its cue word; it continues smoothly from
-  the previous clip; physics rules hold (counterweight opposite the box); people move; nothing
-  built disappears. If a clip fails the check, delete `clips/<ID>.mp4`, adjust its `motion`, and
-  re-run: the estimate shows it plus every chained clip after it (they must follow the new one).
+**Model test (only when trying a new model):** `--only C01` on each model, side by side; the viewer
+picks; set `video.model`.
+Then repeat until all clips are made:
+1. `python3 -m cutaway clips estimate <slug> --next 2` → tell the viewer the amount → on "yes":
+2. `python3 -m cutaway clips run <slug> --next 2 --approve-usd <AMOUNT>`
+3. **Check both clips yourself before continuing** (last frame + a few frames each): the action
+   happens on its cue word; it continues smoothly from the previous clip; physics rules hold
+   (counterweight opposite the box, nothing impossible); people move; nothing built disappears;
+   no part from the NOT BUILT YET list appears. Show the viewer the two clips.
+4. If a clip fails the check: delete `clips/<ID>.mp4`, make its `motion` text more specific, and
+   re-run step 1. Because the next clips aren't made yet, only that clip is paid for again.
+- Keep a running total against the $7 cap and say it in every checkpoint ("$2.10 of $7 used").
 - Re-running is safe: finished, up-to-date clips are skipped and idempotency keys stop double charges.
-- Failed/NSFW clips are not charged; soften that clip's motion text and re-run.
+- Failed/NSFW clips are not charged; make that clip's motion text gentler and re-run.
 - Files on Higgsfield are deleted after 7 days; the tool downloads immediately.
 
 ## Step 7: Final video

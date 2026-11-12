@@ -456,3 +456,33 @@ class V2PlanTests(unittest.TestCase):
         d["clips"][1]["cue"] = "explodes"
         with self.assertRaises(ValueError):
             timing.segments(d, timing.estimated_words(d, 230), 0.8)
+
+
+V3 = json.loads((STUDIO / "projects" / "elevator-v3" / "video.json").read_text())
+
+
+class V3PlanTests(unittest.TestCase):
+    def test_v3_passes_and_has_no_cuts(self):
+        self.assertFalse(lint.has_errors(lint.check(V3)), lint.format_report(lint.check(V3)))
+        self.assertFalse(any(c.get("cut") for c in V3["clips"]))     # one continuous scene
+        self.assertEqual(V3["budget"]["cap_usd"], 7.0)
+        self.assertTrue(any("physically possible" in r for r in V3["rules"]))
+
+    def test_now_result_lines_follow_key_fixes(self):
+        roles = [l["role"] for l in V3["lines"]]
+        self.assertGreaterEqual(roles.count("RESULT"), 2)
+
+    def test_next_step_mode_limits_the_batch(self):
+        fake = FakeHiggsfield()
+        old, http.transport = http.transport, fake
+        try:
+            p, d = make_project(V3)
+            _png(p.path("frames", "F01.png"))
+            _png(p.path("frames", "F02.png"))
+            client = hf.Client("id", "secret", sleep=lambda s: None)
+            made = clips.run(p, d, client, approve_usd=1.0, next_n=2, log=lambda *_: None)
+            self.assertEqual(made, ["C01", "C02"])
+            todo, _ = clips.plan(p, d, next_n=2)
+            self.assertEqual([t["clip"]["id"] for t in todo], ["C03", "C04"])
+        finally:
+            http.transport = old
