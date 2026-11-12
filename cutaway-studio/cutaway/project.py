@@ -111,16 +111,26 @@ def validate(data):
         for ref in f.get("refs", []):
             if ref not in frames:
                 raise ProjectError(f"frame {f['id']} refers to unknown frame {ref}")
+        if f.get("state") is not None and str(f["state"]) not in known_lines:
+            raise ProjectError(f"frame {f['id']} has unknown state line {f['state']}")
     covered = []
+    prev_last = None
     for clip in data.get("clips", []):
         if clip.get("from") not in frames:
             raise ProjectError(f"clip {clip.get('id')} starts from unknown frame {clip.get('from')}")
         if clip.get("to") and clip["to"] not in frames:
             raise ProjectError(f"clip {clip['id']} ends on unknown frame {clip['to']}")
-        for lid in clip.get("lines", []):
-            if str(lid) not in known_lines:
+        lines = [str(l) for l in clip.get("lines", [])]
+        if not lines:
+            raise ProjectError(f"clip {clip['id']} has no lines")
+        # A second clip on the same line is allowed when it starts on a cue word.
+        if lines[0] == prev_last and clip.get("cue"):
+            lines = lines[1:]
+        for lid in lines:
+            if lid not in known_lines:
                 raise ProjectError(f"clip {clip['id']} uses unknown line {lid}")
-            covered.append(str(lid))
+            covered.append(lid)
+        prev_last = str(clip["lines"][-1])
     if data.get("clips"):
         if covered != ids:
             raise ProjectError(

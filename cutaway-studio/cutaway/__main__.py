@@ -124,9 +124,11 @@ def cmd_clips(p, args):
     data = p.load()
     client = hf.Client()
     if args.action == "estimate":
-        rows, total = clp.estimate(p, data, client, args.model, args.only)
+        rows, total, notes = clp.estimate(p, data, client, args.model, args.only)
+        for n in notes:
+            print(f"note: {n}")
         for r in rows:
-            print(f"{r['clip']}: {r['seconds']}s on {r['model']}  ${r['usd']:.3f}")
+            print(f"{r['clip_id']}: {r['duration']}s on {r['model']} ({r['why']})  ${r['usd']:.3f}")
         print(f"TOTAL ${total:.2f}  (spent so far ${ledger.spent(p):.2f}, cap ${data['budget']['cap_usd']:.2f})")
         return 0
     made = clp.run(p, data, client, args.approve_usd, args.model, args.only)

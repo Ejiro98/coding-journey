@@ -34,7 +34,7 @@ water-related first. Avoid pure fantasy escalation ("my house becomes a castle")
 Audience is US/UK (Creator Rewards pays most there): no region-only words.
 
 ## Step 2: Script (approval 1)
-Write `video.json` (copy `projects/elevator/video.json` as the template). The formula:
+Write `video.json` (copy `projects/elevator-v2/video.json` as the template). The formula:
 - Line 1: **"If you [one crude physical action], you have a [thing]."** Words a 10-year-old knows.
 - First **"But"** within 16 words (~3.5 s), with an everyday trigger ("as soon as it rains",
   "by morning") and a problem you can picture, ideally about YOU ("you drop five floors").
@@ -44,8 +44,32 @@ Write `video.json` (copy `projects/elevator/video.json` as the template). The fo
 - One or two **everyday reveals**: "That's why…", "And that beep…? The elevator is weighing you."
 - End: **"Congratulations! You've built a [thing] that…"** then a share line.
 - 290-315 words (~78-85 s at their speed; over 60 s for Creator Rewards). Short sentences.
+- **Every problem has a visible cause first** (the box can't swing until we've said nothing holds it
+  steady). **Every mechanism with two ends shows both ends** (the governor rope is a loop between a
+  top wheel and a bottom wheel, not a rope to nowhere).
 Then `python3 -m cutaway lint <slug>` must show no ERROR. Fact-check every claim with sources and
 show the viewer a table of claims (true / simplified). Present the script, wait for approval.
+
+## Shot plan rules (learned from the first elevator video; the viewer's notes)
+- **Setting, never white space**: the `style` puts the cutaway in a real place (street, neighbouring
+  buildings, trees, cars, residents inside). Keep it identical in every wide frame.
+- **Parts can't appear early**: give every frame a `state` (the line whose result it shows) and every
+  part a `looks` description; the prompt then lists everything NOT BUILT YET as "do not draw".
+  Mark wide frames `"wide": true` so built parts are listed as must-be-visible.
+- **One continuous build**: `video.chain` is on, so each clip starts from the previous clip's last
+  frame. Use `"cut": true` only for a real change of place (shaft → hallway → inside the car).
+  Use `to` keyframes to anchor each build step's end state.
+- **Action on the word**: give problem clips a `cue` word ("snaps", "swings") so the cut and the
+  action land on that word, and the prompt says the action starts immediately. Don't use a cue if
+  it leaves the clip under ~2 s (check `timing`).
+- **Physics rules every clip must obey** go in `rules` (e.g. the counterweight always moves
+  opposite to the box at the same speed; built parts never disappear; the street stays the same).
+- **Show the fix WORKING**: after a part is built, show the result (the box gliding straight on the
+  rails; the box actually stopped and hanging safely). Small mechanisms get wide → close-up → wide.
+- **People are alive**: describe continuous action ("keeps walking steadily, eyes on his phone"),
+  a reaction, and a payoff. Never a person just standing in frame.
+- **The ending shows the whole system working** (a button press, the box rising while the
+  counterweight sinks), in the same camera angle as the build.
 
 ## Step 3: Voice (approval 2)
 `python3 -m cutaway voices` to list voices (first video: offer 3 clear, fast, friendly voices).
@@ -67,6 +91,12 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
   run `python3 -m cutaway quota limit-hit` and ask: "Wait until tomorrow (free) or make the rest
   with Gemini (~$0.15 each)?" Paid route: `frames gemini <slug> <ID> --approve-usd 0.15`.
 - Schedule: make the next video's frames a day ahead so the daily limit never blocks a post.
+- **Check every frame before making the next** (look at it yourself at full size):
+  1. nothing from its NOT BUILT YET list is visible anywhere (rails, motor, doors…);
+  2. same building, camera angle, street and residents as the previous wide frame;
+  3. positions match the description (box floor, counterweight floor, opposite each other);
+  4. a real setting, no white or empty background.
+  Remake any frame that fails before moving on.
 - Show the viewer one contact sheet of all frames; wait for approval.
 - If Flow refuses a frame on policy grounds, soften the picture (never the facts) and retry twice.
 
@@ -77,12 +107,17 @@ must be on screen when its word is spoken. Fix frames or clip line-grouping now,
 
 ## Step 6: Clips on Higgsfield (approval 4: spend)
 `python3 -m cutaway timing <slug>` shows each clip's length and a planning cost.
-**First video only - model test:** run just one join clip (e.g. `--only C03`) on `wan3`, `seedance2`
-and `kling-o3`, show the three side by side, let the viewer pick; set `video.model` in video.json.
+**Model test (when trying a new model):** run just `--only C01` (it starts from a keyframe) on each
+model, show them side by side, let the viewer pick; set `video.model` in video.json.
 Then: `python3 -m cutaway clips estimate <slug>` → tell the viewer the TOTAL → on "yes":
 `python3 -m cutaway clips run <slug> --approve-usd <TOTAL>`.
-- Re-running is safe: finished clips are skipped and idempotency keys stop double charges.
-- Failed/NSFW clips are not charged; soften that clip's motion text and re-run `--only <ID>`.
+- Clips are made **in order** (each starts from the previous clip's last frame), so a run takes a while.
+- **Check each clip as it lands**: the action happens on its cue word; it continues smoothly from
+  the previous clip; physics rules hold (counterweight opposite the box); people move; nothing
+  built disappears. If a clip fails the check, delete `clips/<ID>.mp4`, adjust its `motion`, and
+  re-run: the estimate shows it plus every chained clip after it (they must follow the new one).
+- Re-running is safe: finished, up-to-date clips are skipped and idempotency keys stop double charges.
+- Failed/NSFW clips are not charged; soften that clip's motion text and re-run.
 - Files on Higgsfield are deleted after 7 days; the tool downloads immediately.
 
 ## Step 7: Final video

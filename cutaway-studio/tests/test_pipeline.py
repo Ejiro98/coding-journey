@@ -122,12 +122,23 @@ class TimingTests(unittest.TestCase):
         self.assertTrue(70 < total < 95, total)
 
 
-class FakeHiggsfield:
-    """Stands in for the HTTP transport and records every call."""
+def _tiny_mp4(color):
+    out = Path(tempfile.mkdtemp()) / "v.mp4"
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", f"color=c={color}:s=96x160:r=10:d=1",
+                    "-pix_fmt", "yuv420p", str(out)], check=True)
+    return out.read_bytes()
 
-    def __init__(self, video_bytes=b"FAKEMP4", final_status="completed"):
+
+class FakeHiggsfield:
+    """Stands in for the HTTP transport and records every call.
+    Each generated clip is a real tiny video of a different colour, so chaining
+    (start = previous clip's last frame) can be checked."""
+
+    COLORS = ["red", "green", "blue", "yellow", "white", "purple"]
+
+    def __init__(self, final_status="completed"):
         self.calls = []
-        self.video_bytes = video_bytes
+        self.videos = {}
         self.final_status = final_status
         self.polls = {}
 
@@ -153,7 +164,10 @@ class FakeHiggsfield:
                 out["video"] = {"url": f"https://out.test/{rid}.mp4"}
             return js(out)
         if url.startswith("https://out.test/"):
-            return 200, {}, self.video_bytes
+            rid = url.rsplit("/", 1)[-1].split(".")[0]
+            if rid not in self.videos:
+                self.videos[rid] = _tiny_mp4(self.COLORS[len(self.videos) % len(self.COLORS)])
+            return 200, {}, self.videos[rid]
         if method == "POST" and url.startswith("https://api.higgsfield.ai/"):
             rid = f"r{len([c for c in self.calls if c[0] == 'POST' and 'estimate' not in c[1] and 'upload' not in c[1]])}"
             return js({"status": "queued", "request_id": rid,
@@ -188,20 +202,54 @@ class ClipRunTests(unittest.TestCase):
             clips.run(p, d, client, approve_usd=None, only="C01,C02,C03", log=lambda *_: None)
         made = clips.run(p, d, client, approve_usd=0.60, only="C01,C02,C03", log=lambda *_: None)
         self.assertEqual(made, ["C01", "C02", "C03"])
-        self.assertEqual(p.clip_file("C03").read_bytes(), b"FAKEMP4")
+        self.assertTrue(p.clip_file("C03").stat().st_size > 100)
         self.assertAlmostEqual(ledger.spent(p), 0.60)
         subs = [c for c in self.fake.calls
                 if c[0] == "POST" and c[1].endswith("image-to-video") and "/estimate/" not in c[1]]
         self.assertEqual(len(subs), 3)
         body = json.loads(subs[2][3])
-        self.assertIn("end_image_url", body)                  # C03 joins F01 -> F02
+        self.assertIn("end_image_url", body)                  # C03 must end on F02
         self.assertFalse(body["generate_audio"])
         self.assertEqual(body["aspect_ratio"], "9:16")
         self.assertTrue(all("Idempotency-Key" in c[2] for c in subs))
+        # Chain: C02 and C03 start from the previous clip's last frame, not the keyframe.
+        st = p.load_state()["clips"]
+        self.assertEqual(st["C02"]["start_source"], "end of C01")
+        self.assertEqual(st["C03"]["start_source"], "end of C02")
+        starts = [json.loads(c[3])["image_url"] for c in subs]
+        self.assertEqual(len(set(starts)), 3)
         # Re-running makes nothing new and pays nothing more.
         again = clips.run(p, d, client, approve_usd=0.60, only="C01,C02,C03", log=lambda *_: None)
         self.assertEqual(again, [])
         self.assertAlmostEqual(ledger.spent(p), 0.60)
+
+    def test_remaking_a_clip_marks_later_chained_clips_out_of_date(self):
+        p, d = make_project()
+        for fid in ("F01", "F02"):
+            _png(p.path("frames", f"{fid}.png"))
+        client = hf.Client("id", "secret", sleep=lambda s: None)
+        clips.run(p, d, client, approve_usd=0.60, only="C01,C02,C03", log=lambda *_: None)
+        p.clip_file("C01").unlink()                            # viewer rejects C01
+        todo, _ = clips.plan(p, d, only="C01,C02,C03")
+        self.assertEqual([(t["clip"]["id"], t["why"]) for t in todo],
+                         [("C01", "new"), ("C02", "out of date"), ("C03", "out of date")])
+
+    def test_cut_clip_starts_from_its_keyframe(self):
+        p, d = make_project()
+        for fid in ("F01", "F02"):
+            _png(p.path("frames", f"{fid}.png"))
+        d["clips"][1]["cut"] = True
+        client = hf.Client("id", "secret", sleep=lambda s: None)
+        clips.run(p, d, client, approve_usd=0.60, only="C01,C02,C03", log=lambda *_: None)
+        self.assertEqual(p.load_state()["clips"]["C02"]["start_source"], "keyframe F01")
+
+    def test_rules_and_cue_go_into_the_prompt(self):
+        d = copy.deepcopy(ELEVATOR)
+        d["rules"] = ["The counterweight always moves opposite to the box."]
+        clip = dict(d["clips"][1], cue="snaps")
+        text = clips.clip_prompt(d, clip)
+        self.assertTrue(text.startswith("The action starts immediately"))
+        self.assertIn("opposite to the box", text)
 
     def test_failed_clip_is_not_recorded_as_spend(self):
         self.fake.final_status = "failed"
@@ -371,3 +419,40 @@ class SlimFfmpegTests(unittest.TestCase):
     def test_encoder_fallback_without_libx264(self):
         rep = self._render({"subtitles": False, "drawtext": False, "libx264": False, "videotoolbox": False})
         self.assertTrue(Path(rep["file"]).stat().st_size > 1000)
+
+
+V2 = json.loads((STUDIO / "projects" / "elevator-v2" / "video.json").read_text())
+
+
+class V2PlanTests(unittest.TestCase):
+    def test_v2_script_passes(self):
+        self.assertFalse(lint.has_errors(lint.check(V2)), lint.format_report(lint.check(V2)))
+
+    def test_first_frame_forbids_parts_not_built_yet(self):
+        f01 = next(f for f in V2["frames"] if f["id"] == "F01")
+        prompt = frames.prompt_for(V2, f01)
+        for thing in ("guide rails", "electric motor", "counterweight", "governor", "elevator doors"):
+            self.assertIn(thing, prompt.split("NOT BUILT YET")[1])
+
+    def test_later_frame_lists_built_parts_and_forbids_only_later_ones(self):
+        f05 = next(f for f in V2["frames"] if f["id"] == "F05")
+        built, missing = frames.build_state(V2, f05)
+        self.assertTrue(any("guide rails" in b for b in built))
+        self.assertTrue(any("governor" in m for m in missing))
+        self.assertFalse(any("guide rails" in m for m in missing))
+
+    def test_cue_moves_the_cut_onto_the_word(self):
+        words = timing.estimated_words(V2, 230)
+        segs, _ = timing.segments(V2, words, 0.8)
+        seg = {s["clip"]: s for s in segs}
+        lt = timing.line_times(V2, words)
+        snaps = next(w for w in lt["2"]["words"] if w["w"].startswith("snaps"))
+        self.assertAlmostEqual(seg["C02"]["start"], snaps["s"] - 0.15, places=2)
+        self.assertGreater(seg["C02"]["start"], lt["2"]["start"])
+        self.assertAlmostEqual(seg["C01"]["end"], seg["C02"]["start"])
+
+    def test_bad_cue_word_is_reported(self):
+        d = copy.deepcopy(V2)
+        d["clips"][1]["cue"] = "explodes"
+        with self.assertRaises(ValueError):
+            timing.segments(d, timing.estimated_words(d, 230), 0.8)

@@ -50,15 +50,33 @@ def line_times(data, words):
     return times
 
 
+def _norm_word(w):
+    return re.sub(r"[^a-z0-9']", "", w.lower().replace("’", "'"))
+
+
+def cue_time(clip, lt):
+    """When a clip should start: its cue word if it has one, else the start of its first line.
+    A cue moves the cut so the action lands ON the word (e.g. the rope snaps on 'snaps')."""
+    first = lt[str(clip["lines"][0])]
+    cue = clip.get("cue")
+    if not cue:
+        return first["start"]
+    target = _norm_word(cue)
+    for w in first["words"]:
+        if _norm_word(w["w"]) == target:
+            return max(w["s"] - 0.15, first["start"])   # a hair early so the hit lands on the word
+    raise ValueError(f"Clip {clip['id']}: cue word '{cue}' is not in line {clip['lines'][0]}")
+
+
 def segments(data, words, end_hold=0.8):
     lt = line_times(data, words)
     clips = data["clips"]
     total_end = words[-1]["e"] + end_hold
     segs = []
     for idx, clip in enumerate(clips):
-        start = 0.0 if idx == 0 else lt[str(clip["lines"][0])]["start"]
+        start = 0.0 if idx == 0 else cue_time(clip, lt)
         if idx + 1 < len(clips):
-            end = lt[str(clips[idx + 1]["lines"][0])]["start"]
+            end = cue_time(clips[idx + 1], lt)
         else:
             end = total_end
         segs.append({"clip": clip["id"], "start": round(start, 3), "end": round(end, 3),

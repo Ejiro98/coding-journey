@@ -18,11 +18,34 @@ CONSISTENCY = (
 )
 
 
+def build_state(data, frame):
+    """Which parts exist in this frame, from the script line whose state it shows."""
+    parts = data.get("parts", {})
+    order = [str(l["id"]) for l in data["lines"]]
+    state = frame.get("state")
+    if state is None or not parts:
+        return [], []
+    upto = order.index(str(state))
+    built, missing = [], []
+    for name, spec in parts.items():
+        looks = spec.get("looks") or name
+        (built if order.index(str(spec["built_in"])) <= upto else missing).append(looks)
+    return built, missing
+
+
 def prompt_for(data, frame):
     style = data.get("style", "").strip()
+    body = frame["shows"].strip()
+    built, missing = build_state(data, frame)
+    extra = ""
+    if frame.get("wide") and built:
+        extra += " Already built and clearly visible: " + "; ".join(built) + "."
+    if missing:
+        extra += (" NOT BUILT YET, do not draw any of these anywhere in the image: "
+                  + "; ".join(missing) + ".")
     if not frame.get("refs"):
-        return f"{style} {frame['shows']}".strip()
-    return f"{style} {CONSISTENCY}{frame['shows']}".strip()
+        return f"{style} {body}{extra}".strip()
+    return f"{style} {CONSISTENCY}{body}{extra}".strip()
 
 
 def plan(project, data):

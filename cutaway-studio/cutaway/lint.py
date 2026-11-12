@@ -97,7 +97,7 @@ def check(data):
         t = l["text"].strip().lower()
         if role.startswith("PROBLEM") and not t.startswith(("but", "and")):
             warn(f"Line {l['id']} is a PROBLEM but doesn't start with 'But'.")
-        if role.startswith("FIX") and not t.startswith(("so", "that", "if", "then")):
+        if role.startswith("FIX") and not t.startswith(("so", "that", "if", "then", "and")):
             warn(f"Line {l['id']} is a FIX but doesn't start with 'So'.")
 
     # 5. Ending
