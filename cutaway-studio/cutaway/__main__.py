@@ -155,8 +155,15 @@ def run_checks(log=print):
         log(f"[{mark}] {name}: {msg}")
 
     v = sys.version_info
-    line(v >= (3, 10), "Python", f"{v.major}.{v.minor}" + ("" if v >= (3, 10) else " (need 3.10+: brew install python)"))
-    line(bool(shutil.which("ffmpeg")), "ffmpeg", "installed" if shutil.which("ffmpeg") else "missing: brew install ffmpeg")
+    line(v >= (3, 9), "Python", f"{v.major}.{v.minor}" + ("" if v >= (3, 9) else " (need 3.9+: brew install python)"))
+    if shutil.which("ffmpeg"):
+        import subprocess
+        filters = subprocess.run(["ffmpeg", "-hide_banner", "-filters"], capture_output=True, text=True).stdout
+        has_subs = " subtitles " in filters
+        line(has_subs, "ffmpeg", "installed, can burn in captions" if has_subs else
+             "installed but without libass (captions): brew reinstall ffmpeg")
+    else:
+        line(False, "ffmpeg", "missing: brew install ffmpeg")
     for name in config.KEY_NAMES:
         optional = name == "GEMINI_API_KEY"
         present = config.has_key(name)

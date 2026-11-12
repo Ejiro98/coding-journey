@@ -14,7 +14,7 @@ Claude runs it through the `cutaway-studio` skill (`.claude/skills/cutaway-studi
 four approvals per video: script, voice, frames, spend.
 
 ## Setup (once, on the Mac)
-1. Python 3.10+ and ffmpeg (`brew install ffmpeg`). No other packages are needed.
+1. Python 3.9+ (the Mac's built-in python3 is fine) and ffmpeg (`brew install ffmpeg`). No other packages are needed.
 2. Keys in `~/.cutaway/keys.env` (never in this repo):
    ```
    HF_API_KEY_ID=...
