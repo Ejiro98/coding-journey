@@ -324,3 +324,14 @@ class CheckTests(unittest.TestCase):
         self.assertIn("29,000 characters left", text)
         self.assertTrue(all(m == "GET" for m, _ in calls))   # only free reads
         self.assertEqual(good, HAS_FFMPEG)
+
+    def test_combined_hf_key(self):
+        os.environ["HF_KEY"] = "abc123:s3cr3t:with-colon"
+        try:
+            self.assertEqual(hf.credentials(), ("abc123", "s3cr3t:with-colon"))
+            os.environ["HF_KEY"] = "nocolonhere"
+            with self.assertRaises(Exception) as ctx:
+                hf.credentials()
+            self.assertIn("secret part is missing", str(ctx.exception))
+        finally:
+            os.environ.pop("HF_KEY", None)

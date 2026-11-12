@@ -21,7 +21,7 @@ Keep checkpoint messages short (the viewer is often on their phone): decision fi
 "Reply **approve** or tell me what to change".
 
 ## Keys (one-time)
-Keys live in environment variables or `~/.cutaway/keys.env` (`HF_API_KEY_ID`, `HF_API_KEY_SECRET`,
+Keys live in environment variables or `~/.cutaway/keys.env` (`HF_KEY=keyid:secret` or `HF_API_KEY_ID` + `HF_API_KEY_SECRET`,
 `ELEVENLABS_API_KEY`, optional `GEMINI_API_KEY`). Never ask for a key in chat and never print one.
 In a cloud session, use the credential form (request_credential) for api.higgsfield.ai and
 api.elevenlabs.io instead.

@@ -17,11 +17,11 @@ four approvals per video: script, voice, frames, spend.
 1. Python 3.9+ (the Mac's built-in python3 is fine) and ffmpeg (`brew install ffmpeg`). No other packages are needed.
 2. Keys in `~/.cutaway/keys.env` (never in this repo):
    ```
-   HF_API_KEY_ID=...
-   HF_API_KEY_SECRET=...
+   HF_KEY=keyid:secret       # Higgsfield: the whole value, two parts joined by a colon
    ELEVENLABS_API_KEY=...
    GEMINI_API_KEY=...        # optional, paid fallback for keyframes
    ```
+   (`HF_API_KEY_ID=...` + `HF_API_KEY_SECRET=...` on two lines also works.)
 3. Google Flow MCP connected in Claude (the same one Story Studio uses) for free keyframes.
 4. Check: `cd cutaway-studio && python3 -m unittest discover -s tests` (offline, costs nothing),
    then `python3 -m cutaway check` (confirms ffmpeg and that every key is accepted; spends nothing).

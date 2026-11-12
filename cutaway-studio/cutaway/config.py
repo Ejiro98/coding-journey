@@ -12,6 +12,7 @@ PROJECTS_DIR = Path(os.environ.get("CUTAWAY_PROJECTS", STUDIO_DIR / "projects"))
 HOME_DIR = Path(os.environ.get("CUTAWAY_HOME", Path.home() / ".cutaway"))
 
 KEY_NAMES = (
+    "HF_KEY",                # one combined "keyid:secret" value (Higgsfield's own format), or:
     "HF_API_KEY_ID",
     "HF_API_KEY_SECRET",
     "ELEVENLABS_API_KEY",

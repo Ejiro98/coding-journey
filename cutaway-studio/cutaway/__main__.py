@@ -164,12 +164,19 @@ def run_checks(log=print):
              "installed but without libass (captions): brew reinstall ffmpeg")
     else:
         line(False, "ffmpeg", "missing: brew install ffmpeg")
-    for name in config.KEY_NAMES:
-        optional = name == "GEMINI_API_KEY"
+    try:
+        hf.credentials()
+        hf_found = True
+        line(True, "Higgsfield key", "found (HF_KEY)" if config.has_key("HF_KEY") else "found (ID + secret)")
+    except config.MissingKey as e:
+        hf_found = False
+        line(False, "Higgsfield key", "not set. Add HF_KEY=keyid:secret (or HF_API_KEY_ID and HF_API_KEY_SECRET)"
+             if "HF_KEY should" not in str(e) else str(e))
+    for name, optional in (("ELEVENLABS_API_KEY", False), ("GEMINI_API_KEY", True)):
         present = config.has_key(name)
         line(present or (None if optional else False), name, "found" if present else ("not set (optional)" if optional else "not set"))
 
-    if config.has_key("HF_API_KEY_ID") and config.has_key("HF_API_KEY_SECRET"):
+    if hf_found:
         try:
             c = hf.Client()
             http.request("GET", f"{hf.BASE}/requests/{uuid.uuid4()}/status", headers=c._auth(), retries=1)

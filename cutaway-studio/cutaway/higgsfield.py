@@ -70,10 +70,36 @@ STYLE_SUFFIX = (
 )
 
 
+def credentials():
+    """Accept either HF_KEY='id:secret' (one combined key, as Higgsfield's SDK uses)
+    or the pair HF_API_KEY_ID + HF_API_KEY_SECRET."""
+    if config.has_key("HF_KEY"):
+        combined = config.get_key("HF_KEY")
+        if ":" not in combined:
+            raise config.MissingKey(
+                "HF_KEY should look like 'keyid:secret' (two parts joined by a colon). "
+                "Yours has no colon, so the secret part is missing. Create a new API key in the "
+                "Higgsfield console and copy the whole value."
+            )
+        key_id, secret = combined.split(":", 1)
+        return key_id.strip(), secret.strip()
+    return config.get_key("HF_API_KEY_ID"), config.get_key("HF_API_KEY_SECRET")
+
+
+def has_credentials():
+    try:
+        credentials()
+        return True
+    except config.MissingKey:
+        return False
+
+
 class Client:
     def __init__(self, key_id=None, secret=None, base=BASE, sleep=time.sleep):
-        self.key_id = key_id or config.get_key("HF_API_KEY_ID")
-        self.secret = secret or config.get_key("HF_API_KEY_SECRET")
+        if not (key_id and secret):
+            key_id, secret = credentials()
+        self.key_id = key_id
+        self.secret = secret
         self.base = base
         self.sleep = sleep
 
