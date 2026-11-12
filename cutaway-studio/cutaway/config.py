@@ -7,6 +7,14 @@ Keys are read from environment variables first, then from ~/.cutaway/keys.env
 import os
 from pathlib import Path
 
+# Prefer a full ffmpeg build (with caption support) if Homebrew's ffmpeg-full is
+# installed; it lives outside the normal PATH. CUTAWAY_FFMPEG_DIR overrides.
+for _dir in (os.environ.get("CUTAWAY_FFMPEG_DIR"), "/opt/homebrew/opt/ffmpeg-full/bin",
+             "/usr/local/opt/ffmpeg-full/bin"):
+    if _dir and Path(_dir, "ffmpeg").exists():
+        os.environ["PATH"] = _dir + os.pathsep + os.environ.get("PATH", "")
+        break
+
 STUDIO_DIR = Path(__file__).resolve().parent.parent
 PROJECTS_DIR = Path(os.environ.get("CUTAWAY_PROJECTS", STUDIO_DIR / "projects"))
 HOME_DIR = Path(os.environ.get("CUTAWAY_HOME", Path.home() / ".cutaway"))
