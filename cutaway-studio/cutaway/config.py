@@ -25,6 +25,7 @@ KEY_NAMES = (
     "HF_API_KEY_SECRET",
     "ELEVENLABS_API_KEY",
     "GEMINI_API_KEY",
+    "KIE_API_KEY",
 )
 
 # Defaults that a project's video.json can override.
@@ -33,6 +34,7 @@ DEFAULTS = {
     "flow_daily_limit": 20,           # replaced by the real number once Flow says "limit reached"
     "gemini_image_model": "gemini-3-pro-image-preview",
     "gemini_usd_per_image": 0.15,     # conservative planning figure; check current Gemini pricing
+    "kie_usd_per_image": 0.09,        # kie.ai Nano Banana Pro at 1K/2K (pricing page, Nov 2026)
     "caption_font": "Arial Black",
     "caption_size": 96,
     "caption_uppercase": True,

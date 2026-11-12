@@ -26,7 +26,7 @@ Keep checkpoint messages short (the viewer is often on their phone): decision fi
 
 ## Keys (one-time)
 Keys live in environment variables or `~/.cutaway/keys.env` (`HF_KEY=keyid:secret` or `HF_API_KEY_ID` + `HF_API_KEY_SECRET`,
-`ELEVENLABS_API_KEY`, optional `GEMINI_API_KEY`). Never ask for a key in chat and never print one.
+`ELEVENLABS_API_KEY`, optional `KIE_API_KEY` and `GEMINI_API_KEY`). Never ask for a key in chat and never print one.
 In a cloud session, use the credential form (request_credential) for api.higgsfield.ai and
 api.elevenlabs.io instead.
 
@@ -106,8 +106,11 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
   time.** Fetch finished images with `flow_download` (never regenerate because a download failed).
 - Then `python3 -m cutaway frames import <slug> <FRAME_ID> <downloaded file>` (counts the free use).
 - Free allowance is a daily limit (~20, learned automatically). If Flow says the limit is reached,
-  run `python3 -m cutaway quota limit-hit` and ask: "Wait until tomorrow (free) or make the rest
-  with Gemini (~$0.15 each)?" Paid route: `frames gemini <slug> <ID> --approve-usd 0.15`.
+  run `python3 -m cutaway quota limit-hit` and ask: "Wait until tomorrow (free), or make the
+  remaining N frames on kie.ai for about $0.09 each (~$X total)?" Paid routes, cheapest first:
+  1. `frames kie <slug> <ID> --approve-usd 0.09` (Nano Banana Pro on kie.ai; logs the real charge)
+  2. `frames gemini <slug> <ID> --approve-usd 0.15` (only if kie.ai is down or out of credits)
+  Paid frames count toward the video's $7 cap, so say the running total.
 - Schedule: make the next video's frames a day ahead so the daily limit never blocks a post.
 - **Check every frame before making the next** (look at it yourself at full size):
   1. nothing from its NOT BUILT YET list is visible anywhere (rails, motor, doors…);

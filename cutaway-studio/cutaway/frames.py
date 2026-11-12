@@ -106,6 +106,31 @@ def make_with_gemini(project, data, frame_id, approve_usd, gemini_mod=None):
     return dest
 
 
+def make_with_kie(project, data, frame_id, approve_usd, kie_mod=None, sleep=None):
+    """Cheapest paid fallback: Nano Banana Pro on kie.ai (~$0.09 at 2K). Logs the real charge."""
+    from . import config
+    from . import kie as k
+    kie_mod = kie_mod or k
+    frame = frame_map(data)[frame_id]
+    price = float(data.get("settings", {}).get("kie_usd_per_image", config.DEFAULTS["kie_usd_per_image"]))
+    ledger.guard(project, data, price, approve_usd)
+    refs = [project.frame_file(r) for r in frame.get("refs", [])]
+    if any(r is None for r in refs):
+        raise ValueError(f"Make {frame['refs']} first; they are references for {frame_id}.")
+    kwargs = {"sleep": sleep} if sleep else {}
+    img, usd, task = kie_mod.nano_banana_pro(prompt_for(data, frame), refs, **kwargs)
+    dest = project.path("frames", f"{frame_id}.png")
+    old = project.frame_file(frame_id)
+    if old and old != dest:
+        old.rename(old.with_name(f"{frame_id}.prev{old.suffix}"))
+    dest.write_bytes(img)
+    ledger.append(project, "spend", "kie", frame_id, usd or price, task_id=task)
+    state = project.load_state()
+    state["frames"][frame_id] = {"file": dest.name, "source": "kie:nano-banana-pro"}
+    project.save_state(state)
+    return dest
+
+
 def make_with_higgsfield(project, data, frame_id, approve_usd, client=None, model="qwen-edit"):
     from . import higgsfield as hf, http
     client = client or hf.Client()

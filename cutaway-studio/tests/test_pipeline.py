@@ -486,3 +486,83 @@ class V3PlanTests(unittest.TestCase):
             self.assertEqual([t["clip"]["id"] for t in todo], ["C03", "C04"])
         finally:
             http.transport = old
+
+
+class FakeKie:
+    def __init__(self, broke=False, fail=False):
+        self.calls, self.polls, self.broke, self.fail = [], 0, broke, fail
+        self.png = Path(tempfile.mkdtemp()) / "out.png"
+        _png(self.png, "0x22aa55")
+
+    def __call__(self, method, url, headers, body, timeout):
+        self.calls.append((method, url, headers, body))
+        js = lambda o: (200, {}, json.dumps(o).encode())  # noqa: E731
+        if url.endswith("/file-base64-upload"):
+            return js({"success": True, "code": 200, "data": {"downloadUrl": "https://tmp.kie.test/ref.png"}})
+        if url.endswith("/jobs/createTask"):
+            if self.broke:
+                return js({"code": 402, "msg": "Insufficient credits"})
+            return js({"code": 200, "data": {"taskId": "t1"}})
+        if "/jobs/recordInfo" in url:
+            self.polls += 1
+            if self.polls < 2:
+                return js({"code": 200, "data": {"state": "generating"}})
+            if self.fail:
+                return js({"code": 200, "data": {"state": "fail", "failMsg": "content policy", "creditsConsumed": 0}})
+            return js({"code": 200, "data": {"state": "success", "creditsConsumed": 18,
+                                             "resultJson": json.dumps({"resultUrls": ["https://tmp.kie.test/out.png"]})}})
+        if url == "https://tmp.kie.test/out.png":
+            assert "Authorization" not in headers, "kie key must not go to the image download host"
+            return 200, {}, self.png.read_bytes()
+        if url.endswith("/chat/credit"):
+            return js({"code": 200, "data": 1000})
+        raise AssertionError(f"unexpected {method} {url}")
+
+
+class KieTests(unittest.TestCase):
+    def setUp(self):
+        os.environ["KIE_API_KEY"] = "test-key"
+        self._old = http.transport
+
+    def tearDown(self):
+        http.transport = self._old
+        os.environ.pop("KIE_API_KEY", None)
+
+    def test_frame_via_kie_logs_real_charge_and_sends_refs(self):
+        fake = FakeKie()
+        http.transport = fake
+        p, d = make_project(V3)
+        _png(p.path("frames", "F01.png"))
+        with self.assertRaises(ledger.BudgetError):
+            frames.make_with_kie(p, d, "F02", approve_usd=None, sleep=lambda s: None)
+        dest = frames.make_with_kie(p, d, "F02", approve_usd=0.09, sleep=lambda s: None)
+        self.assertTrue(dest.exists())
+        self.assertAlmostEqual(ledger.spent(p), 0.09)                    # 18 credits x $0.005
+        task = json.loads(next(c[3] for c in fake.calls if c[1].endswith("/jobs/createTask")))
+        self.assertEqual(task["model"], "nano-banana-pro")
+        self.assertEqual(task["input"]["aspect_ratio"], "9:16")
+        self.assertEqual(task["input"]["image_input"], ["https://tmp.kie.test/ref.png"])
+        self.assertIn("NOT BUILT YET", task["input"]["prompt"])
+        self.assertEqual(p.load_state()["frames"]["F02"]["source"], "kie:nano-banana-pro")
+
+    def test_insufficient_credits_in_body_is_an_error(self):
+        http.transport = FakeKie(broke=True)
+        from cutaway import kie
+        p, d = make_project(V3)
+        with self.assertRaises(kie.KieError) as ctx:
+            frames.make_with_kie(p, d, "F01", approve_usd=0.09, sleep=lambda s: None)
+        self.assertIn("Insufficient credits", str(ctx.exception))
+        self.assertEqual(ledger.spent(p), 0.0)
+
+    def test_failed_image_is_not_charged(self):
+        http.transport = FakeKie(fail=True)
+        from cutaway import kie
+        p, d = make_project(V3)
+        with self.assertRaises(kie.KieError):
+            frames.make_with_kie(p, d, "F01", approve_usd=0.09, sleep=lambda s: None)
+        self.assertEqual(ledger.spent(p), 0.0)
+
+    def test_credit_balance(self):
+        http.transport = FakeKie()
+        from cutaway import kie
+        self.assertEqual(kie.credits(), 1000.0)

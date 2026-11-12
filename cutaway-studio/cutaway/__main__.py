@@ -111,6 +111,9 @@ def cmd_frames(p, args):
         dest = frm.import_frame(p, args.frame, Path(args.file).expanduser(), source=args.source)
         print(f"{args.frame} -> {dest}" + ("  (+1 Flow image today)" if args.source == "flow" else ""))
         return 0
+    if args.action == "kie":
+        print(frm.make_with_kie(p, data, args.frame, args.approve_usd))
+        return 0
     if args.action == "gemini":
         print(frm.make_with_gemini(p, data, args.frame, args.approve_usd))
         return 0
@@ -180,7 +183,7 @@ def run_checks(log=print):
         hf_found = False
         line(False, "Higgsfield key", "not set. Add HF_KEY=keyid:secret (or HF_API_KEY_ID and HF_API_KEY_SECRET)"
              if "HF_KEY should" not in str(e) else str(e))
-    for name, optional in (("ELEVENLABS_API_KEY", False), ("GEMINI_API_KEY", True)):
+    for name, optional in (("ELEVENLABS_API_KEY", False), ("KIE_API_KEY", True), ("GEMINI_API_KEY", True)):
         present = config.has_key(name)
         line(present or (None if optional else False), name, "found" if present else ("not set (optional)" if optional else "not set"))
 
@@ -211,6 +214,14 @@ def run_checks(log=print):
         except http.ApiError as e:
             line(False, "ElevenLabs", f"rejected ({e.status}): {e.detail}. If it mentions permissions, edit the "
                                       "key on elevenlabs.io and allow Text to Speech and Voices (read).")
+    if config.has_key("KIE_API_KEY"):
+        from . import kie
+        try:
+            bal = kie.credits()
+            line(True, "kie.ai", f"key accepted, {bal:,.0f} credits (~${bal * kie.USD_PER_CREDIT:.2f}, "
+                                 f"~{int(bal * kie.USD_PER_CREDIT / 0.09)} Nano Banana Pro images)")
+        except (http.ApiError, kie.KieError) as e:
+            line(False, "kie.ai", f"key rejected: {e}")
     if config.has_key("GEMINI_API_KEY"):
         try:
             http.request("GET", "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1",
@@ -260,7 +271,7 @@ def main(argv=None):
     sp = with_slug("timing", "clip lengths from the voice")
     sp.add_argument("--model")
     sp = sub.add_parser("frames", help="keyframes")
-    sp.add_argument("action", choices=["prompts", "import", "gemini", "higgsfield"])
+    sp.add_argument("action", choices=["prompts", "import", "kie", "gemini", "higgsfield"])
     sp.add_argument("slug")
     sp.add_argument("frame", nargs="?")
     sp.add_argument("file", nargs="?")

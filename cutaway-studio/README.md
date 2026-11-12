@@ -19,7 +19,8 @@ four approvals per video: script, voice, frames, spend.
    ```
    HF_KEY=keyid:secret       # Higgsfield: the whole value, two parts joined by a colon
    ELEVENLABS_API_KEY=...
-   GEMINI_API_KEY=...        # optional, paid fallback for keyframes
+   KIE_API_KEY=...           # optional, cheapest paid fallback for keyframes (~$0.09)
+   GEMINI_API_KEY=...        # optional, second paid fallback for keyframes
    ```
    (`HF_API_KEY_ID=...` + `HF_API_KEY_SECRET=...` on two lines also works.)
 3. Google Flow MCP connected in Claude (the same one Story Studio uses) for free keyframes.
@@ -36,7 +37,8 @@ four approvals per video: script, voice, frames, spend.
 | `python3 -m cutaway timing <slug>` | Clip lengths from the voice + planning cost | free |
 | `python3 -m cutaway frames prompts <slug>` | Prompts and reference files for Flow | free |
 | `python3 -m cutaway frames import <slug> F01 file.png` | Adds a Flow image to the project | free (counts toward the daily limit) |
-| `python3 -m cutaway frames gemini <slug> F05 --approve-usd 0.15` | Paid fallback frame | ~$0.15 (check pricing) |
+| `python3 -m cutaway frames kie <slug> F05 --approve-usd 0.09` | Paid fallback frame (Nano Banana Pro on kie.ai) | ~$0.09 |
+| `python3 -m cutaway frames gemini <slug> F05 --approve-usd 0.15` | Second paid fallback frame | ~$0.15 (check pricing) |
 | `python3 -m cutaway assemble <slug> --draft` | Whole video from stills (preview) | free |
 | `python3 -m cutaway clips estimate <slug>` | Exact Higgsfield cost for the remaining clips | free |
 | `python3 -m cutaway clips estimate <slug> --next 2` | Cost of just the next 2 clips | free |
