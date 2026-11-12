@@ -289,3 +289,38 @@ class FramesTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CheckTests(unittest.TestCase):
+    def test_check_reports_key_status_without_spending(self):
+        from cutaway.__main__ import run_checks
+        calls = []
+
+        def fake(method, url, headers, body, timeout):
+            calls.append((method, url))
+            if "higgsfield" in url:
+                return 404, {}, b'{"detail": "Request not found"}'
+            if "elevenlabs" in url:
+                return 200, {}, json.dumps({"tier": "starter", "character_limit": 30000,
+                                            "character_count": 1000}).encode()
+            return 200, {}, b"{}"
+
+        old, http.transport = http.transport, fake
+        env = {"HF_API_KEY_ID": "a", "HF_API_KEY_SECRET": "b", "ELEVENLABS_API_KEY": "c"}
+        saved = {k: os.environ.get(k) for k in env}
+        os.environ.update(env)
+        out = []
+        try:
+            good = run_checks(log=out.append)
+        finally:
+            http.transport = old
+            for k, v in saved.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
+        text = "\n".join(out)
+        self.assertIn("Higgsfield: key accepted", text)
+        self.assertIn("29,000 characters left", text)
+        self.assertTrue(all(m == "GET" for m, _ in calls))   # only free reads
+        self.assertEqual(good, HAS_FFMPEG)

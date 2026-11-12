@@ -141,6 +141,66 @@ def cmd_assemble(p, args):
     return 0
 
 
+def run_checks(log=print):
+    """Free checks: tools installed and every key accepted. Spends nothing."""
+    import shutil
+    import uuid
+    from . import config, http
+    ok = True
+
+    def line(good, name, msg):
+        nonlocal ok
+        ok = ok and good is not False
+        mark = "OK  " if good else ("--  " if good is None else "FAIL")
+        log(f"[{mark}] {name}: {msg}")
+
+    v = sys.version_info
+    line(v >= (3, 10), "Python", f"{v.major}.{v.minor}" + ("" if v >= (3, 10) else " (need 3.10+: brew install python)"))
+    line(bool(shutil.which("ffmpeg")), "ffmpeg", "installed" if shutil.which("ffmpeg") else "missing: brew install ffmpeg")
+    for name in config.KEY_NAMES:
+        optional = name == "GEMINI_API_KEY"
+        present = config.has_key(name)
+        line(present or (None if optional else False), name, "found" if present else ("not set (optional)" if optional else "not set"))
+
+    if config.has_key("HF_API_KEY_ID") and config.has_key("HF_API_KEY_SECRET"):
+        try:
+            c = hf.Client()
+            http.request("GET", f"{hf.BASE}/requests/{uuid.uuid4()}/status", headers=c._auth(), retries=1)
+            line(True, "Higgsfield", "key accepted")
+        except http.ApiError as e:
+            if e.status == 404:
+                line(True, "Higgsfield", "key accepted")
+            elif e.status == 401:
+                line(False, "Higgsfield", "key ID or secret rejected (401). Re-copy both from the console.")
+            else:
+                line(False, "Higgsfield", f"unexpected reply {e.status}: {e.detail}")
+    if config.has_key("ELEVENLABS_API_KEY"):
+        try:
+            sub = http.request_json("GET", "https://api.elevenlabs.io/v1/user/subscription",
+                                    headers={"xi-api-key": config.get_key("ELEVENLABS_API_KEY")}, retries=1)
+            left = sub.get("character_limit", 0) - sub.get("character_count", 0)
+            line(True, "ElevenLabs", f"key accepted, plan '{sub.get('tier')}', {left:,} characters left "
+                                     f"(~{left // 1700} videos)")
+        except http.ApiError as e:
+            if e.status == 401:
+                line(False, "ElevenLabs", "key rejected (401). Re-copy it from your ElevenLabs profile.")
+            else:
+                line(None, "ElevenLabs", f"couldn't read plan ({e.status}); the key may lack 'user' permission")
+    if config.has_key("GEMINI_API_KEY"):
+        try:
+            http.request("GET", "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1",
+                         headers={"x-goog-api-key": config.get_key("GEMINI_API_KEY")}, retries=1)
+            line(True, "Gemini", "key accepted")
+        except http.ApiError as e:
+            line(False, "Gemini", f"key rejected ({e.status})")
+    log("\nAll set." if ok else "\nFix the FAIL lines above, then run check again.")
+    return ok
+
+
+def cmd_check(args):
+    return 0 if run_checks() else 1
+
+
 def cmd_quota(args):
     if args.action == "add":
         quota.add(args.n)
@@ -168,6 +228,7 @@ def main(argv=None):
     with_slug("status", "where a video is up to")
     with_slug("ledger", "costs so far")
     sub.add_parser("voices", help="list ElevenLabs voices")
+    sub.add_parser("check", help="free check that tools and keys work (spends nothing)")
     sp = with_slug("voice", "make the voiceover with word timings")
     sp.add_argument("--voice-id")
     sp.add_argument("--force", action="store_true")
@@ -197,6 +258,8 @@ def main(argv=None):
     try:
         if args.cmd == "voices":
             return cmd_voices(args)
+        if args.cmd == "check":
+            return cmd_check(args)
         if args.cmd == "quota":
             return cmd_quota(args)
         p = Project(args.slug)

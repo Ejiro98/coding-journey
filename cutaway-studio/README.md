@@ -23,7 +23,8 @@ four approvals per video: script, voice, frames, spend.
    GEMINI_API_KEY=...        # optional, paid fallback for keyframes
    ```
 3. Google Flow MCP connected in Claude (the same one Story Studio uses) for free keyframes.
-4. Check: `cd cutaway-studio && python3 -m unittest discover -s tests` (offline, costs nothing).
+4. Check: `cd cutaway-studio && python3 -m unittest discover -s tests` (offline, costs nothing),
+   then `python3 -m cutaway check` (confirms ffmpeg and that every key is accepted; spends nothing).
 
 ## Commands
 | Command | What it does | Costs |
