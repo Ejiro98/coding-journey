@@ -741,7 +741,7 @@ class SeedanceSafetyTests(unittest.TestCase):
 class PerClipModelTests(unittest.TestCase):
     def test_clip_model_overrides_video_model(self):
         d = copy.deepcopy(LF)
-        d["clips"][7]["model"] = "seedance25"
+        next(c for c in d["clips"] if c["id"] == "C08")["model"] = "seedance25"
         p, d = make_project(d)
         for fid in ("L01", "L02", "L03", "L04", "L05", "L06"):
             _png(p.path("frames", f"{fid}.png"))
@@ -761,3 +761,15 @@ class CentsUpTests(unittest.TestCase):
         self.assertEqual(ledger.cents_up(0.6000000001), 0.6)
         p, d = make_project()
         self.assertTrue(ledger.guard(p, d, 1.234, ledger.cents_up(1.234)))
+
+
+class PlainWordsTests(unittest.TestCase):
+    def test_uncommon_words_are_flagged(self):
+        d = copy.deepcopy(LF)
+        d["lines"][2]["text"] = "And it seeps down toward the water people drink."
+        self.assertIn("'seeps' isn't an everyday word", lint.format_report(lint.check(d)))
+
+    def test_landfill_stays_in_one_hole(self):
+        text = json.dumps(LF)
+        self.assertNotIn("next hole", text)
+        self.assertNotIn("second pit", text)

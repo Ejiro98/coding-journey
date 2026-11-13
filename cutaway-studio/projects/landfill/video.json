@@ -42,17 +42,17 @@
     {
       "id": "2",
       "role": "PROBLEM",
-      "text": "But as soon as it rains, water soaks through the garbage and leaks out the bottom as a black, toxic juice."
+      "text": "But as soon as it rains, water soaks through the garbage and turns into a black, toxic juice."
     },
     {
       "id": "3",
-      "role": "PROBLEM",
-      "text": "And it seeps down toward the water people drink."
+      "role": "CONSEQUENCE",
+      "text": "It drips out the bottom and soaks into the ground, right into the water people drink."
     },
     {
       "id": "4",
       "role": "FIX",
-      "text": "So in the next hole, line the floor and walls with thick clay and a heavy plastic sheet."
+      "text": "So scoop the trash back out, and line the hole with thick clay and a heavy plastic sheet."
     },
     {
       "id": "5",
@@ -62,7 +62,7 @@
     {
       "id": "6",
       "role": "RESULT + NAME",
-      "text": "Now the juice drips into the pipes and gets pumped away to be cleaned. It's called leachate."
+      "text": "Now, when the trash goes back in, the juice drips into the pipes and gets pumped away to be cleaned. It's called leachate."
     },
     {
       "id": "7",
@@ -132,7 +132,7 @@
         "plastic sheet"
       ],
       "built_in": "4",
-      "looks": "a clay layer and black plastic liner in the second pit"
+      "looks": "a clay layer and black plastic liner in the pit"
     },
     "drainage": {
       "aliases": [
@@ -140,7 +140,7 @@
         "pipes full of holes"
       ],
       "built_in": "5",
-      "looks": "a gravel layer with perforated drainage pipes at the bottom of the second pit"
+      "looks": "a gravel layer with perforated drainage pipes at the bottom of the pit"
     },
     "daily cover": {
       "aliases": [
@@ -182,7 +182,7 @@
   "frames": [
     {
       "id": "L01",
-      "view": "pit-A",
+      "view": "pit",
       "zoom": 1,
       "state": "1",
       "wide": true,
@@ -191,19 +191,18 @@
     },
     {
       "id": "L02",
-      "view": "pit-B",
+      "view": "pit",
       "zoom": 1,
       "state": "4",
       "wide": true,
       "refs": [
         "L01"
       ],
-      "camera": "it has panned to the right to centre on a second, freshly dug pit beside the first, which is now partly visible at the left edge",
-      "shows": "The second pit is empty, and its floor and walls are covered with a grey clay layer and a black heavy plastic sheet."
+      "shows": "The same pit is now empty: the trash has been scooped out, and the pit's floor and walls are covered with a grey clay layer and a black heavy plastic sheet. The garbage truck is gone."
     },
     {
       "id": "L03",
-      "view": "pit-B",
+      "view": "pit",
       "zoom": 1,
       "state": "5",
       "wide": true,
@@ -215,18 +214,18 @@
     },
     {
       "id": "L04",
-      "view": "pit-B-bottom",
+      "view": "pit-bottom",
       "zoom": 2,
       "state": "6",
       "refs": [
         "L03"
       ],
-      "camera": "it has moved down and about twice as close to the bottom of the second pit",
+      "camera": "it has moved down and about twice as close to the bottom of the pit, with the pipes still running left to right exactly as before",
       "shows": "Trash now fills the lower part of the lined pit. Dark liquid trickles down through the trash into the gravel and into the holes of a white drainage pipe, flowing away along it."
     },
     {
       "id": "L05",
-      "view": "pit-B",
+      "view": "pit",
       "zoom": 1,
       "state": "6",
       "wide": true,
@@ -234,11 +233,11 @@
         "L03",
         "L01"
       ],
-      "shows": "The lined second pit is one third full of loose trash. Plastic bags are blowing up out of it toward the houses, and a flock of seagulls circles and lands on the trash."
+      "shows": "The lined pit is one third full of loose trash. Plastic bags are blowing up out of it toward the houses, and a flock of seagulls circles and lands on the trash."
     },
     {
       "id": "L06",
-      "view": "pit-B",
+      "view": "pit",
       "zoom": 1,
       "state": "8",
       "wide": true,
@@ -250,7 +249,7 @@
     },
     {
       "id": "L07",
-      "view": "pit-B",
+      "view": "pit",
       "zoom": 1,
       "state": "11",
       "wide": true,
@@ -262,7 +261,7 @@
     },
     {
       "id": "L08",
-      "view": "pit-B",
+      "view": "pit",
       "zoom": 1,
       "state": "12",
       "wide": true,
@@ -274,7 +273,7 @@
     },
     {
       "id": "L09",
-      "view": "pit-B",
+      "view": "pit",
       "zoom": 1,
       "state": "14",
       "wide": true,
@@ -325,7 +324,7 @@
       ],
       "from": "L01",
       "to": null,
-      "motion": "The dark liquid slowly spreads down through the soil until it reaches the blue groundwater band."
+      "motion": "Dark liquid drips out of the bottom of the trash and soaks down through the soil until it reaches the blue groundwater band."
     },
     {
       "id": "C04",
@@ -333,9 +332,18 @@
         "4"
       ],
       "from": "L01",
+      "to": null,
+      "motion": "An excavator scoops the trash back out of the pit and loads it into trucks until the pit is empty."
+    },
+    {
+      "id": "C04b",
+      "lines": [
+        "4"
+      ],
+      "cue": "hole",
+      "from": "L01",
       "to": "L02",
-      "move": "pan",
-      "motion": "The camera pans right to a second, empty pit, where a grey clay layer and a black plastic sheet are spread over its floor and walls."
+      "motion": "A grey clay layer and then a black plastic sheet are spread over the empty pit's floor and walls."
     },
     {
       "id": "C05",
@@ -352,9 +360,19 @@
         "6"
       ],
       "from": "L03",
+      "to": null,
+      "motion": "Trucks tip the trash back into the lined pit on top of the gravel and pipes."
+    },
+    {
+      "id": "C06b",
+      "lines": [
+        "6"
+      ],
+      "cue": "juice",
+      "from": "L03",
       "to": "L04",
       "move": "dolly-in",
-      "motion": "Trucks dump trash into the lined pit while the camera moves down closer; dark liquid trickles through the gravel into the pipe holes and flows away."
+      "motion": "The camera moves down closer as dark liquid trickles through the gravel into the pipe holes and flows away along the pipes."
     },
     {
       "id": "C07",

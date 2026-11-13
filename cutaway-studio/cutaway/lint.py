@@ -17,6 +17,15 @@ REGIONAL = {
     "flat": None,  # too common as an adjective to flag automatically
     "bin": None,
 }
+# Words most viewers don't use day to day; their scripts say leaks, drips, runs, soaks.
+UNCOMMON = {
+    "seep": "say 'leak', 'drip' or 'soak'", "seeps": "say 'leaks', 'drips' or 'soaks'",
+    "seeping": "say 'leaking' or 'soaking'", "percolate": "say 'soak through'",
+    "percolates": "say 'soaks through'", "aquifer": "say 'the water underground'",
+    "subterranean": "say 'underground'", "utilize": "say 'use'", "commence": "say 'start'",
+    "approximately": "say 'about'", "facilitate": "say 'help'",
+}
+
 REGIONAL_PHRASES = {
     r"\b(a|the) lift\b": "say 'elevator' (understood everywhere; 'lift' confuses US viewers)",
     r"\bgas station\b": "fine for the US; UK says petrol station. OK if the caption covers both",
@@ -113,6 +122,9 @@ def check(data):
     for word, advice in REGIONAL.items():
         if advice and f" {word} " in norm:
             warn(f"'{word}': {advice}")
+    for word, advice in UNCOMMON.items():
+        if f" {word} " in norm:
+            warn(f"'{word}' isn't an everyday word: {advice}")
     for pattern, advice in REGIONAL_PHRASES.items():
         if re.search(pattern, text.lower()):
             warn(f"'{re.search(pattern, text.lower()).group(0)}': {advice}")
