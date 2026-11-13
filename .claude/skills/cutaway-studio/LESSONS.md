@@ -180,6 +180,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Landfill C01 try 2 ($0.34): with the hold clip ending on its own start still, Kling froze the picture: the trash
   stream hung in mid-air for 4.5 s → a hold clip that ends on its start still needs motion that LOOPS back to the
   same picture (falling trash replaced by more falling trash, birds circling, dust drifting), stated as continuous.
+- Landfill C02 (2 tries, $0.68): the clip had to start mid-dump (C01's end still, truck tipped) and end on L01r,
+  where the truck has gone, while the motion said "the truck doesn't move". Kling spent the first ~2 s finishing the
+  dump and driving the truck off, so the rain started 2-3 s after its cue word → the end still may differ from the
+  start still ONLY in what the motion describes. Check every pair of stills a clip joins for extra differences
+  (vehicles, weather, objects) before paying for it.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
