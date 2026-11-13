@@ -189,6 +189,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   pouring in over the rim from outside → the stills lesson holds for clips too: describe liquid as a colour change
   spreading through something already there ("the trash darkens from the bottom up; the dark patch at the bottom
   turns glossy") and say "nothing pours, nothing flows over the ground or down the walls".
+- Landfill C02 try 4 ($0.34): the black waterfall came back in the same back-right spot even with "nothing pours".
+  Cause: the end still L01r had been redrawn (heap moved right, right wall reshaped) when it was made from L01, so the
+  clip had to move the trash and reshape the pit as well as add rain, and the model filled the gap with a stream →
+  before paying for a clip, overlay its start and end stills: everything except the motion's change must line up.
+  When a new start still is needed for a cut, make it FROM the end still (remove the change), not from an older still.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
