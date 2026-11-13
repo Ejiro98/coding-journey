@@ -47,6 +47,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   dark") that image models can't draw reliably, and one try leaked liquid below the pit early →
   ask only for things a viewer can point at ("black liquid collected at the bottom, under the trash"); put one change in each
   still and save the next change for the next still (the leak belongs in L01g).
+- Landfill L03b try 2 (kie.ai): adding five sentences of fixes made the edit drift (camera moved, groundwater band and
+  bulldozer vanished, juice leaked through the liner) → keep fixes to one or two short sentences per failed answer;
+  on kie.ai, attach the single closest reference first.
+- Landfill (kie.ai): each remake overwrote the previous try (same filename), so failed tries had to be fetched back from
+  kie.ai by task id → keep every try (tries/<ID>_tryN) until the still passes.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
