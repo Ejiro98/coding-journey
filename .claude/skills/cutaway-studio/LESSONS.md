@@ -119,6 +119,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   and the model never covered the strip next to the cut face → one change per still even inside one
   line (L09a clay+sheet, L09 soil dome; `not_yet` keeps the soil out of L09a), and say the cut slices
   through the new layer "like icing on a slice of cake" so it reaches the front edge.
+- Landfill L09a (3 tries on kie.ai, $0.27): the reviewer failed every try on the automatic continuity questions for
+  things the plan removes on purpose (the drilling rig leaves, the rain stops) → the continuity question should list
+  what is meant to go ("…except the rig and the rain, which leave in this still"), or every try fails for nothing.
+  Also: the drain pipe's holes turn into text-like squiggles on kie.ai (L08, L08b, L09, L09a) and are then copied into
+  every later still → catch it in the first still where it appears.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
