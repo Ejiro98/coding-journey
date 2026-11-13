@@ -364,6 +364,17 @@ class AssembleTests(unittest.TestCase):
         dest, _ = clips.trim(p, d, "C01", None, 1.5)                 # cut the start of the original
         self.assertAlmostEqual(assemble.probe_duration(dest), 3.5, delta=0.15)
 
+    def test_pair_sheet_shows_start_end_and_difference(self):
+        p, d = make_project()
+        _png(p.path("frames", "F01.png"), "0x2244cc")
+        _png(p.path("frames", "F02.png"), "0xcc4422")
+        cid = next(c["id"] for c in d["clips"] if c.get("to") == "F02")
+        out, source = clips.pair_sheet(p, d, cid)
+        self.assertTrue(out.exists())
+        w = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width",
+                            "-of", "csv=p=0", str(out)], capture_output=True, text=True).stdout.strip()
+        self.assertEqual(w, "1620")          # three 540-wide panels
+
     def test_caption_words_are_cleaned(self):
         ass = assemble.captions_ass([{"w": "rope,", "s": 0, "e": 0.3}, {"w": "snaps?", "s": 0.3, "e": 0.6}],
                                     1080, 1920, "Arial", 96)

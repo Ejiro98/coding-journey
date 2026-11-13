@@ -310,3 +310,31 @@ def trim(project, data, clip_id, end_s=None, start_s=0.0):
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(keep), *span, "-an",
                     "-c:v", "libx264", "-pix_fmt", "yuv420p", str(src)], check=True)
     return src, beat
+
+
+def pair_sheet(project, data, clip_id, w=540, h=960):
+    """FREE check BEFORE paying for a clip: its start picture, its end picture, and a boosted
+    difference of the two side by side. Bright areas in the difference are everything the model
+    must change. If anything is bright that the motion doesn't describe (a redrawn wall, a moved
+    heap, a vanished truck), fix the stills first: the model fills such gaps with invented action
+    (landfill C02: four failed clips from a redrawn pit wall)."""
+    clips = data["clips"]
+    idx = [c["id"] for c in clips].index(clip_id)
+    clip = clips[idx]
+    start, source = _start_image(project, data, clips, idx)
+    if start is None:   # previous clip not made yet: its end still is the best stand-in
+        prev = clips[idx - 1]
+        start = project.frame_file(prev.get("to") or prev["from"])
+        source = f"end still of {prev['id']} (clip not made yet)"
+    end = project.frame_file(clip["to"]) if clip.get("to") else (
+        project.frame_file(clip["from"]) if clip.get("hold") else None)
+    if not start or not end:
+        raise ValueError(f"{clip_id}: start or end picture missing.")
+    out = project.path("build", "review", f"{clip_id}_pair.png")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fit = f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},format=rgb24"
+    graph = (f"[0:v]{fit},split[a][a2];[1:v]{fit},split[b][b2];"
+             f"[a2][b2]blend=all_mode=difference,eq=contrast=4:brightness=0.1[d];[a][b][d]hstack=inputs=3")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(start), "-i", str(end), "-filter_complex", graph,
+                    "-frames:v", "1", str(out)], check=True)
+    return out, source

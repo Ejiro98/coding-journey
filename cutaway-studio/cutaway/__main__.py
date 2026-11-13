@@ -184,6 +184,20 @@ def cmd_clips(p, args):
                 print(f"  {i}. {q}")
             print()
         return 0
+    if args.action == "precheck":
+        ids = [c.strip() for c in (args.only or "").split(",") if c.strip()]
+        if not ids:
+            print("Usage: clips precheck <slug> --only C02,C03   (free, before paying)")
+            return 2
+        by = {c["id"]: c for c in data["clips"]}
+        for cid in ids:
+            out, source = clp.pair_sheet(p, data, cid)
+            print(f"== {cid}: start ({source}) | end | difference -> {out}")
+            print(f"   Motion: {by[cid]['motion']}")
+            print("   A NEW reviewer looks at the difference panel: is EVERY bright area something the motion")
+            print("   describes? Anything else (a redrawn wall, moved heap, vanished or new object, a camera shift)")
+            print("   = fix the stills before paying for this clip.\n")
+        return 0
     if args.action == "trim":
         if not (args.only and (args.end or args.start)):
             print("Usage: clips trim <slug> --only C01 [--start 1.5] [--end 3.2]   (free)")
@@ -374,7 +388,7 @@ def main(argv=None):
     sp.add_argument("--fix", help="repair: the ONE thing to change in the try image")
     sp.add_argument("--reviewed", action="store_true", help="the still passed `frames check` by a separate reviewer")
     sp = sub.add_parser("clips", help="Higgsfield clips")
-    sp.add_argument("action", choices=["estimate", "run", "check", "trim"])
+    sp.add_argument("action", choices=["estimate", "run", "check", "trim", "precheck"])
     sp.add_argument("slug")
     sp.add_argument("--model", choices=sorted(hf.VIDEO_MODELS))
     sp.add_argument("--only", help="comma-separated clip ids, e.g. C01,C02")

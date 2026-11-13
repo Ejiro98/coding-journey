@@ -227,6 +227,11 @@ on Seedance 2.0 and ~$19 on Seedance 2.5. Under the $7 cap only Kling O3 or Wan 
 Seedance needs the viewer to raise the cap first. `timing` prices at the project's resolution and
 at the rate actually charged; `clips estimate` is always the real number.
 Then repeat until all clips are made:
+0. **Free precheck before paying:** `python3 -m cutaway clips precheck <slug> --only C05,C06` puts each clip's
+   start picture, end picture and their difference side by side. A NEW reviewer checks that every bright
+   area in the difference is something the motion describes; anything else (a redrawn wall, a moved
+   heap, an object appearing) means fix the stills first. The model fills such gaps with invented action.
+   A cut's start still is made FROM its end still (only the change removed), so they match.
 1. `python3 -m cutaway clips estimate <slug> --next 2` → tell the viewer the amount → on "yes":
 2. `python3 -m cutaway clips run <slug> --next 2 --approve-usd <AMOUNT>`
 3. **Each clip is reviewed by a separate reviewer before the next pair is paid for.**

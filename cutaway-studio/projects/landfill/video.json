@@ -223,13 +223,14 @@
       "state": "1",
       "wide": true,
       "refs": [
-        "L01"
+        "L01r"
       ],
-      "shows": "Exactly the same scene as the reference, a little later: the garbage truck has gone, and no trash is falling. The trash in the pit is the same. Same sunny sky, town, camera, soil and blue band.",
+      "shows": "Exactly the same picture as the reference (same pit walls, same trash heap in the same place, same camera, town, soil and blue band), but dry and a little earlier: a sunny blue sky with white clouds, no rain, and no black liquid on the pit floor; the bottom of the trash is its normal colours.",
       "checks": [
-        "Has the truck gone, with no trash falling?",
-        "Is everything else identical to L01: same pit, same trash, same town, sky, camera, soil and blue band?",
-        "MUST BE NO: is there any rain, liquid, or anything in the soil or the blue band?",
+        "Is it sunny with no rain, and no black liquid on the pit floor?",
+        "Put it next to L01r: are the pit walls and the trash heap EXACTLY the same shape and place?",
+        "Is there no truck at the rim (as in L01r)?",
+        "MUST BE NO: is there any liquid, or anything in the soil or the blue band?",
         "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
       ],
       "line_part": "(a moment later: the dump is done and the truck has left)"
