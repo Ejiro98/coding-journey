@@ -155,14 +155,14 @@
         "drill"
       ],
       "built_in": "11",
-      "looks": "four vertical gas pipes drilled down into the trash (stopping above the gravel), each sticking up only knee-high above the surface, all four joined by one horizontal pipe lying on the surface"
+      "looks": "four short white gas pipe stubs, knee-high, on the soil top, joined by one white pipe lying flat on the soil that runs to the LEFT side of the pit (never to the right-hand pump box)"
     },
     "engines": {
       "aliases": [
         "engines"
       ],
       "built_in": "12",
-      "looks": "a small engine building with a chimney and power lines beside the pit"
+      "looks": "a small engine building with a chimney at the pit's LEFT edge, with power lines to the houses"
     },
     "cap": {
       "aliases": [
@@ -343,7 +343,7 @@
         "L06",
         "L01"
       ],
-      "shows": "Same pit, same fill level and same smooth brown soil top as before; the bulldozer has gone. Added: four white gas pipes drilled straight down through the soil into the trash, in a row from left to right. Each pipe stops inside the trash, well above the gravel, and sticks up only knee-high above the soil. One horizontal white pipe lies on top of the soil and connects to the top of ALL FOUR pipes, the leftmost included, then runs to the right edge of the pit. In the cut-away, the pipes are seen going down through the layers of trash and soil. Clean sharp image, same quality as the reference. The small yellow drilling rig that drilled them is parked at the back-left rim.",
+      "shows": "Same pit, same fill level and same smooth brown soil top as the reference, with the same tall black liner wall showing above the soil; the bulldozer has gone. Added on the soil top only: four short white pipe stubs, each knee-high, standing in a row across the middle of the soil top, and one white pipe lying flat on the soil that joins the top of all four and runs to the LEFT rim and stops there, capped (nothing at the right side is connected to it). The cut-away face and everything else stay exactly as in the reference. Clean sharp image. The small yellow drilling rig that drilled them is parked outside the pit at the middle of the back rim.",
       "checks": [
         "Count the vertical white pipes: exactly four?",
         "Does the horizontal pipe touch the top of EVERY one of the four, including the leftmost?",
@@ -353,7 +353,8 @@
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
         "MUST BE NO: is the bulldozer still there?",
         "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
-        "Is a small yellow drilling rig parked at the back-left rim (outside the pit)?"
+        "Is a small yellow drilling rig parked at the middle of the back rim (outside the pit)?",
+        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
       ]
     },
     {
@@ -366,15 +367,16 @@
         "L07",
         "L01"
       ],
-      "shows": "Everything as before (pit half full, smooth soil top, the four vertical gas pipes and the horizontal pipe). Added: at the right edge of the pit, a small grey engine building with a short chimney, connected to the horizontal gas pipe, and a line of power poles with wires running from it toward the houses. The small yellow drilling rig is still parked at the back-left rim.",
+      "shows": "Everything as before (same fill level, smooth soil top, the four knee-high gas pipe stubs and the pipe joining them). Added: just outside the pit's LEFT edge, a small grey engine building with a short chimney, which the gas pipe runs into, and a line of power poles with wires running from it to the houses. The green pump box and its riser at the back-right corner stay separate and unchanged. The small yellow drilling rig is still parked at the middle of the back rim.",
       "checks": [
-        "Is there a small grey engine building with a short chimney at the right edge of the pit?",
+        "Is there a small grey engine building with a short chimney at the LEFT edge of the pit?",
         "Does the horizontal gas pipe run into the engine building?",
         "Do power poles and wires run from the engine building toward the houses?",
         "Are the four knee-high gas pipes and the fill level exactly as in L07?",
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
         "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
-        "Is the drilling rig still parked at the back-left rim, unchanged from L07?"
+        "Is the drilling rig still parked at the middle of the back rim, unchanged from L07?",
+        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
       ]
     },
     {
@@ -387,7 +389,7 @@
         "L08",
         "L01"
       ],
-      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the right edge, with its power lines to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top. The drilling rig has gone.",
+      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the LEFT edge, with its power lines to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top. The drilling rig has gone.",
       "checks": [
         "Is the pit filled right up to the rim, the soil top level with the ground around it?",
         "Is rain falling, with dark wet streaks soaking down into the top layers in the cut-away?",
@@ -396,7 +398,8 @@
         "Are the engine building, chimney and power lines still there, unchanged?",
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
         "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
-        "MUST BE NO: is the drilling rig still there?"
+        "MUST BE NO: is the drilling rig still there?",
+        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
       ]
     },
     {
@@ -409,7 +412,7 @@
         "L08b",
         "L01"
       ],
-      "shows": "The pit is now full to the rim and rounded into a low mound. It is sealed on top, and the cross-section shows the cap clearly from bottom to top: a grey-brown clay layer, a black plastic sheet, then a thick layer of brown soil. The four gas pipes now reach up through the cap and end in short pipe heads on the surface, still joined to the engine building at the right edge, with its power lines to the town. The layers of trash and soil and the liner and gravel at the bottom are still visible in the cross-section.",
+      "shows": "The pit is now full to the rim and rounded into a low mound. It is sealed on top, and the cross-section shows the cap clearly from bottom to top: a grey-brown clay layer, a black plastic sheet, then a thick layer of brown soil. The four gas pipes now reach up through the cap and end in short pipe heads on the surface, still joined to the engine building at the LEFT edge, with its power lines to the town. The layers of trash and soil and the liner and gravel at the bottom are still visible in the cross-section.",
       "checks": [
         "Is the top a low rounded mound (not a tall hill or a pyramid)?",
         "In the cut-away at the top, from the bottom up: grey-brown clay, a black plastic sheet, a thick brown soil layer?",
@@ -418,7 +421,8 @@
         "Is the whole buried stack still visible below: trash and soil layers, liner, gravel and pipe?",
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
         "MUST BE NO: is it raining, or is there any grass yet?",
-        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?"
+        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
+        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
       ]
     },
     {
@@ -432,14 +436,15 @@
         "L01"
       ],
       "camera": "it has pulled back to show the whole mound and more of the town around it",
-      "shows": "The mound is now a green park hill with grass, winding paths, wooden benches and a few young trees. An open gate at the front edge lets people in; people walk dogs and jog on the hill. The short gas pipe heads still poke out of the grass, and the small engine building with its power lines is still at the right edge. The cross-section below the hill still shows the cap, the layers of trash and soil, and the liner and gravel at the bottom.",
+      "shows": "The mound is now a green park hill with grass, winding paths, wooden benches and a few young trees. An open gate at the front edge lets people in; people walk dogs and jog on the hill. The short gas pipe heads still poke out of the grass, and the small engine building with its power lines is still at the LEFT edge. The cross-section below the hill still shows the cap, the layers of trash and soil, and the liner and gravel at the bottom.",
       "checks": [
         "Is the mound now a green grassy hill with paths, benches and a few young trees?",
         "Is there an open gate at the front with people walking in, and people walking dogs or jogging on the hill?",
         "Do the short gas pipe heads still poke out of the grass?",
-        "Are the engine building and its power lines still at the right edge?",
+        "Are the engine building and its power lines still at the LEFT edge?",
         "In the cut-away under the hill: the cap layers, the trash and soil layers, the liner and gravel still visible?",
-        "Is it the same town (same houses, road and fields), just seen from further back?"
+        "Is it the same town (same houses, road and fields), just seen from further back?",
+        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
       ]
     }
   ],
@@ -570,7 +575,7 @@
       ],
       "from": "L06",
       "to": "L07",
-      "motion": "A small yellow drilling rig drives in from the back-left rim, drills four holes down into the trash, and white pipes are lowered into them; a pipe laid along the soil joins all four tops. The rig stops at the back-left rim.",
+      "motion": "A small drilling rig drives up to the back rim and drills four holes into the trash; white pipes are lowered in, and a pipe on the soil joins their tops and runs to the left rim.",
       "model": "seedance25"
     },
     {
@@ -580,7 +585,7 @@
       ],
       "from": "L07",
       "to": "L08",
-      "motion": "A small engine building is set at the edge of the pit, the gas pipe connects to it, and a little exhaust rises from its chimney."
+      "motion": "A small engine building is set just outside the pit's left edge, the gas pipe connects to it, and a little exhaust rises from its chimney."
     },
     {
       "id": "C13",
