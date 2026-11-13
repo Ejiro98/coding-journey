@@ -7,6 +7,7 @@ Paid fallbacks (Gemini API, Higgsfield image edit) go through the budget guard.
 """
 
 import shutil
+from pathlib import Path
 
 from . import ledger, quota
 from .project import frame_map
@@ -109,8 +110,10 @@ def checklist(data, frame):
             qs.append(f"Has the camera moved exactly as described ({frame.get('camera', 'closer')}), with every "
                       f"object, colour and direction unchanged from {ref.get('id')}?")
         else:
+            gone = frame.get("removes") or []
+            meant = (" (except these, which are MEANT to go in this still: " + "; ".join(gone) + ")") if gone else ""
             qs.append(f"Put it next to {frame['refs'][0]}: same camera angle, same houses, road, fields and pit "
-                      f"shape, and nothing that was there before has gone or moved?")
+                      f"shape, and nothing that was there before has gone or moved{meant}?")
     if data.get("rules"):
         qs.append("MUST BE NO: does anything break these rules: " + " ".join(data["rules"]))
     qs.append(f"Is it as sharp and clean as {first} (not grainy, blurry or smeared), with no text or labels?")
@@ -196,6 +199,38 @@ def make_with_kie(project, data, frame_id, approve_usd, kie_mod=None, sleep=None
     ledger.append(project, "spend", "kie", frame_id, usd or price, task_id=task)
     state = project.load_state()
     state["frames"][frame_id] = {"file": dest.name, "source": "kie:nano-banana-pro"}
+    project.save_state(state)
+    return dest
+
+
+REPAIR = (
+    "Edit this image. Change ONLY this one thing: {fix} Keep everything else exactly as it is: same "
+    "camera, layout, objects, colours, lighting and detail. No text, letters or labels anywhere."
+)
+
+
+def repair_with_kie(project, data, frame_id, src, fix, approve_usd, kie_mod=None, sleep=None):
+    """Fix ONE small fault in an almost-right try by editing that try (its only reference), instead
+    of regenerating the still from the previous one. Much more likely to keep everything that was
+    already right. Saves to frames/<ID>.png; the result still has to pass `frames check`."""
+    from . import config
+    from . import kie as k
+    kie_mod = kie_mod or k
+    price = float(data.get("settings", {}).get("kie_usd_per_image", config.DEFAULTS["kie_usd_per_image"]))
+    ledger.guard(project, data, price, approve_usd)
+    src = Path(src).expanduser()
+    if not src.exists():
+        raise ValueError(f"No such try image: {src}")
+    kwargs = {"sleep": sleep} if sleep else {}
+    img, usd, task = kie_mod.nano_banana_pro(REPAIR.format(fix=fix.strip()), [src], **kwargs)
+    dest = project.path("frames", f"{frame_id}.png")
+    old = project.frame_file(frame_id)
+    if old and old != dest:
+        old.rename(old.with_name(f"{frame_id}.prev{old.suffix}"))
+    dest.write_bytes(img)
+    ledger.append(project, "spend", "kie", f"{frame_id}-repair", usd or price, task_id=task)
+    state = project.load_state()
+    state["frames"][frame_id] = {"file": dest.name, "source": "kie:repair", "repaired_from": src.name}
     project.save_state(state)
     return dest
 

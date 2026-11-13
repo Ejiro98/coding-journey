@@ -571,6 +571,24 @@ class KieTests(unittest.TestCase):
         self.assertIn("NOT BUILT YET", task["input"]["prompt"])
         self.assertEqual(p.load_state()["frames"]["F02"]["source"], "kie:nano-banana-pro")
 
+    def test_repair_edits_the_try_with_only_that_reference(self):
+        fake = FakeKie()
+        http.transport = fake
+        p, d = make_project(V3)
+        try_img = p.path("tries", "F02_try2.png")
+        _png(try_img)
+        with self.assertRaises(ledger.BudgetError):
+            frames.repair_with_kie(p, d, "F02", try_img, "Remove the stray pipe.", approve_usd=None,
+                                   sleep=lambda s: None)
+        dest = frames.repair_with_kie(p, d, "F02", try_img, "Remove the stray pipe.", approve_usd=0.09,
+                                      sleep=lambda s: None)
+        self.assertTrue(dest.exists())
+        task = json.loads(next(c[3] for c in fake.calls if c[1].endswith("/jobs/createTask")))
+        self.assertEqual(len(task["input"]["image_input"]), 1)             # only the try itself
+        self.assertIn("Change ONLY this one thing: Remove the stray pipe.", task["input"]["prompt"])
+        self.assertEqual(p.load_state()["frames"]["F02"]["source"], "kie:repair")
+        self.assertAlmostEqual(ledger.spent(p), 0.09)
+
     def test_insufficient_credits_in_body_is_an_error(self):
         http.transport = FakeKie(broke=True)
         from cutaway import kie

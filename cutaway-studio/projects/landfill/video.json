@@ -141,7 +141,7 @@
         "pipes full of holes"
       ],
       "built_in": "5",
-      "looks": "a gravel layer with perforated drainage pipes at the bottom of the pit, and ONE solid white riser pipe that runs up the pit's BACK-RIGHT corner on top of the liner and over the rim into the small green pump box, exactly where it is in L03 (once the pit is filled, only the top of the riser shows, coming up out of the fill)"
+      "looks": "a gravel layer with perforated drainage pipes (plain small round holes, no markings) at the bottom of the pit, and ONE solid white riser pipe that runs up the pit's BACK-RIGHT corner on top of the liner and over the rim into the small green pump box, exactly where it is in L03 (once the pit is filled, only the top of the riser shows, coming up out of the fill)"
     },
     "daily cover": {
       "aliases": [
@@ -250,7 +250,12 @@
         "Is there a yellow excavator at the rim and a loaded truck beside it?",
         "Has the rain stopped, the dark trail gone, and the groundwater band light blue again?"
       ],
-      "line_part": "So scoop the trash back out (the pit is empty again)"
+      "line_part": "So scoop the trash back out (the pit is empty again)",
+      "removes": [
+        "the trash",
+        "the rain",
+        "the dark trail in the soil and the stain in the water"
+      ]
     },
     {
       "id": "L02",
@@ -339,6 +344,11 @@
         "In the cut-away, do you see, from the bottom up: liner, gravel with pipe, trash, a soil band, trash, soil on top?",
         "Is the bulldozer small (a fraction of the pit's width)?",
         "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?"
+      ],
+      "removes": [
+        "the loose trash on top",
+        "the plastic bags",
+        "the seagulls"
       ]
     },
     {
@@ -363,6 +373,9 @@
         "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
         "Is a small yellow drilling rig parked at the middle of the back rim (outside the pit)?",
         "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
+      ],
+      "removes": [
+        "the bulldozer"
       ]
     },
     {
@@ -434,7 +447,11 @@
         "Are the engine building, drum, power poles, green pump box and riser unchanged from L08b?",
         "MUST BE NO: is there any writing, letters or text-like marks anywhere (for example on the pipes)?"
       ],
-      "line_part": "So seal it with more clay and another plastic sheet (the soil blanket comes in the next still)"
+      "line_part": "So seal it with more clay and another plastic sheet (the soil blanket comes in the next still)",
+      "removes": [
+        "the drilling rig",
+        "the rain"
+      ]
     },
     {
       "id": "L09",

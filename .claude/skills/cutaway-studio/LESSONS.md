@@ -124,6 +124,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   what is meant to go ("…except the rig and the rain, which leave in this still"), or every try fails for nothing.
   Also: the drain pipe's holes turn into text-like squiggles on kie.ai (L08, L08b, L09, L09a) and are then copied into
   every later still → catch it in the first still where it appears.
+- Landfill L09a (3 tries): try 2 got the hard part right (the cap to the front edge) and failed on
+  one stray pipe; tries 3+ regenerated from L08b and lost the cap again → when one try is almost
+  right, `frames repair` that try with one fix instead of rerolling. The continuity question also
+  failed every try for the rig and rain that were MEANT to go → list them in `removes`.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

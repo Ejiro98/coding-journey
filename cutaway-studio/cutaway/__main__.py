@@ -138,6 +138,13 @@ def cmd_frames(p, args):
     if args.action == "kie":
         print(frm.make_with_kie(p, data, args.frame, args.approve_usd))
         return 0
+    if args.action == "repair":
+        if not (args.frame and args.file and args.fix):
+            print("Usage: frames repair <slug> <ID> <try image> --fix \"Remove the ...\" --approve-usd 0.09")
+            return 2
+        print(frm.repair_with_kie(p, data, args.frame, args.file, args.fix, args.approve_usd))
+        print(f"Now review it: python3 -m cutaway frames check {p.slug} {args.frame}")
+        return 0
     if args.action == "gemini":
         print(frm.make_with_gemini(p, data, args.frame, args.approve_usd))
         return 0
@@ -316,13 +323,14 @@ def main(argv=None):
     sp = with_slug("timing", "clip lengths from the voice")
     sp.add_argument("--model")
     sp = sub.add_parser("frames", help="keyframes")
-    sp.add_argument("action", choices=["prompts", "check", "import", "kie", "gemini", "higgsfield"])
+    sp.add_argument("action", choices=["prompts", "check", "import", "kie", "repair", "gemini", "higgsfield"])
     sp.add_argument("slug")
     sp.add_argument("frame", nargs="?")
     sp.add_argument("file", nargs="?")
     sp.add_argument("--source", default="flow")
     sp.add_argument("--approve-usd", type=float)
     sp.add_argument("--all", action="store_true")
+    sp.add_argument("--fix", help="repair: the ONE thing to change in the try image")
     sp.add_argument("--reviewed", action="store_true", help="the still passed `frames check` by a separate reviewer")
     sp = sub.add_parser("clips", help="Higgsfield clips")
     sp.add_argument("action", choices=["estimate", "run"])

@@ -167,6 +167,13 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
   3. All PASS → `frames import <slug> <ID> <file> --reviewed` (the tool refuses without
      `--reviewed`). Any FAIL → remake with the FAILED answers added to the prompt as plain
      instructions. Paid stills (kie/gemini) are saved straight away; review them the same way.
+  3b. **Almost right? Repair it instead of remaking it.** When a try passes the main subject and fails on ONE
+     small fault (a stray pipe, a missing pole, a mark), don't regenerate from the previous still (that
+     rerolls everything that was right). Edit the try itself:
+     `python3 -m cutaway frames repair <slug> <ID> tries/<ID>_tryN.png --fix "Remove the white pipe on the
+     front-right of the cut face." --approve-usd 0.09`, then review the result as usual.
+     Stills that remove things on purpose list them in `removes`, so the continuity question doesn't
+     fail them for it.
   4. Three failed tries on one still → stop. First ask: is the QUESTION the problem? Image models
      can't draw degrees ("soaked", "slightly", "half") or fine detail reliably; rewrite such a
      question as something visible ("black liquid collected at the bottom", "liner wall showing all round").
