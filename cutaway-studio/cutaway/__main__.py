@@ -184,6 +184,16 @@ def cmd_clips(p, args):
                 print(f"  {i}. {q}")
             print()
         return 0
+    if args.action == "trim":
+        if not (args.only and args.end):
+            print("Usage: clips trim <slug> --only C01 --end 3.2   (free; keeps the first 3.2 s)")
+            return 2
+        dest, beat = clp.trim(p, data, args.only, args.end)
+        warn = "" if args.end >= 0.8 * beat else (f"  WARNING: the beat is {beat:.1f}s, so this will be slowed "
+                                                  "down or frozen; a remake is usually better.")
+        print(f"{args.only}: kept the first {args.end:.1f}s (original saved as {args.only}.untrimmed). "
+              f"The next chained clip is now out of date.{warn}")
+        return 0
     client = hf.Client()
     if args.action == "estimate":
         rows, total, notes = clp.estimate(p, data, client, args.model, args.only, args.next)
@@ -362,12 +372,13 @@ def main(argv=None):
     sp.add_argument("--fix", help="repair: the ONE thing to change in the try image")
     sp.add_argument("--reviewed", action="store_true", help="the still passed `frames check` by a separate reviewer")
     sp = sub.add_parser("clips", help="Higgsfield clips")
-    sp.add_argument("action", choices=["estimate", "run", "check"])
+    sp.add_argument("action", choices=["estimate", "run", "check", "trim"])
     sp.add_argument("slug")
     sp.add_argument("--model", choices=sorted(hf.VIDEO_MODELS))
     sp.add_argument("--only", help="comma-separated clip ids, e.g. C01,C02")
     sp.add_argument("--next", type=int, help="make only the next N clips in order (review, then continue)")
     sp.add_argument("--approve-usd", type=float)
+    sp.add_argument("--end", type=float, help="trim: keep the first N seconds")
     sp = with_slug("compare", "same clips on several models, side by side")
     sp.add_argument("--models", default="wan3,kling-o3,seedance2,seedance25")
     sp.add_argument("--resolution", default="480p",

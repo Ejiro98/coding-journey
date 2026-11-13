@@ -352,6 +352,16 @@ class AssembleTests(unittest.TestCase):
         self.assertGreater(b0, r0)     # starts on the start still
         self.assertGreater(r1, b1)     # ends on the end still
 
+    def test_trim_keeps_start_and_original(self):
+        p, d = make_project()
+        words = timing.estimated_words(d, 230)
+        p.words_file().write_text(json.dumps(words))
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "testsrc=s=320x568:r=24:d=5",
+                        "-pix_fmt", "yuv420p", str(p.path("clips", "C01.mp4"))], check=True)
+        dest, beat = clips.trim(p, d, "C01", 2.0)
+        self.assertAlmostEqual(assemble.probe_duration(dest), 2.0, delta=0.15)
+        self.assertTrue(p.path("clips", "C01.untrimmed.mp4").exists())
+
     def test_caption_words_are_cleaned(self):
         ass = assemble.captions_ass([{"w": "rope,", "s": 0, "e": 0.3}, {"w": "snaps?", "s": 0.3, "e": 0.6}],
                                     1080, 1920, "Arial", 96)
@@ -798,6 +808,19 @@ class LandfillPlanTests(unittest.TestCase):
         qs2 = " ".join(clips.checklist(LF, c2))
         self.assertIn("pull-back smoothly", qs2)
         self.assertIn("start right away", qs2)
+
+    def test_hold_clip_ends_on_its_own_still(self):
+        p, d = make_project(V3)
+        _png(p.path("frames", "F01.png"))
+        clip = dict(d["clips"][0]); clip.pop("to", None); clip["hold"] = True
+        state = {"uploads": {}, "clips": {}, "frames": {}}
+
+        class C:
+            def upload(self, path):
+                return f"https://up/{path.name}"
+        body = clips._body(p, d, C(), state, {"clip": clip, "model": "kling-o3", "seconds": 3},
+                           p.frame_file("F01"))
+        self.assertEqual(body["last_frame_url"], "https://up/F01.png")
 
     def test_landfill_passes_every_check(self):
         rep = lint.check(LF)

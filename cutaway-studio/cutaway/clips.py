@@ -160,6 +160,10 @@ def _body(project, data, client, state, item, start_img):
     clip = item["clip"]
     res = data.get("video", {}).get("resolution", "720p")
     end_img = project.frame_file(clip["to"]) if clip.get("to") else None
+    if end_img is None and clip.get("hold"):
+        # A hold clip with no end still let the model invent the next story beat (landfill C01 drew
+        # the leak 2.5 s in). Ending on its own still pins it: only small motion can happen.
+        end_img = project.frame_file(clip["from"])
     if end_img is not None:
         start_img = match_size(start_img, end_img)
     start = _upload_cached(client, project, state, start_img)
@@ -287,3 +291,21 @@ def _duration(path):
     out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
                           str(path)], capture_output=True, text=True).stdout.strip()
     return float(out or 0)
+
+
+def trim(project, data, clip_id, end_s):
+    """FREE: keep only the first `end_s` seconds of a clip (when the model went wrong near the end).
+    Only worth it if what's left still fills most of the beat, or the assembly slows it down or
+    freezes it. The next chained clip becomes out of date (it must start from the new last frame)."""
+    src = project.clip_file(clip_id)
+    if not src:
+        raise ValueError(f"{clip_id} has no clip yet.")
+    words, _ = timing.load_words(project, data, project.setting(data, "words_per_minute"))
+    segs, _ = timing.segments(data, words, project.setting(data, "end_hold_seconds"))
+    beat = next(s["seconds"] for s in segs if s["clip"] == clip_id)
+    keep = src.with_name(f"{clip_id}.untrimmed{src.suffix}")
+    if not keep.exists():
+        src.replace(keep)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(keep), "-t", f"{end_s:.3f}", "-an",
+                    "-c:v", "libx264", "-pix_fmt", "yuv420p", str(src)], check=True)
+    return src, beat

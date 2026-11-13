@@ -517,7 +517,7 @@
       ],
       "from": "L01",
       "to": null,
-      "motion": "The garbage truck tips its load and trash tumbles into the pit.",
+      "motion": "Only the truck moves: its tipped bed keeps pouring trash into the pit. Nothing else changes: no liquid anywhere, nothing in the soil or the blue band, and the bed stays tipped.",
       "hold": true
     },
     {
@@ -528,7 +528,7 @@
       "cue": "rains",
       "from": "L01",
       "to": "L01r",
-      "motion": "Rain starts falling on the pit. In the cut-away, the rainwater soaks down through the trash, turning black, and a shallow black pool forms at the very bottom of the pit."
+      "motion": "Rain starts at once and the sky darkens. The bottom of the trash darkens and black liquid collects on the pit floor. Nothing leaves the pit, and the truck doesn't move."
     },
     {
       "id": "C03",

@@ -232,6 +232,9 @@ Then repeat until all clips are made:
    previous clip, matches its end still, camera, nothing appearing/vanishing/morphing, rules, no text).
    A NEW subagent answers them from the sheet and the end still at full size; any doubt is FAIL. Show
    the viewer the two clips with the answers and the running total.
+   **Hold clips now end on their own still** (automatic), so the model can't invent the next story beat.
+   **Trim instead of remaking** (`clips trim <slug> --only C05 --end 3.2`, free) only when the clean part
+   covers at least ~80% of the beat; otherwise the assembly slows or freezes it and a remake is better.
 4. If a clip fails the check: delete `clips/<ID>.mp4`, make its `motion` text more specific, and
    re-run step 1. Because the next clips aren't made yet, only that clip is paid for again.
    Add a lesson to `LESSONS.md` for every remade clip (what went wrong, what it cost, the fix).
