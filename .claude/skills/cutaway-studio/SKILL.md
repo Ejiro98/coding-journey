@@ -131,6 +131,9 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
 
 ## Step 4: Keyframes in Google Flow (free) (approval 3)
 `python3 -m cutaway frames prompts <slug>` prints each frame's prompt and the reference files.
+- **The video's `rules` are added to every clip prompt, so word them as what must be SEEN** ("juice only
+  seeps, shown as darkening; it never pours"), never as general physics ("liquid flows down"), which
+  models act out.
 - **A still shows results, never motion.** Flowing liquid, rising gas or a moving machine in a still
   gets drawn wrong (leaks, smears). Show the result instead (dark-stained gravel, a parked machine)
   and let the clip show the movement.

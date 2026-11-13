@@ -200,6 +200,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   2-3 s late → when something must leave between two beats, use a cut at a sentence break ("…a
   landfill. | But…") from a still where it has already gone; a cut reads as time passing.
 
+- Landfill C02 try 3: the video's own rule "liquid drips and flows down" (added to EVERY clip prompt)
+  plus "black liquid collects" gave Kling a black waterfall from outside the pit → word the rules
+  as what the viewer should see ("juice only seeps, shown as darkening; it never pours or streams");
+  a rule is in every clip, so one bad word costs many clips.
+
 ## Money
 - Elevator v1 ($15) and v2 ($20+): money spent before the story was right → free draft first,
   then 2 clips at a time with the estimate approved each time. Never skip.

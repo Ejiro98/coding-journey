@@ -28,7 +28,7 @@
   "style": "Vertical 9:16 realistic 3D engineering cutaway illustration at the edge of a small town on a clear day: a row of houses with red roofs and a road run along the top of the frame, with green fields beside them, and a large landfill pit fills the middle of the frame. The ground in front is cut away to show a deep brown soil cross-section beneath the pit, with a light-blue band of groundwater near the bottom. Clear elevated view, natural materials, readable lighting, the main action large enough to see. No text, no labels, no arrows, no watermark.",
   "rules": [
     "Only physically possible events: nothing rewinds, teleports, glows or appears from nowhere; materials are poured, spread, laid, dumped or drilled in by machines.",
-    "Liquids and gas obey gravity and pressure: liquid drips and flows down, gas rises.",
+    "Liquids and gas obey gravity and pressure: rain falls from the sky; dark juice only ever SEEPS slowly out of the trash itself, shown as soil or trash turning darker; it never pours, streams or comes in from outside the pit; gas rises.",
     "Everything already built stays exactly in place.",
     "The town, road, fields and houses at the top stay the same.",
     "The camera stays still unless the motion says it moves.",
@@ -563,7 +563,7 @@
       "cue": "rains",
       "from": "L01d",
       "to": "L01r",
-      "motion": "Rain starts at once and the sky darkens. The bottom of the trash darkens and black liquid collects on the pit floor. Nothing leaves the pit.",
+      "motion": "Rain falls from the very first frame and the sky turns grey. The trash slowly darkens from the bottom up, and the dark patch on the pit floor turns glossy black. Nothing pours, and nothing flows over the ground or down the walls.",
       "cut": true
     },
     {
@@ -573,7 +573,7 @@
       ],
       "from": "L01r",
       "to": "L01g",
-      "motion": "Black liquid drips out of the bottom of the pit and soaks down through the soil in a widening dark trail until it reaches the blue groundwater band, where a dark cloud starts spreading toward the houses."
+      "motion": "A dark stain slowly spreads down through the soil under the pit, like ink soaking into paper, until it reaches the blue groundwater band, where a dark cloud starts spreading toward the houses. Nothing pours or streams."
     },
     {
       "id": "C04",
