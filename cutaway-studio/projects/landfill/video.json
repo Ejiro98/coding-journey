@@ -389,7 +389,7 @@
         "L08",
         "L01"
       ],
-      "shows": "The pit is now filled right up to the rim: its flat brown soil top is level with the ground all round, and no black liner wall shows above the soil anywhere. Rain is falling. On the new soil top: the same four short white pipe stubs, and the same flat white pipe joining them to the grey drum at the left rim. Everything else exactly as in L08.",
+      "shows": "The pit is now filled right up to the rim: its flat brown soil top is level with the ground all round, and no black liner wall shows above the soil anywhere. Rain is falling. On the new soil top: the same four short white pipe stubs, and the same flat white pipe joining them to the grey drum at the left rim. Everything else exactly as in L08. The black liner still lines the pit's walls and floor in the cut-away, and the flat pipe joins all four stubs.",
       "checks": [
         "Is the pit filled right up to the rim, with NO black liner wall showing above the soil anywhere?",
         "Is rain clearly falling?",
