@@ -77,6 +77,12 @@ show the viewer a table of claims (true / simplified). Present the script, wait 
   (master = 1). A clip that changes view needs a `move` (dolly-in, pull-back, pan, follow) and at
   most ~2x zoom; bigger jumps make the model cut. Return to the master view after a close look.
 - `lint` checks all of this (shot checks) and blocks oversized moves.
+- **A moved frame keeps the same objects in the same orientation**: say "the same pipe, still
+  running left to right, camera twice as close", never "look along the pipe" (image models then
+  turn the object to face the camera, as happened in the drainage test).
+- **Physics check on every keyframe: where does everything end up?** Water must drain somewhere
+  real (a channel, a river, a tank), pipes must connect at both ends, loads must rest on something.
+  A pipe ending in the middle of the soil fails the frame.
 - **Setting, never white space**: the `style` puts the cutaway in a real place (street, neighbouring
   buildings, trees, cars, residents inside). Keep it identical in every wide frame.
 - **Parts can't appear early**: give every frame a `state` (the line whose result it shows) and every
@@ -150,6 +156,12 @@ the total → on "yes": `... --approve-usd <TOTAL>`. It makes the first two clip
 change, one camera move) on each model, each with its own chain, and joins them into
 `compare/side_by_side.mp4`. The viewer picks; set `video.model`. `projects/drain-test` recreates
 two beats of their drainage video for exactly this purpose (never post it).
+**Default model: Kling O3** (won the drainage test with Wan 3.0: both did a locked change and a 2x
+camera move with no cuts; Kling is the cheapest at 720p). **Hard shots** (several objects doing a
+physical action, e.g. a bulldozer crushing and covering trash): a clip can set `"model":
+"seedance25"` (and optionally `"resolution"`) to override the video's model. Only do that after the
+project's hard-shot test (see `tests` in video.json, e.g. `compare landfill --models
+kling-o3,seedance25 --clips C08`) shows Seedance is clearly better, and only for 2-3 clips.
 Real 720p prices (Higgsfield, Nov 2026, per output second): Kling O3 std $0.068, Wan 3.0 $0.075,
 Seedance 2.0 $0.174, Seedance 2.5 $0.265. A ~70 s video costs ~$5 on Kling O3 or Wan 3.0, ~$12
 on Seedance 2.0 and ~$19 on Seedance 2.5. Under the $7 cap only Kling O3 or Wan 3.0 fit, so

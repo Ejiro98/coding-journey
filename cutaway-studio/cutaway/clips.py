@@ -122,7 +122,10 @@ def plan(project, data, model=None, only=None, words=None, next_n=None):
             for fid in [clip["from"]] + ([clip["to"]] if clip.get("to") else []):
                 if not project.frame_file(fid):
                     raise ValueError(f"Clip {cid} needs keyframe {fid}; make it first.")
-            todo.append({"clip": clip, "idx": idx, "seconds": secs[cid], "model": model,
+            clip_model = clip.get("model") or model   # per-clip override (e.g. Seedance for a hard shot)
+            if clip_model not in hf.VIDEO_MODELS:
+                raise ValueError(f"Clip {cid}: unknown model {clip_model}")
+            todo.append({"clip": clip, "idx": idx, "seconds": secs[cid], "model": clip_model,
                          "why": "out of date" if stale else "new"})
             dirty = True
     return todo, notes
@@ -161,6 +164,7 @@ def _body(project, data, client, state, item, start_img):
         start_img = match_size(start_img, end_img)
     start = _upload_cached(client, project, state, start_img)
     end = _upload_cached(client, project, state, end_img) if end_img is not None else None
+    res = clip.get("resolution") or res
     return hf.clip_body(item["model"], start, end, clip_prompt(data, clip), item["seconds"], res)
 
 

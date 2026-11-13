@@ -85,7 +85,7 @@ def cmd_timing(p, args):
     model = args.model or data.get("video", {}).get("model", "wan3")
     print(f"Timing from {source}; total {total:.1f}s; model {model}")
     print(timing.table(segs))
-    reqs = [(c, s["seconds"], model) for c, s in zip(data["clips"], segs)]
+    reqs = [(c, s["seconds"], c.get("model") or model) for c, s in zip(data["clips"], segs)]
     res = data.get("video", {}).get("resolution", "720p")
     plan, unknown = clp.planning_total(reqs, res)
     print(f"Planning cost for all clips on {model} at {res} (price table): ~${plan:.2f}"

@@ -21,7 +21,7 @@
     "similarity_boost": 0.75
   },
   "video": {
-    "model": "wan3",
+    "model": "kling-o3",
     "resolution": "720p",
     "chain": true
   },
@@ -469,5 +469,18 @@
       "motion": "Gentle hold on the park and the town as the sun lowers slightly."
     }
   ],
-  "sfx": []
+  "sfx": [],
+  "tests": [
+    {
+      "name": "hard-shot model test (bulldozer)",
+      "why": "Decide whether Seedance 2.5 is worth using for the 2-3 most complex shots of each video.",
+      "command": "python3 -m cutaway compare landfill --models kling-o3,seedance25 --clips C08 --estimate",
+      "needs_frames": [
+        "L05",
+        "L06"
+      ],
+      "approx_cost": "~$0.95 (Kling 720p ~$0.34 + Seedance 2.5 at 480p ~$0.59); counts toward this video's cap",
+      "decide": "If Seedance 2.5 is clearly better at the physical action, set \"model\": \"seedance25\" on the 2-3 hardest clips only (each ~$1.30 at 720p). Otherwise keep Kling everywhere."
+    }
+  ]
 }

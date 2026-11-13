@@ -736,3 +736,19 @@ class SeedanceSafetyTests(unittest.TestCase):
             self.assertEqual(ledger.spent(p), 0.0)
         finally:
             http.transport = old
+
+
+class PerClipModelTests(unittest.TestCase):
+    def test_clip_model_overrides_video_model(self):
+        d = copy.deepcopy(LF)
+        d["clips"][7]["model"] = "seedance25"
+        p, d = make_project(d)
+        for fid in ("L01", "L02", "L03", "L04", "L05", "L06"):
+            _png(p.path("frames", f"{fid}.png"))
+        todo, _ = clips.plan(p, d, only="C01,C08")
+        self.assertEqual([(t["clip"]["id"], t["model"]) for t in todo],
+                         [("C01", "kling-o3"), ("C08", "seedance25")])
+
+    def test_landfill_uses_kling_and_documents_the_hard_shot_test(self):
+        self.assertEqual(LF["video"]["model"], "kling-o3")
+        self.assertIn("--clips C08", LF["tests"][0]["command"])

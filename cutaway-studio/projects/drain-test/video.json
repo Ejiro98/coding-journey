@@ -52,7 +52,7 @@
         "D02",
         "D01"
       ],
-      "shows": "A grey pipe now runs from the bottom of the hole sideways through the soil toward the water channel on the right, and the water level in the hole has dropped as water flows out through the pipe."
+      "shows": "A grey pipe now runs from the bottom of the hole sideways and slightly downhill through the soil and out into the open water channel on the right, where the water pours out into the channel. The water level in the hole has dropped."
     },
     {
       "id": "D04",
@@ -61,8 +61,8 @@
       "refs": [
         "D03"
       ],
-      "camera": "it has moved down and closer to look along the pipe in the soil cross-section, about twice as close as before, with the road edge still visible at the top",
-      "shows": "Inside the cut-away pipe, water flows along carrying a few brown leaves, some mud and a yellow-green tennis ball."
+      "camera": "it has moved down and about twice as close to the pipe, which still runs left to right in exactly the same direction and position as before; the road edge is still visible at the top",
+      "shows": "Through the cut-away side of the same pipe, water flows from left to right carrying a few brown leaves, some mud and a yellow-green tennis ball."
     }
   ],
   "clips": [
