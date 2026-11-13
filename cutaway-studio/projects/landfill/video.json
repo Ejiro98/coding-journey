@@ -10,7 +10,7 @@
     "#3DAnimation"
   ],
   "budget": {
-    "cap_usd": 13.0
+    "cap_usd": 15.0
   },
   "voice": {
     "provider": "elevenlabs",
