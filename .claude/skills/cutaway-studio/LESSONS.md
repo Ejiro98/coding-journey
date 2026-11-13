@@ -136,6 +136,9 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Landfill L09a/L09: after ~10 kie.ai stills in a chain plus repairs, the colours drifted pink
   (G 128→123, B 114→119) and went soft; in the video that is a colour shift halfway through →
   `frames tidy --match <clean still>` fixes the colour for free (no AI); keep repairs to one per still.
+- Landfill L10 try 2 (kie.ai): asking the edit model to pull the camera back made it invent everything outside the old
+  frame (a different town, cartoon style, pump box gone) → an edit model can't widen a view. Keep the end still at the
+  same framing and let the clip do the camera move, or make the wide still from L01 (which already shows the town).
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

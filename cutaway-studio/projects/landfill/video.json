@@ -487,7 +487,7 @@
         "L01"
       ],
       "camera": "it has pulled back to show the whole mound and more of the town around it",
-      "shows": "The mound is now a green park hill with grass, winding paths, wooden benches and a few young trees. An open gate at the front edge lets people in; people walk dogs and jog on the hill. The short gas pipe heads still poke out of the grass, and the small engine building with its line of power poles is still at the LEFT edge. The cross-section below the hill still shows the cap, the layers of trash and soil, and the liner and gravel at the bottom.",
+      "shows": "The mound is now a green park hill with grass, winding paths, wooden benches and a few young trees. An open gate at the front edge lets people in; people walk dogs and jog on the hill. The short gas pipe heads still poke out of the grass, and the small engine building with its line of power poles is still at the LEFT edge. The cross-section below the hill still shows the cap, the layers of trash and soil, and the liner and gravel at the bottom. The camera is clearly further back than in L09, with more town and fields around the hill, and the gas pipe still runs unbroken from all four heads to the grey drum, the path curving around it.",
       "checks": [
         "Is the mound now a green grassy hill with paths, benches and a few young trees?",
         "Is there an open gate at the front with people walking in, and people walking dogs or jogging on the hill?",
