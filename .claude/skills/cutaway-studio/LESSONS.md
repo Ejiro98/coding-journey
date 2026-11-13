@@ -101,6 +101,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   them, even when asked for "a thick black cable from the wall to a pole right against the building" → power wires are
   too thin to draw or see at this scale; show electricity with something big (a row of poles from the building to the
   houses, or a transformer box) and don't make a still pass or fail on wires.
+- Landfill L08b (3 tries on kie.ai, $0.27): raising the fill from half to the rim in one edit failed. kie.ai kept L08's
+  fill level (tries 2-3) or dropped the gas header (try 1); each added fix sentence made it drift further (try 3 lost the
+  gravel, drain pipe and clay, and grew a stray pipe) → a big change in fill level is the still's ONE change: lead the
+  prompt with it, keep the rest to "everything else exactly as in L08", and don't stack fix sentences. If it still
+  won't move, split it into two stills (three-quarters full, then full).
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

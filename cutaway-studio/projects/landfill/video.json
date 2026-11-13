@@ -389,7 +389,7 @@
         "L08",
         "L01"
       ],
-      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the LEFT edge, with its line of power poles to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top. The drilling rig has gone.",
+      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the LEFT edge, with its line of power poles to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top. The drilling rig has gone. The flat white pipe from L08 still lies on the new soil top, joining all four stubs and running left over the rim to the grey drum and the engine building. The soil has been raised to the rim: no black liner wall shows above the soil anywhere, only the liner's thin top edge around the flat soil.",
       "checks": [
         "Is the pit filled right up to the rim, the soil top level with the ground around it?",
         "Is rain falling, with dark wet streaks soaking down into the top layers in the cut-away?",
