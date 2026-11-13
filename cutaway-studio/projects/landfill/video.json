@@ -235,9 +235,9 @@
         "L01g",
         "L01"
       ],
-      "shows": "The same pit is now empty: all the trash has been scooped out, leaving bare brown dirt with no lining. A yellow excavator stands at the rim beside a loaded garbage truck. The darkened soil under the pit has been dug out, so the pit is slightly deeper and its floor is clean brown dirt. The rain has stopped. The dark trail has been dug out with the soil, and the groundwater band is light blue again.",
+      "shows": "The same pit is now empty: all the trash has been scooped out, leaving bare brown dirt with no lining. A yellow excavator stands at the rim beside a loaded garbage truck. The darkened soil under the pit has been dug out, so the pit is slightly deeper and its floor is clean brown dirt. The rain has stopped. The dark trail has been dug out with the soil, and the groundwater band is light blue again. Everything on and around the rim stays exactly as in L01g, the parked bulldozer included; add only the excavator and the truck, and no boxes. The pit floor keeps a crisp front edge at the cut face.",
       "checks": [
-        "Is the pit completely empty: no trash, no bags anywhere in or around it?",
+        "Is the pit completely empty: no trash or bags in the pit or lying on the ground around it (the load inside the truck doesn't count)?",
         "Is the pit bare brown dirt: no clay, no black plastic sheet, no gravel, no pipes?",
         "Is there a yellow excavator at the rim and a loaded truck beside it?",
         "Has the rain stopped, the dark trail gone, and the groundwater band light blue again?"
@@ -323,7 +323,7 @@
         "L03",
         "L01"
       ],
-      "shows": "The pit is only half full: the soil top is about halfway down, and the black liner wall shows clearly above it all the way round. Its ENTIRE top surface is now a smooth, flat layer of brown soil: no trash is visible anywhere on the surface, no plastic bags, no seagulls. A yellow bulldozer, small compared to the pit, is smoothing the last strip of soil at one corner. In the cut-away front of the pit the layers are clearly visible: flattened trash, then a band of brown soil, then flattened trash, then soil on top, like a layered cake, resting on the gravel and drainage pipes at the bottom. The white riser pipe still comes up out of the fill at the BACK-RIGHT corner, exactly where it is in L03, and runs over the rim into the green box; no pipe climbs the cut-away face. Crisp, sharp detail like L01, with no smeared or painterly areas.",
+      "shows": "The pit is only half full: the soil top is about halfway down, and the black liner wall shows clearly above it all the way round. Its ENTIRE top surface is now a smooth, flat layer of brown soil: no trash is visible anywhere on the surface, no plastic bags, no seagulls. A yellow bulldozer, small compared to the pit, is smoothing the last strip of soil at one corner. In the cut-away front of the pit the layers are clearly visible: flattened trash, then a band of brown soil, then flattened trash, then soil on top, like a layered cake, resting on the gravel and drainage pipes at the bottom. The white riser pipe still comes up out of the fill at the BACK-RIGHT corner, exactly where it is in L03, and runs over the rim into the green box; no pipe climbs the cut-away face. Crisp, sharp detail like L01, with no smeared or painterly areas. On the small front-right step between the cut face and the right wall, the soil also stays low and a band of black liner wall shows above it, as on every other side. The drain pipe in the gravel is one straight pipe with no branches or stubs. The trash layers in the cut look like squashed bags and litter, not pebbles.",
       "checks": [
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
         "Is the soil top clearly below the rim, with the black liner wall showing above the soil all the way round?",

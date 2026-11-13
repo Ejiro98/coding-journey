@@ -79,6 +79,12 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Landfill L01g (3 tries on kie.ai, $0.27): try 2 passed every question except "the trail widens as it goes down" (a
   degree); the extra sentence for try 3 fixed the trail but reshaped the pit floor into a square slab → don't ask for a
   shape degree ("widening"); ask for what a viewer reads ("one unbroken dark trail from the pit to the blue band").
+- Landfill L06 (3 tries with the back-right riser prompt, $0.27): every try filled the small front-right step beside the
+  cut face flush to the rim, even when the prompt named that step; try 4 failed nothing else → image models treat the
+  corner next to a cut-away as part of the cut. For fill-level questions, name the walls a viewer sees (back, left,
+  right), not "all the way round".
+- Landfill L01b try 2: the remake added a green box (like the later pump box) and dropped the parked bulldozer → when a
+  still adds machines, say "add only X and Y; everything else on the rim stays as in <ref>".
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
