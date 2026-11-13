@@ -85,6 +85,13 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   right), not "all the way round".
 - Landfill L01b try 2: the remake added a green box (like the later pump box) and dropped the parked bulldozer → when a
   still adds machines, say "add only X and Y; everything else on the rim stays as in <ref>".
+- Landfill L06 (5 tries) and L01b (3 tries): most failures came from awkward shapes in the FIRST
+  still (a small front-right step beside the cut, a soft pit-bottom edge) that every later still has
+  to copy, and from the model adding or removing machines → make the first still simple: one clean
+  box-shaped pit with straight edges and a clear cut face, few vehicles, nothing at the rim that
+  isn't in the story. It sets the shape for 15+ stills.
+- Judge single failed points at phone size: a sliver no viewer would notice (L06 step) or a soft edge
+  (L01b) is not worth more tries; a wrong fact (pipe to nowhere, liquid through the liner) always is.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
