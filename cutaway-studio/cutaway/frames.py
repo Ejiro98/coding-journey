@@ -47,9 +47,11 @@ def build_state(data, frame):
         return [], []
     upto = order.index(str(state))
     built, missing = [], []
+    not_yet = set(frame.get("not_yet", []))   # parts built later in the SAME line (e.g. a cap in two stills)
     for name, spec in parts.items():
         looks = spec.get("looks") or name
-        (built if order.index(str(spec["built_in"])) <= upto else missing).append(looks)
+        done = order.index(str(spec["built_in"])) <= upto and name not in not_yet
+        (built if done else missing).append(looks)
     return built, missing
 
 

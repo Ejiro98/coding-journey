@@ -115,6 +115,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   changed nothing; tries 2-3 put a mound only at the back, left the strip by the cut face open, and moved the gas pipes
   down the cut face (once into the drain pipe) → one change per still: lay the clay and black sheet flat over the whole
   top first, then the soil hump in the next still. The strip next to a cut-away is the hardest place to change.
+- Landfill L09 (3 failed tries): the cap was three changes in one still (clay+sheet, soil, dome),
+  and the model never covered the strip next to the cut face → one change per still even inside one
+  line (L09a clay+sheet, L09 soil dome; `not_yet` keeps the soil out of L09a), and say the cut slices
+  through the new layer "like icing on a slice of cake" so it reaches the front edge.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

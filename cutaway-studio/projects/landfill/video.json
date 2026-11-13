@@ -166,10 +166,18 @@
     },
     "cap": {
       "aliases": [
-        "cap"
+        "cap",
+        "another plastic sheet"
       ],
       "built_in": "14",
-      "looks": "the sealed cap of clay, plastic sheet and soil over the full pit"
+      "looks": "the cap's grey clay layer and black plastic sheet laid over the whole top of the full pit"
+    },
+    "cap soil": {
+      "aliases": [
+        "blanket of soil"
+      ],
+      "built_in": "14",
+      "looks": "a thick blanket of brown soil over the cap, gently domed"
     },
     "park": {
       "aliases": [
@@ -402,26 +410,51 @@
       "big_change": true
     },
     {
+      "id": "L09a",
+      "view": "pit",
+      "zoom": 1,
+      "state": "14",
+      "wide": true,
+      "big_change": true,
+      "not_yet": [
+        "cap soil"
+      ],
+      "refs": [
+        "L08b",
+        "L01"
+      ],
+      "shows": "The rain has stopped. A layer of grey clay and, on top of it, a black plastic sheet now cover the WHOLE flat top of the full pit, from the back rim right to the front cut edge. The cut-away face slices through the cap too, like icing on a slice of cake: the cap reaches right to the front edge of the cut, and its bands show along the very top of the cut face. Here that is a thin grey clay band with a black line on top. The four knee-high white pipe heads stick up through the sheet, still joined by the flat pipe to the grey drum at the left rim. The drilling rig has left. Everything else exactly as in L08b.",
+      "checks": [
+        "Do the grey clay and black sheet cover the WHOLE top, including the strip right next to the front cut edge?",
+        "Along the very top of the cut face, is there a thin grey clay band with a black line on top?",
+        "Do the four knee-high pipe heads stick up through the sheet, joined by the flat pipe to the grey drum at the left rim?",
+        "MUST BE NO: is there brown soil or a mound on top of the black sheet yet?",
+        "MUST BE NO: does any gas pipe run down the cut face, or reach the gravel or the drain pipe?",
+        "Are the gravel, drain pipe, liner and clay band still at the bottom of the cut-away, unchanged?",
+        "Are the engine building, drum, power poles, green pump box and riser unchanged from L08b?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere (for example on the pipes)?"
+      ]
+    },
+    {
       "id": "L09",
       "view": "pit",
       "zoom": 1,
       "state": "14",
       "wide": true,
       "refs": [
-        "L08b",
+        "L09a",
         "L01"
       ],
-      "shows": "The pit is now full to the rim and rounded into a low mound. It is sealed on top, and the cross-section shows the cap clearly from bottom to top: a grey-brown clay layer, a black plastic sheet, then a thick layer of brown soil. The four gas pipes now reach up through the cap and end in short pipe heads on the surface, still joined to the engine building at the LEFT edge, with its line of power poles to the town. The layers of trash and soil and the liner and gravel at the bottom are still visible in the cross-section. The cap is one low hump covering the whole pit right up to the cut face, where its three bands (grey-brown clay, black sheet, brown soil) sit on top of the old surface, and only the four knee-high pipe heads stick out of it.",
+      "shows": "A thick blanket of brown soil now covers the whole black sheet, gently domed: highest in the middle and sloping down to the rim on every side, including the front. The cut-away face slices through the cap too, like icing on a slice of cake: the cap reaches right to the front edge of the cut, and its bands show along the very top of the cut face. Here the top of the cut face shows, from bottom to top: the grey clay band, the black line of the sheet, then a thick brown soil band. The four knee-high pipe heads stick up through the soil, still joined by the flat pipe to the grey drum at the left rim. Everything else exactly as in L09a.",
       "checks": [
-        "Is the top a low rounded mound (not a tall hill or a pyramid)?",
-        "In the cut-away at the top, from the bottom up: grey-brown clay, a black plastic sheet, a thick brown soil layer?",
-        "Do the four gas pipes poke up through the cap as short pipe heads, still joined to the engine building?",
-        "Are the engine building, chimney and line of power poles still there, unchanged?",
-        "Is the whole buried stack still visible below: trash and soil layers, liner, gravel and pipe?",
-        "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
+        "Is the whole top a gently domed brown soil hump, sloping down to the rim on every side INCLUDING the front by the cut?",
+        "At the top of the cut face, are there three bands from bottom to top: grey clay, a black line, thick brown soil?",
+        "Do the four knee-high pipe heads stick up through the soil, joined by the flat pipe to the grey drum at the left rim?",
+        "MUST BE NO: does any gas pipe run down the cut face, or reach the gravel or the drain pipe?",
+        "Are the trash and soil layers, gravel, drain pipe, liner and clay band still in the cut-away below the cap?",
+        "Are the engine building, drum, power poles, green pump box and riser unchanged from L09a?",
         "MUST BE NO: is it raining, or is there any grass yet?",
-        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
-        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
       ],
       "big_change": true
     },
@@ -602,8 +635,18 @@
         "14"
       ],
       "from": "L08b",
+      "to": "L09a",
+      "motion": "The rain stops. A layer of grey clay is spread over the whole top of the full pit, then a black plastic sheet is rolled out over it."
+    },
+    {
+      "id": "C14b",
+      "lines": [
+        "14"
+      ],
+      "cue": "blanket",
+      "from": "L09a",
       "to": "L09",
-      "motion": "Layers are spread over the full pit one after another: grey-brown clay, a black plastic sheet, and a thick blanket of brown soil, rounding it into a low mound. The gas pipes stay poking up."
+      "motion": "A thick blanket of brown soil is spread over the black sheet and shaped into a gentle dome."
     },
     {
       "id": "C15",

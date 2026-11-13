@@ -676,7 +676,7 @@ class LandfillPlanTests(unittest.TestCase):
         joined = " ".join(qs)
         self.assertIn("drill pipes down", joined)                      # its script line
         self.assertIn("including the leftmost", joined)                 # its own checks
-        self.assertIn("MUST BE NO: is any part of this visible anywhere: the sealed cap", joined)
+        self.assertIn("MUST BE NO: is any part of this visible anywhere: the cap's grey clay layer", joined)
         self.assertIn("green pump box", joined)                         # built part, with connection
         self.assertIn("next to L06", joined)                            # continuity
         self.assertTrue(qs[-1].startswith("Is it as sharp"))
@@ -694,6 +694,15 @@ class LandfillPlanTests(unittest.TestCase):
         self.assertNotIn("Change ONLY", prompt)
         small = next(f for f in LF["frames"] if f["id"] == "L08")
         self.assertIn("Change ONLY", frames.prompt_for(LF, small))
+
+    def test_not_yet_keeps_a_same_line_part_out(self):
+        a = next(f for f in LF["frames"] if f["id"] == "L09a")
+        built, missing = frames.build_state(LF, a)
+        self.assertTrue(any("grey clay layer and black plastic sheet" in b for b in built))
+        self.assertTrue(any("blanket of brown soil" in m for m in missing))
+        b = next(f for f in LF["frames"] if f["id"] == "L09")
+        built, _ = frames.build_state(LF, b)
+        self.assertTrue(any("blanket of brown soil" in x for x in built))
 
     def test_import_refused_without_review(self):
         from cutaway.__main__ import main
