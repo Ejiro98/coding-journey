@@ -174,6 +174,10 @@ def check_shots(data):
         if len(words(m)) > 45 or m.lower().count(" then ") > 1:
             report.append(("warn", f"Clip {c['id']} motion is long ({len(words(m))} words); "
                                    "their clips show ONE change each."))
+        if not c.get("to") and re.search(r"\buntil\b|\bbuild(s)? up\b|\bfills?\b", m, re.I):
+            report.append(("warn", f"Clip {c['id']} changes what is built (\"{m[:40]}…\") but has no end "
+                                   "keyframe ('to'), so the model decides where it ends and the next clip "
+                                   "inherits it. Add a keyframe showing the finished state (lesson: L08b)."))
     try:
         from . import timing
         segs, _ = timing.segments(data, timing.estimated_words(data, 230), 0.8)

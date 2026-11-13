@@ -9,6 +9,11 @@ The tool lives in `cutaway-studio/` in this repo. Run every command from that fo
 `python3 -m cutaway <command> <slug>`. Each video is `cutaway-studio/projects/<slug>/video.json`.
 Start every session with `python3 -m cutaway status <slug>`: it says where the video is up to.
 
+**Read `LESSONS.md` (next to this file) before writing a script or a shot plan.** Check the plan
+against every lesson and tell the viewer which ones you checked. Whenever a still is remade, a clip
+is paid for twice, or the viewer points out a mistake, add a lesson there (what happened, cost, the
+rule that prevents it) and commit it, so the next video doesn't repeat it.
+
 ## Five approvals: never skip them
 1. **Script**: the viewer approves the script (after `lint` passes and facts are checked).
 2. **Voice**: the viewer listens to `audio/voice.mp3` once on a phone and approves it.
@@ -131,10 +136,14 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
   Paid frames count toward the video's $7 cap, so say the running total.
 - Schedule: make the next video's frames a day ahead so the daily limit never blocks a post.
 - **Check every frame before making the next** (look at it yourself at full size):
-  1. nothing from its NOT BUILT YET list is visible anywhere (rails, motor, doors…);
-  2. same building, camera angle, street and residents as the previous wide frame;
-  3. positions match the description (box floor, counterweight floor, opposite each other);
-  4. a real setting, no white or empty background.
+  1. nothing from its NOT BUILT YET list is visible anywhere;
+  2. everything in its "Already built" list is visible, and nothing built earlier has vanished
+     (buildings, pipes, liners stay);
+  3. same place, camera angle, buildings and people as the previous wide frame; a zoomed frame
+     keeps everything running the same direction;
+  4. levels and positions match the description (fill level, which side things are on);
+  5. it SHOWS the answer to its line with the sound off (e.g. "nothing to grab" → no trash visible);
+  6. physically possible, a real setting, no white background, no text.
   Remake any frame that fails before moving on.
 - Show the viewer one contact sheet of all frames; wait for approval.
 - If Flow refuses a frame on policy grounds, soften the picture (never the facts) and retry twice.
@@ -176,6 +185,7 @@ Then repeat until all clips are made:
    no part from the NOT BUILT YET list appears. Show the viewer the two clips.
 4. If a clip fails the check: delete `clips/<ID>.mp4`, make its `motion` text more specific, and
    re-run step 1. Because the next clips aren't made yet, only that clip is paid for again.
+   Add a lesson to `LESSONS.md` for every remade clip (what went wrong, what it cost, the fix).
 - Keep a running total against the $7 cap and say it in every checkpoint ("$2.10 of $7 used").
 - Re-running is safe: finished, up-to-date clips are skipped and idempotency keys stop double charges.
 - Failed/NSFW clips are not charged; make that clip's motion text gentler and re-run.

@@ -191,12 +191,24 @@
       "shows": "A plain dug pit of bare brown dirt, with no lining, half full of loose garbage bags and trash. A garbage truck at the rim is tipping more trash in."
     },
     {
+      "id": "L01b",
+      "view": "pit",
+      "zoom": 1,
+      "state": "3",
+      "wide": true,
+      "refs": [
+        "L01"
+      ],
+      "shows": "The same pit is now empty: all the trash has been scooped out, leaving bare brown dirt with no lining. A yellow excavator stands at the rim beside a loaded garbage truck. The darkened soil under the pit has been dug out, so the pit is slightly deeper and its floor is clean brown dirt."
+    },
+    {
       "id": "L02",
       "view": "pit",
       "zoom": 1,
       "state": "4",
       "wide": true,
       "refs": [
+        "L01b",
         "L01"
       ],
       "shows": "The same pit is now empty: the trash has been scooped out, and the pit's floor and walls are covered with a layer of brown-grey earthy clay, with a heavy black plastic sheet laid over the clay. The garbage truck is gone."
@@ -214,12 +226,24 @@
       "shows": "A layer of grey gravel now covers the bottom of the lined pit, with white pipes full of small holes running through the gravel to a pump pipe at the edge."
     },
     {
+      "id": "L03b",
+      "view": "pit",
+      "zoom": 1,
+      "state": "6",
+      "wide": true,
+      "refs": [
+        "L03",
+        "L01"
+      ],
+      "shows": "The lined pit now has a layer of loose trash covering the bottom third, lying on top of the gravel and pipes; the gravel, the white pipes and the liner are still visible in the cut-away below the trash. Two garbage trucks stand at the rim, their beds tipped up and empty. No plastic bags in the air, no seagulls yet."
+    },
+    {
       "id": "L04",
       "view": "pit-bottom",
       "zoom": 2,
       "state": "6",
       "refs": [
-        "L03"
+        "L03b"
       ],
       "camera": "it has moved down and about twice as close to the bottom of the pit, with the pipes still running left to right exactly as before",
       "shows": "Trash now fills the lower part of the lined pit. Dark liquid trickles down through the trash into the gravel and into the holes of a white drainage pipe, flowing away along it."
@@ -231,7 +255,7 @@
       "state": "6",
       "wide": true,
       "refs": [
-        "L03",
+        "L03b",
         "L01"
       ],
       "shows": "The lined pit is one third full of loose trash. Plastic bags are blowing up out of it toward the houses, and a flock of seagulls circles and lands on the trash."
@@ -345,7 +369,7 @@
         "4"
       ],
       "from": "L01",
-      "to": null,
+      "to": "L01b",
       "motion": "An excavator at the rim scoops the trash, together with the darkened soil just under it, back out of the pit and loads it into two trucks waiting beside the pit, until the pit is empty bare dirt."
     },
     {
@@ -354,7 +378,7 @@
         "4"
       ],
       "cue": "hole",
-      "from": "L01",
+      "from": "L01b",
       "to": "L02",
       "motion": "A grey clay layer and then a black plastic sheet are spread over the empty pit's floor and walls."
     },
@@ -373,7 +397,7 @@
         "6"
       ],
       "from": "L03",
-      "to": null,
+      "to": "L03b",
       "motion": "The two trucks tip the trash back into the lined pit, on top of the gravel and pipes, until the bottom third is filled."
     },
     {
@@ -382,7 +406,7 @@
         "6"
       ],
       "cue": "juice",
-      "from": "L03",
+      "from": "L03b",
       "to": "L04",
       "move": "dolly-in",
       "motion": "The camera moves down closer as black liquid trickles down through the trash and gravel, into the holes of the white pipe, and flows along the pipe toward the pump at the edge."

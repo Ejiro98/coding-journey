@@ -660,6 +660,16 @@ LF = json.loads((STUDIO / "projects" / "landfill" / "video.json").read_text())
 
 
 class LandfillPlanTests(unittest.TestCase):
+    def test_clip_that_builds_without_end_keyframe_is_flagged(self):
+        data = copy.deepcopy(LF)
+        c = next(c for c in data["clips"] if c["id"] == "C04")
+        c.pop("to")
+        msgs = [m for l, m in lint.check_shots(data) if l == "warn"]
+        self.assertTrue(any("C04" in m and "end keyframe" in m for m in msgs), msgs)
+        c["motion"] = "Rain falls on the pit."
+        msgs = [m for l, m in lint.check_shots(data) if l == "warn"]
+        self.assertFalse(any("C04" in m for m in msgs), msgs)
+
     def test_landfill_passes_every_check(self):
         rep = lint.check(LF)
         self.assertFalse(lint.has_errors(rep), lint.format_report(rep))
