@@ -196,6 +196,8 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
   Don't wait for the viewer between stills: they approve the contact sheet once, at the end,
   with the reviewer's answers for each still.
 - Show the viewer one contact sheet of all frames; wait for approval.
+- **Then run `clips precheck` on ALL clips** (free) and fix every pair whose stills differ in ways the
+  motion doesn't describe, before the free draft. Mismatched pairs are where paid clips fail.
 - If Flow refuses a frame on policy grounds, soften the picture (never the facts) and retry twice.
 
 ## Step 5: Free draft (approval 4) - nothing is paid for before this is approved

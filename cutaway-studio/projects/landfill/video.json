@@ -339,6 +339,23 @@
       "line_part": "when the trash goes back in (the juice is shown in the close-up L04, not here)"
     },
     {
+      "id": "L04pre",
+      "view": "pit-bottom",
+      "zoom": 2,
+      "state": "6",
+      "refs": [
+        "L04"
+      ],
+      "shows": "Exactly the same picture as the reference, a moment earlier: the gravel around the white pipe is clean light grey and the pipe's holes are not dark; there is no dark stain anywhere. Everything else identical.",
+      "checks": [
+        "Is the gravel around the pipe clean light grey, with no dark stain and no dark holes?",
+        "Is everything else EXACTLY as in L04 (same trash, pipe, liner, camera)?",
+        "MUST BE NO: is there any liquid anywhere?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "when the trash goes back in (just before the juice soaks in)"
+    },
+    {
       "id": "L04",
       "view": "pit-bottom",
       "zoom": 2,
@@ -357,6 +374,23 @@
         "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
       ],
       "line_part": "the juice drips into the pipes (shown as the dark-stained gravel around the pipe; the flowing is the clip's job)"
+    },
+    {
+      "id": "L05pre",
+      "view": "pit",
+      "zoom": 1,
+      "state": "6",
+      "wide": true,
+      "refs": [
+        "L05"
+      ],
+      "shows": "Exactly the same picture as the reference, a moment earlier: no plastic bags in the air and no seagulls; the loose trash lies still in the pit. Everything else identical.",
+      "checks": [
+        "Are there no plastic bags in the air and no seagulls anywhere?",
+        "Is everything else EXACTLY as in L05 (same trash mound, pit, camera, town)?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "(the moment before the wind picks up the loose trash)"
     },
     {
       "id": "L05",
@@ -564,7 +598,7 @@
       "cue": "rains",
       "from": "L01d",
       "to": "L01r",
-      "motion": "Rain falls from the very first frame and the sky turns grey. The trash slowly darkens from the bottom up, and the dark patch on the pit floor turns glossy black. Nothing pours, and nothing flows over the ground or down the walls.",
+      "motion": "Rain falls from the very first frame and the sky turns grey. A glossy black puddle slowly forms on the pit floor under the trash. Nothing pours, and nothing flows over the ground or down the walls.",
       "cut": true
     },
     {
@@ -574,7 +608,7 @@
       ],
       "from": "L01r",
       "to": "L01g",
-      "motion": "A dark stain slowly spreads down through the soil under the pit, like ink soaking into paper, until it reaches the blue groundwater band, where a dark cloud starts spreading toward the houses. Nothing pours or streams."
+      "motion": "Dark drips seep out under the black puddle and a dark stain soaks slowly down through the soil in a column to the blue groundwater band, where a dark cloud spreads out along the band both ways. Nothing pours."
     },
     {
       "id": "C04",
@@ -583,7 +617,7 @@
       ],
       "from": "L01g",
       "to": "L01b",
-      "motion": "The rain stops. An excavator and a truck drive up to the back rim along the dirt road; the excavator scoops the trash and the darkened soil out of the pit into the truck, until the pit is empty bare dirt."
+      "motion": "The rain stops. An empty truck and an excavator drive up; the excavator scoops the trash and dirty soil into the truck, digging the pit a little deeper, and the dark stain in the soil and water fades."
     },
     {
       "id": "C04b",
@@ -593,7 +627,7 @@
       "cue": "hole",
       "from": "L01b",
       "to": "L02",
-      "motion": "The excavator and truck drive away along the back road; a grey clay layer, then a black plastic sheet, are spread over the empty pit."
+      "motion": "The excavator and truck drive away. The pit floor is levelled flat, then a grey clay layer and a black plastic sheet are spread over the floor and walls, up over the rim."
     },
     {
       "id": "C05",
@@ -602,7 +636,7 @@
       ],
       "from": "L02",
       "to": "L03",
-      "motion": "Gravel pours over the bottom of the lined pit and white pipes full of holes are laid through it."
+      "motion": "Gravel pours over the floor of the lined pit; white pipes full of holes are laid in it and joined to one white pipe that runs up the back-right corner to a small green pump box at the rim."
     },
     {
       "id": "C06",
@@ -611,7 +645,7 @@
       ],
       "from": "L03",
       "to": "L03b",
-      "motion": "The two trucks tip the trash back into the lined pit, on top of the gravel and pipes, until the bottom third is filled."
+      "motion": "Two garbage trucks back up to the rim and tip their trash into the lined pit, on top of the gravel and pipes, until the bottom third is covered."
     },
     {
       "id": "C06b",
@@ -619,10 +653,10 @@
         "6"
       ],
       "cue": "juice",
-      "from": "L03b",
+      "from": "L04pre",
       "to": "L04",
-      "move": "dolly-in",
-      "motion": "The camera moves down closer as dark juice trickles down through the trash into the gravel and seeps into the holes of the white pipe, staining the gravel around it."
+      "motion": "Dark juice seeps down through the trash: the gravel around the white pipe slowly darkens and the pipe's holes turn dark. Nothing pours or streams.",
+      "cut": true
     },
     {
       "id": "C07",
@@ -630,10 +664,10 @@
         "7"
       ],
       "cue": "blows",
-      "from": "L04",
+      "from": "L05pre",
       "to": "L05",
-      "move": "pull-back",
-      "motion": "The camera pulls back to the whole pit as wind lifts plastic bags out of the loose trash and seagulls swoop in."
+      "motion": "Wind lifts plastic bags out of the loose trash and blows them toward the houses; seagulls swoop down and land on the trash.",
+      "cut": true
     },
     {
       "id": "C08",
@@ -642,7 +676,7 @@
       ],
       "from": "L05",
       "to": "L06",
-      "motion": "A yellow bulldozer drives down into the pit from the right rim, crushes the loose trash flat into a grey layer, then pushes a layer of brown soil over it; the seagulls fly off.",
+      "motion": "The plastic bags blow away. A yellow bulldozer drives down into the pit from the right rim, crushes the loose trash flat, then pushes a thick layer of brown soil over it; the seagulls fly off.",
       "model": "seedance25"
     },
     {
@@ -673,7 +707,7 @@
       ],
       "from": "L06",
       "to": "L07",
-      "motion": "A small drilling rig drives up to the back rim and drills four holes into the trash; white pipes are lowered in, and a pipe on the soil joins their tops and runs to the left rim.",
+      "motion": "The bulldozer drives away. A small drilling rig drives up to the back rim and drills four holes into the trash; white pipes are lowered in and a pipe on the soil joins their tops and runs to the left rim.",
       "model": "seedance25"
     },
     {
@@ -683,7 +717,7 @@
       ],
       "from": "L07",
       "to": "L08",
-      "motion": "A small engine building is set just outside the pit's left edge, the gas pipe connects to it, and a little exhaust rises from its chimney."
+      "motion": "A small engine building is set just outside the pit's left edge, the gas pipe connects to it, power poles are put up from it to the road, and a little exhaust rises from its chimney."
     },
     {
       "id": "C13",
@@ -692,7 +726,7 @@
       ],
       "from": "L08",
       "to": "L08b",
-      "motion": "In a quick time-lapse, more flattened layers of trash and soil build up until the pit is full to the rim, the gas pipes growing up with them; then rain falls on the flat top and soaks in."
+      "motion": "In a quick time-lapse, more flattened layers of trash and soil build up until the pit is full to the rim, the gas pipes are extended up with them, and rain falls on the flat top."
     },
     {
       "id": "C14",
@@ -701,7 +735,7 @@
       ],
       "from": "L08b",
       "to": "L09a",
-      "motion": "The rain stops. A layer of grey clay is spread over the whole top of the full pit, then a black plastic sheet is rolled out over it."
+      "motion": "The rain stops and the drilling rig drives away. A layer of grey clay is spread over the whole top of the full pit, then a black plastic sheet is rolled out over it."
     },
     {
       "id": "C14b",
@@ -730,7 +764,7 @@
       ],
       "from": "L09",
       "to": "L10",
-      "motion": "Grass spreads over the mound, a path and benches appear and a few young trees grow; the gate at the back opens and people walk in."
+      "motion": "In a quick time-lapse, grass spreads over the mound and the yard around it, a path, benches and young trees appear, a gate is built at the back, and people walk in."
     },
     {
       "id": "C17",

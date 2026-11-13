@@ -817,7 +817,7 @@ class LandfillPlanTests(unittest.TestCase):
         self.assertIn("end still L06", qs)
         self.assertIn("stay completely still", qs)               # no move
         self.assertIn("white gulls turning into dark birds", qs)
-        c2 = next(c for c in LF["clips"] if c["id"] == "C07")
+        c2 = dict(next(c for c in LF["clips"] if c["id"] == "C07"), move="pull-back")
         qs2 = " ".join(clips.checklist(LF, c2))
         self.assertIn("pull-back smoothly", qs2)
         self.assertIn("start right away", qs2)
