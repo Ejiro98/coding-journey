@@ -768,7 +768,7 @@
       ],
       "from": "L05",
       "to": "L06",
-      "motion": "The plastic bags blow away. A yellow bulldozer drives down into the pit from the right rim, crushes the loose trash flat, then pushes a thick layer of brown soil over it; the seagulls fly off."
+      "motion": "The plastic bags blow away over the rim and the white seagulls fly up and out of the top of the frame. A yellow bulldozer drives in over the right rim, runs over the loose trash to flatten it, then pushes brown soil across it until the trash is covered."
     },
     {
       "id": "C09",
@@ -798,7 +798,7 @@
       ],
       "from": "L07pre",
       "to": "L07",
-      "motion": "The drilling rig at the back rim drills four holes into the trash; white pipes are lowered into them and a pipe laid on the soil joins them and runs to the left rim.",
+      "motion": "The drilling rig's mast swings out over the soil and drives four white pipes straight down into the trash, one after another, leaving knee-high stubs; the short pipe from the grey drum is then extended along the soil to join all four. Only the rig and the pipes move.",
       "cut": true
     },
     {
@@ -808,7 +808,7 @@
       ],
       "from": "L07",
       "to": "L08",
-      "motion": "A small engine building is set just outside the pit's left edge, the gas pipe connects to it, a line of power poles goes up from it to the road and beyond, and a little exhaust rises from its chimney."
+      "motion": "A small engine building is set just outside the pit's left edge, the gas pipe connects to it, a line of power poles goes up from it to the road and beyond, and a little exhaust rises from its chimney. Everything below the soil, including the trash layers in the cut-away, stays exactly still."
     },
     {
       "id": "C13",
@@ -817,7 +817,9 @@
       ],
       "from": "L08",
       "to": "L08b",
-      "motion": "In a quick time-lapse, more flattened layers of trash and soil build up until the pit is full to the rim, the gas pipes are extended up with them, and rain falls on the flat top."
+      "motion": "In a quick time-lapse, the flat brown soil top inside the pit rises evenly until it is level with the rim, covering the black liner walls. The four white gas pipe heads and the pipe joining them stay on top of the soil. The cut-away layers at the front stay exactly as they are; nothing swells, churns or disappears. Light rain falls.",
+      "cut": true,
+      "note": "Starts from its own still because the beat before it is a still fade ending on that same still."
     },
     {
       "id": "C14",
@@ -856,7 +858,9 @@
       ],
       "from": "L09",
       "to": "L10",
-      "motion": "In a quick time-lapse, grass spreads over the mound and the yard around it, a path, benches and young trees appear, a gate is built at the back, and people walk in."
+      "motion": "In a quick time-lapse, grass spreads over the mound and the yard around it, a path, benches and young trees appear, a gate is built at the back, and people walk in. Only the top surface changes: the pit, the cut-away layers, the soil and the ground around the pit stay exactly the same; no liquid appears anywhere. Dry, sunny weather.",
+      "cut": true,
+      "note": "Starts from its own still because the beat before it is a still fade ending on that same still."
     },
     {
       "id": "C17",

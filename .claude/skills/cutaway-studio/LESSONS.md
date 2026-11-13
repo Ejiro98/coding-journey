@@ -239,6 +239,15 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   on a phone → strict (zoomed, any doubt) for wrong facts and invented events only; phone-size viewer
   judgement for everything else.
 
+- Landfill C13 and C16 (time-lapses on Kling): the first tries invented events between the stills.
+  C13 ("layers build up until the pit is full, pipes extended, rain") swelled a trash mass up
+  through the cut-away and melted it away again. C16 (park build) poured dark liquid out around
+  the pit, which reads as a leak. Both passed on the one remake once the motion named only the one
+  thing that differs between the stills ("the soil top rises until level with the rim") and listed
+  what must NOT change ("the cut-away layers stay exactly as they are; nothing swells, churns or
+  disappears", "the pit and the soil around it stay the same; no liquid appears anywhere") →
+  overlay the two stills, describe only what differs, and name the nearby parts that stay still.
+
 ## Money
 - Elevator v1 ($15) and v2 ($20+): money spent before the story was right → free draft first,
   then 2 clips at a time with the estimate approved each time. Never skip.
