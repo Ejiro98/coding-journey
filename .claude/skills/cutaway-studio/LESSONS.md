@@ -194,6 +194,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   clip had to move the trash and reshape the pit as well as add rain, and the model filled the gap with a stream →
   before paying for a clip, overlay its start and end stills: everything except the motion's change must line up.
   When a new start still is needed for a cut, make it FROM the end still (remove the change), not from an older still.
+- Landfill C02 try 5: going from a sunny start still to a stormy end still made the sky jump in a quarter second at
+  0.9 s (fixed for free with clips trim --start 1.2), and the rain stayed faint → big lighting/weather changes belong
+  in the stills, not the clip: give the start still the same sky as the end still and let the clip add only the rain.
+- Landfill C03: the end still L01g has drip streaks and a narrow column under the pit, so the model streamed liquid
+  down the soil despite "seeps only" → an end still for seepage must show a soft-edged stain, no drips or columns.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
