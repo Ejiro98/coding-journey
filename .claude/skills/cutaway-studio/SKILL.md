@@ -160,7 +160,7 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
      instructions. Paid stills (kie/gemini) are saved straight away; review them the same way.
   4. Three failed tries on one still → stop. First ask: is the QUESTION the problem? Image models
      can't draw degrees ("soaked", "slightly", "half") or fine detail reliably; rewrite such a
-     question as something visible ("a black pool at the bottom", "liner wall showing all round").
+     question as something visible ("black liquid collected at the bottom", "liner wall showing all round").
      If a try already passes every question a viewer would care about, show it to the viewer as the
      candidate. Add a lesson, and show the viewer the tries with the failed answers.
   Don't wait for the viewer between stills: they approve the contact sheet once, at the end,
