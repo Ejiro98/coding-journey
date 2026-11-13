@@ -665,8 +665,8 @@ class LandfillPlanTests(unittest.TestCase):
         c = next(c for c in data["clips"] if c["id"] == "C04")
         c.pop("to")
         msgs = [m for l, m in lint.check_shots(data) if l == "warn"]
-        self.assertTrue(any("C04" in m and "end keyframe" in m for m in msgs), msgs)
-        c["motion"] = "Rain falls on the pit."
+        self.assertTrue(any("C04" in m and "end still" in m for m in msgs), msgs)
+        c["hold"] = True
         msgs = [m for l, m in lint.check_shots(data) if l == "warn"]
         self.assertFalse(any("C04" in m for m in msgs), msgs)
 

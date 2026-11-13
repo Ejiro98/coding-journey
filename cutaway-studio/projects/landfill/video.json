@@ -191,19 +191,56 @@
       "shows": "A plain dug pit of bare brown dirt, with no lining, half full of loose garbage bags and trash. A garbage truck at the rim is tipping more trash in."
     },
     {
+      "id": "L01r",
+      "view": "pit",
+      "zoom": 1,
+      "state": "2",
+      "wide": true,
+      "refs": [
+        "L01"
+      ],
+      "shows": "Exactly the same scene as the reference, but now rain is falling, the sky is grey, and the truck has gone. In the cut-away front of the pit, rainwater is soaking down through the trash and turning black: the lowest part of the trash is soaked dark, and a shallow pool of black liquid sits at the very bottom of the pit, on the bare dirt. The soil below the pit is still clean brown, and the groundwater band is still clean light blue.",
+      "checks": [
+        "Is rain clearly falling and the sky grey?",
+        "In the cut-away, is the bottom of the trash soaked dark with a shallow pool of black liquid at the very bottom of the pit?",
+        "MUST BE NO: has any black liquid gone below the pit into the soil, or into the blue band?",
+        "Is the pit still bare dirt with no lining, and the trash at the same level as L01?"
+      ]
+    },
+    {
+      "id": "L01g",
+      "view": "pit",
+      "zoom": 1,
+      "state": "3",
+      "wide": true,
+      "refs": [
+        "L01r",
+        "L01"
+      ],
+      "shows": "Same scene, still raining. Black liquid has dripped out of the bottom of the pit and soaked down through the soil below it in a dark, spreading trail, wider at the bottom, like an upside-down ink stain. The trail reaches the light-blue groundwater band, where a dark grey cloud is spreading sideways along the band toward the houses.",
+      "checks": [
+        "Does one continuous dark trail run from the bottom of the pit down through the soil to the blue band?",
+        "Is there a dark cloud spreading sideways inside the blue band, toward the houses?",
+        "Is the trail plausible: going downward and widening, not sideways through the air or uphill?",
+        "Is the pit still bare dirt with no lining, trash at the same level, still raining?"
+      ]
+    },
+    {
       "id": "L01b",
       "view": "pit",
       "zoom": 1,
       "state": "3",
       "wide": true,
       "refs": [
+        "L01g",
         "L01"
       ],
-      "shows": "The same pit is now empty: all the trash has been scooped out, leaving bare brown dirt with no lining. A yellow excavator stands at the rim beside a loaded garbage truck. The darkened soil under the pit has been dug out, so the pit is slightly deeper and its floor is clean brown dirt.",
+      "shows": "The same pit is now empty: all the trash has been scooped out, leaving bare brown dirt with no lining. A yellow excavator stands at the rim beside a loaded garbage truck. The darkened soil under the pit has been dug out, so the pit is slightly deeper and its floor is clean brown dirt. The rain has stopped. The dark trail has been dug out with the soil, and the groundwater band is light blue again.",
       "checks": [
         "Is the pit completely empty: no trash, no bags anywhere in or around it?",
         "Is the pit bare brown dirt: no clay, no black plastic sheet, no gravel, no pipes?",
-        "Is there a yellow excavator at the rim and a loaded truck beside it?"
+        "Is there a yellow excavator at the rim and a loaded truck beside it?",
+        "Has the rain stopped, the dark trail gone, and the groundwater band light blue again?"
       ]
     },
     {
@@ -402,7 +439,8 @@
       ],
       "from": "L01",
       "to": null,
-      "motion": "The garbage truck tips its load and trash tumbles into the pit."
+      "motion": "The garbage truck tips its load and trash tumbles into the pit.",
+      "hold": true
     },
     {
       "id": "C02",
@@ -411,26 +449,26 @@
       ],
       "cue": "rains",
       "from": "L01",
-      "to": null,
-      "motion": "Rain starts falling on the pit. In the cut-away soil directly beneath the pit, black liquid begins dripping out of the bottom of the trash."
+      "to": "L01r",
+      "motion": "Rain starts falling on the pit. In the cut-away, the rainwater soaks down through the trash, turning black, and a shallow black pool forms at the very bottom of the pit."
     },
     {
       "id": "C03",
       "lines": [
         "3"
       ],
-      "from": "L01",
-      "to": null,
-      "motion": "The black liquid spreads down through the cut-away soil in a dark trail and the first of it reaches the blue groundwater band, where a small dark cloud starts to spread."
+      "from": "L01r",
+      "to": "L01g",
+      "motion": "Black liquid drips out of the bottom of the pit and soaks down through the soil in a widening dark trail until it reaches the blue groundwater band, where a dark cloud starts spreading toward the houses."
     },
     {
       "id": "C04",
       "lines": [
         "4"
       ],
-      "from": "L01",
+      "from": "L01g",
       "to": "L01b",
-      "motion": "An excavator at the rim scoops the trash, together with the darkened soil just under it, back out of the pit and loads it into two trucks waiting beside the pit, until the pit is empty bare dirt."
+      "motion": "The rain stops. An excavator at the rim scoops the trash and the darkened soil out of the pit and loads it into a truck, until the pit is empty bare dirt."
     },
     {
       "id": "C04b",
@@ -498,7 +536,8 @@
       ],
       "from": "L06",
       "to": null,
-      "motion": "A gust of wind blows a little dust across the smooth soil but nothing lifts. One seagull lands, pecks at the bare soil, finds nothing and flies away."
+      "motion": "A gust of wind blows a little dust across the smooth soil but nothing lifts. One seagull lands, pecks at the bare soil, finds nothing and flies away.",
+      "hold": true
     },
     {
       "id": "C10",
@@ -508,7 +547,8 @@
       "cue": "methane",
       "from": "L06",
       "to": null,
-      "motion": "A faint shimmering haze, like heat haze, rises from thin cracks in the soil, and for a moment a small flame flickers up from one crack and goes out."
+      "motion": "A faint shimmering haze, like heat haze, rises from thin cracks in the soil, and for a moment a small flame flickers up from one crack and goes out.",
+      "hold": true
     },
     {
       "id": "C11",
@@ -553,7 +593,8 @@
       ],
       "from": "L09",
       "to": null,
-      "motion": "Rain falls on the sealed mound and runs off down its sloped sides in little streams instead of soaking in."
+      "motion": "Rain falls on the sealed mound and runs off down its sloped sides in little streams instead of soaking in.",
+      "hold": true
     },
     {
       "id": "C16",
@@ -572,7 +613,8 @@
       ],
       "from": "L10",
       "to": null,
-      "motion": "People walk dogs and jog over the green hill while, in the cross-section below them, the buried layers of trash stay still."
+      "motion": "People walk dogs and jog over the green hill while, in the cross-section below them, the buried layers of trash stay still.",
+      "hold": true
     },
     {
       "id": "C18",
@@ -581,7 +623,8 @@
       ],
       "from": "L10",
       "to": null,
-      "motion": "Gentle hold on the park and the town as the sun lowers slightly."
+      "motion": "Gentle hold on the park and the town as the sun lowers slightly.",
+      "hold": true
     }
   ],
   "sfx": [],

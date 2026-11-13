@@ -53,6 +53,8 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Landfill C13/C04/C06: a clip that builds something new had no end still, so the model would
   decide where it ends and every later clip inherits it → every clip that changes what is built
   ends on a keyframe ('to'). Short events (rain, wind, a flicker) don't need one. [lint: no end keyframe]
+- Viewer's rule (landfill): more stills cost less than a failed video → every clip ends on a
+  reviewed still unless it is a `hold`; the hook/problem clips (C02, C03) got their own stills. [lint]
 - Drain test: Seedance failed twice with no reason saved → keep the failure reason
   (`error.json`), first and last frames the same size (done automatically).
 - Any clip: the action must start on its cue word, and the thing named must be on screen when

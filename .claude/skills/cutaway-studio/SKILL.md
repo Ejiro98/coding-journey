@@ -76,6 +76,14 @@ Then `python3 -m cutaway lint <slug>` must show no ERROR. Fact-check every claim
 show the viewer a table of claims (true / simplified). Present the script, wait for approval.
 
 ## Shot plan rules (measured from 7 Hidden By Design videos + the viewer's elevator notes)
+- **Stills are cheap, clips are expensive, failed videos are the most expensive. When in doubt, add a
+  still.** (A still is free on Flow or ~$0.09 on kie.ai; a 4 s clip is ~$0.27 on Kling, ~$1 on
+  Seedance; a failed video is $5+.) Every clip starts on a reviewed still and ENDS on a reviewed still
+  (`to`), so the model only fills in the motion between two pictures that are already right.
+  The only exception is a `"hold": true` clip where nothing new stays on screen afterwards (wind,
+  rain running off, a flicker, people walking); `lint` warns about any other clip without `to`.
+  The hook and the problem lines (the first ~8 s) always get their own stills. More stills also make
+  the free draft look like the final video, so problems show up while they're still free to fix.
 - **Beats of ~3-4 s, ONE change per clip** (~18-20 clips per video). One line ≈ one clip; split a
   long line with a cue word. Motion text: one short sentence or two.
 - **Camera locked for most clips** on a "master" view. Give every frame a `view` name and a `zoom`
