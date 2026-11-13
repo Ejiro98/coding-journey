@@ -670,6 +670,26 @@ class LandfillPlanTests(unittest.TestCase):
         msgs = [m for l, m in lint.check_shots(data) if l == "warn"]
         self.assertFalse(any("C04" in m for m in msgs), msgs)
 
+    def test_frame_checklist_has_line_parts_and_own_checks(self):
+        f = next(f for f in LF["frames"] if f["id"] == "L07")
+        qs = frames.checklist(LF, f)
+        joined = " ".join(qs)
+        self.assertIn("drill pipes down", joined)                      # its script line
+        self.assertIn("including the leftmost", joined)                 # its own checks
+        self.assertIn("MUST BE NO: is any part of this visible anywhere: the sealed cap", joined)
+        self.assertIn("green pump box", joined)                         # built part, with connection
+        self.assertIn("next to L06", joined)                            # continuity
+        self.assertTrue(qs[-1].startswith("Is it as sharp"))
+
+    def test_import_refused_without_review(self):
+        from cutaway.__main__ import main
+        import io, contextlib
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            code = main(["frames", "import", "landfill", "L07", "/nonexistent.png"])
+        self.assertEqual(code, 2)
+        self.assertIn("frames check landfill L07", buf.getvalue())
+
     def test_landfill_passes_every_check(self):
         rep = lint.check(LF)
         self.assertFalse(lint.has_errors(rep), lint.format_report(rep))

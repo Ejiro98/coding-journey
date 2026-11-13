@@ -135,16 +135,23 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
   2. `frames gemini <slug> <ID> --approve-usd 0.15` (only if kie.ai is down or out of credits)
   Paid frames count toward the video's $7 cap, so say the running total.
 - Schedule: make the next video's frames a day ahead so the daily limit never blocks a post.
-- **Check every frame before making the next** (look at it yourself at full size):
-  1. nothing from its NOT BUILT YET list is visible anywhere;
-  2. everything in its "Already built" list is visible, and nothing built earlier has vanished
-     (buildings, pipes, liners stay);
-  3. same place, camera angle, buildings and people as the previous wide frame; a zoomed frame
-     keeps everything running the same direction;
-  4. levels and positions match the description (fill level, which side things are on);
-  5. it SHOWS the answer to its line with the sound off (e.g. "nothing to grab" → no trash visible);
-  6. physically possible, a real setting, no white background, no text.
-  Remake any frame that fails before moving on.
+- **Every still is reviewed by a separate reviewer before it is used. Never mark your own work.**
+  The maker wants the still to pass, so it explains faults away ("a little fuller than half").
+  After each still is generated:
+  1. `python3 -m cutaway frames check <slug> <ID>` prints that still's yes/no questions (its line,
+     its own `checks`, every part that must be there or must not, continuity, sharpness).
+  2. Start a NEW subagent (Agent tool) as the reviewer. Give it ONLY: the image path, the paths of
+     the reference stills, and the questions. Tell it: "Open the images at full size and crop/zoom
+     into each area you judge. Answer every question with PASS or FAIL plus what you actually
+     see. Any doubt is FAIL. You did not make this image and nothing depends on it passing."
+     Don't tell it what you hoped the image shows.
+  3. All PASS → `frames import <slug> <ID> <file> --reviewed` (the tool refuses without
+     `--reviewed`). Any FAIL → remake with the FAILED answers added to the prompt as plain
+     instructions. Paid stills (kie/gemini) are saved straight away; review them the same way.
+  4. Three failed tries on one still → stop, add a lesson to LESSONS.md, and show the viewer the
+     tries with the failed answers.
+  Don't wait for the viewer between stills: they approve the contact sheet once, at the end,
+  with the reviewer's answers for each still.
 - Show the viewer one contact sheet of all frames; wait for approval.
 - If Flow refuses a frame on policy grounds, soften the picture (never the facts) and retry twice.
 

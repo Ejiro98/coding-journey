@@ -40,6 +40,9 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   and say ALL for connections ("connects to ALL FOUR pipes, the leftmost included").
 - Landfill L07: the image turned grainy after several stills made from stills → always attach the
   clean first still (L01) as a reference too, and remake any still that has lost sharpness.
+- Landfill L06/L07: the maker passed its own stills ("a little fuller than half", pipe link not
+  checked) → a separate reviewer agent answers `frames check` questions; specific yes/no questions
+  per still, written before the still is made, not a general checklist.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

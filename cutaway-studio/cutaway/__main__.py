@@ -114,7 +114,24 @@ def cmd_frames(p, args):
                 print("attach as references: none (first frame)")
             print(item["prompt"] + "\n")
         return 0
+    if args.action == "check":
+        ids = [args.frame] if args.frame else [f["id"] for f in data.get("frames", [])]
+        fm = {f["id"]: f for f in data.get("frames", [])}
+        for fid in ids:
+            if fid not in fm:
+                print(f"Unknown frame {fid}")
+                return 2
+            print(f"== {fid}: answer every question by looking at the image. One wrong answer = remake.")
+            for i, q in enumerate(frm.checklist(data, fm[fid]), 1):
+                print(f"  {i}. {q}")
+            print()
+        return 0
     if args.action == "import":
+        if not args.reviewed:
+            print(f"Not imported. First review it: `python3 -m cutaway frames check {p.slug} {args.frame}`, "
+                  "answered by a separate reviewer agent that did not make the still (see SKILL.md). "
+                  "Import with --reviewed only when every answer passes.")
+            return 2
         dest = frm.import_frame(p, args.frame, Path(args.file).expanduser(), source=args.source)
         print(f"{args.frame} -> {dest}" + ("  (+1 Flow image today)" if args.source == "flow" else ""))
         return 0
@@ -299,13 +316,14 @@ def main(argv=None):
     sp = with_slug("timing", "clip lengths from the voice")
     sp.add_argument("--model")
     sp = sub.add_parser("frames", help="keyframes")
-    sp.add_argument("action", choices=["prompts", "import", "kie", "gemini", "higgsfield"])
+    sp.add_argument("action", choices=["prompts", "check", "import", "kie", "gemini", "higgsfield"])
     sp.add_argument("slug")
     sp.add_argument("frame", nargs="?")
     sp.add_argument("file", nargs="?")
     sp.add_argument("--source", default="flow")
     sp.add_argument("--approve-usd", type=float)
     sp.add_argument("--all", action="store_true")
+    sp.add_argument("--reviewed", action="store_true", help="the still passed `frames check` by a separate reviewer")
     sp = sub.add_parser("clips", help="Higgsfield clips")
     sp.add_argument("action", choices=["estimate", "run"])
     sp.add_argument("slug")

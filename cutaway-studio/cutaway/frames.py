@@ -66,6 +66,39 @@ def prompt_for(data, frame):
     return f"{style} {CONSISTENCY}{body}{extra}".strip()
 
 
+def checklist(data, frame):
+    """Yes/no questions a reviewer answers by LOOKING at the still, one by one. Any 'no' (or
+    any 'yes' on a must-be-NO question) means remake. Built from the frame's state, the parts,
+    the world rules, the script line it illustrates and the frame's own `checks`."""
+    lines = {str(l["id"]): l["text"] for l in data.get("lines", [])}
+    fmap = frame_map(data)
+    first = data["frames"][0]["id"] if data.get("frames") else None
+    qs = []
+    if frame.get("state") and str(frame["state"]) in lines:
+        qs.append(f"With the sound off, does the picture SHOW what this line says has happened: "
+                  f"\"{lines[str(frame['state'])]}\"?")
+    for c in frame.get("checks", []):
+        qs.append(c)
+    built, missing = build_state(data, frame)
+    if frame.get("wide"):
+        for b in built:
+            qs.append(f"Is this clearly visible, complete and connected as described: {b}?")
+    for m in missing:
+        qs.append(f"MUST BE NO: is any part of this visible anywhere: {m}?")
+    ref = fmap.get((frame.get("refs") or [None])[0], {})
+    if frame.get("refs"):
+        if frame.get("view") and ref.get("view") and frame["view"] != ref.get("view"):
+            qs.append(f"Has the camera moved exactly as described ({frame.get('camera', 'closer')}), with every "
+                      f"object, colour and direction unchanged from {ref.get('id')}?")
+        else:
+            qs.append(f"Put it next to {frame['refs'][0]}: same camera angle, same houses, road, fields and pit "
+                      f"shape, and nothing that was there before has gone or moved?")
+    if data.get("rules"):
+        qs.append("MUST BE NO: does anything break these rules: " + " ".join(data["rules"]))
+    qs.append(f"Is it as sharp and clean as {first} (not grainy, blurry or smeared), with no text or labels?")
+    return qs
+
+
 def plan(project, data):
     """One entry per frame: prompt, reference files to attach, and whether it's ready to make."""
     out = []
