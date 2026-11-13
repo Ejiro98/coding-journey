@@ -786,7 +786,8 @@ class LandfillPlanTests(unittest.TestCase):
     def test_not_yet_keeps_a_same_line_part_out(self):
         a = next(f for f in LF["frames"] if f["id"] == "L09a")
         built, missing = frames.build_state(LF, a)
-        self.assertTrue(any("grey clay layer and black plastic sheet" in b for b in built))
+        self.assertTrue(any("cap's grey clay layer" in b for b in built))
+        self.assertTrue(any("cap's black plastic sheet" in b for b in built))
         self.assertTrue(any("blanket of brown soil" in m for m in missing))
         b = next(f for f in LF["frames"] if f["id"] == "L09")
         built, _ = frames.build_state(LF, b)

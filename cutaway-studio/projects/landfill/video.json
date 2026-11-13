@@ -127,13 +127,19 @@
     }
   ],
   "parts": {
-    "liner": {
+    "clay liner": {
       "aliases": [
-        "clay",
+        "clay"
+      ],
+      "built_in": "4",
+      "looks": "a grey clay layer lining the pit's floor and walls"
+    },
+    "plastic liner": {
+      "aliases": [
         "plastic sheet"
       ],
       "built_in": "4",
-      "looks": "a clay layer and black plastic liner in the pit"
+      "looks": "a black plastic sheet laid over the clay"
     },
     "drainage": {
       "aliases": [
@@ -164,13 +170,20 @@
       "built_in": "12",
       "looks": "a small engine building with a chimney at the pit's LEFT edge, with a power pole beside it and a line of power poles running to the houses (wires are too thin to see, so poles show the power)"
     },
-    "cap": {
+    "cap clay": {
+      "aliases": [
+        "more clay"
+      ],
+      "built_in": "14",
+      "looks": "the cap's grey clay layer over the whole top of the full pit"
+    },
+    "cap sheet": {
       "aliases": [
         "cap",
         "another plastic sheet"
       ],
       "built_in": "14",
-      "looks": "the cap's grey clay layer and black plastic sheet laid over the whole top of the full pit"
+      "looks": "the cap's black plastic sheet over that clay"
     },
     "cap soil": {
       "aliases": [
@@ -271,6 +284,24 @@
       ]
     },
     {
+      "id": "L01s",
+      "view": "pit",
+      "zoom": 1,
+      "state": "3",
+      "wide": true,
+      "refs": [
+        "L01b"
+      ],
+      "shows": "Exactly the same picture as the reference, a moment earlier: a low heap of trash is still left at one end of the pit floor, and the excavator's bucket is lowered into it. Same sunny sky, same truck, pit shape, soil and clean blue band.",
+      "checks": [
+        "Is there a low heap of trash left at one end of the pit floor, with the excavator's bucket in it?",
+        "Is everything else EXACTLY as in L01b (sky, truck, pit shape, soil, blue band)?",
+        "MUST BE NO: is there any rain, liquid, stain, or anything in the blue band?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "So scoop the trash back out (the last of it)"
+    },
+    {
       "id": "L01b",
       "view": "pit",
       "zoom": 1,
@@ -293,6 +324,26 @@
         "the rain",
         "the dark trail in the soil and the stain in the water"
       ]
+    },
+    {
+      "id": "L01c",
+      "view": "pit",
+      "zoom": 1,
+      "state": "4",
+      "wide": true,
+      "refs": [
+        "L02"
+      ],
+      "not_yet": [
+        "plastic liner"
+      ],
+      "shows": "Exactly the same picture as the reference, a moment earlier: the black plastic sheet is not there yet, so the pit's floor and walls show a smooth grey clay layer. Everything else identical.",
+      "checks": [
+        "Is the black sheet gone, with a smooth grey clay layer covering the pit's floor and walls?",
+        "Is everything else EXACTLY as in L02 (pit shape, rim, camera, town, soil, blue band)?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "line the hole with thick clay (the plastic sheet comes next)"
     },
     {
       "id": "L02",
@@ -432,6 +483,24 @@
       ]
     },
     {
+      "id": "L07pre",
+      "view": "pit",
+      "zoom": 1,
+      "state": "10",
+      "wide": true,
+      "refs": [
+        "L07"
+      ],
+      "shows": "Exactly the same picture as the reference, a moment earlier: the four gas pipes and the pipe joining them are not there yet; the soil top is smooth and bare. The drilling rig is parked at the back rim as in the reference. Everything else identical.",
+      "checks": [
+        "Are the gas pipes and the joining pipe gone, with a smooth bare soil top?",
+        "Is the drilling rig still parked at the back rim, as in L07?",
+        "Is everything else EXACTLY as in L07 (fill level, liner, pump box, riser, town)?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "(the drilling rig has arrived; nothing drilled yet)"
+    },
+    {
       "id": "L07",
       "view": "pit",
       "zoom": 1,
@@ -501,6 +570,27 @@
         "MUST BE NO: is there any clay layer or black plastic sheet ON TOP of the soil?"
       ],
       "big_change": true
+    },
+    {
+      "id": "L09apre",
+      "view": "pit",
+      "zoom": 1,
+      "state": "14",
+      "wide": true,
+      "refs": [
+        "L09a"
+      ],
+      "shows": "Exactly the same picture as the reference, a moment earlier: the black plastic sheet is not there yet, so a smooth grey clay layer covers the whole top of the full pit, with the four pipe heads poking through it. Everything else identical.",
+      "checks": [
+        "Is the black sheet gone, with a smooth grey clay layer over the whole top and the four pipe heads poking through?",
+        "Is everything else EXACTLY as in L09a (cut face, buildings, poles, pump box, town)?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "So seal it with more clay (the plastic sheet comes next)",
+      "not_yet": [
+        "cap sheet",
+        "cap soil"
+      ]
     },
     {
       "id": "L09a",
@@ -615,9 +705,10 @@
       "lines": [
         "4"
       ],
-      "from": "L01g",
+      "from": "L01s",
       "to": "L01b",
-      "motion": "The rain stops and the clouds clear to a sunny sky. An empty truck and an excavator drive up; the excavator scoops the trash and dirty soil into the truck, digging the pit deeper, and the dark stain fades."
+      "motion": "The excavator lifts the last of the trash out of the pit and drops it into the truck.",
+      "cut": true
     },
     {
       "id": "C04b",
@@ -625,9 +716,10 @@
         "4"
       ],
       "cue": "hole",
-      "from": "L01b",
+      "from": "L01c",
       "to": "L02",
-      "motion": "The excavator and truck drive away. The pit floor is levelled flat, then a grey clay layer and a black plastic sheet are spread over the floor and walls, up over the rim."
+      "motion": "A black plastic sheet is unrolled over the grey clay, covering the pit's floor and walls.",
+      "cut": true
     },
     {
       "id": "C05",
@@ -705,10 +797,11 @@
       "lines": [
         "11"
       ],
-      "from": "L06",
+      "from": "L07pre",
       "to": "L07",
-      "motion": "The bulldozer drives away. A small drilling rig drives up to the back rim and drills four holes into the trash; white pipes are lowered in and a pipe on the soil joins their tops and runs to the left rim.",
-      "model": "seedance25"
+      "motion": "The drilling rig at the back rim drills four holes into the trash; white pipes are lowered into them and a pipe laid on the soil joins them and runs to the left rim.",
+      "model": "seedance25",
+      "cut": true
     },
     {
       "id": "C12",
@@ -733,9 +826,10 @@
       "lines": [
         "14"
       ],
-      "from": "L08b",
+      "from": "L09apre",
       "to": "L09a",
-      "motion": "The rain stops and the drilling rig drives away. A layer of grey clay is spread over the whole top of the full pit, then a black plastic sheet is rolled out over it."
+      "motion": "A black plastic sheet is unrolled over the grey clay, covering the whole top of the full pit; the pipe heads poke through it.",
+      "cut": true
     },
     {
       "id": "C14b",
