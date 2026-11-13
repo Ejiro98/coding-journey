@@ -204,6 +204,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   turned the drip into a waterfall, and laid the sheet before the clay → count the changes per clip in the plan: more
   than one (two at most for a 4-5 s clip) means a new still in between or a cut. Weather and machines arriving or
   leaving are changes too.
+- Landfill C04 (2nd structure, $0.21): a big trash heap and one excavator bucket — Kling dissolved the heap instead of
+  lifting it and morphed the excavator into another machine and back → a mechanical action must be physically possible
+  in the clip's length (one bucketful per scoop); for a 1.5 s beat, a still-to-still fade may tell it better than a clip.
+- Landfill C04b: the plastic roll faded in at 0.2 s on a cut → a free `clips trim --start` removed it; check the first
+  half-second of every cut clip for pop-ins.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
