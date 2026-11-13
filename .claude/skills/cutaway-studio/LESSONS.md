@@ -65,6 +65,9 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   question; and the buried joint can never be seen → a wide still only asks what is visible at that scale (liquid into a
   pipe belongs to the close-up, L04); once fill covers a connection, ask for its visible ends (pipe in the gravel at the
   cut face, riser coming out at the corner and into the box), not the hidden middle.
+- Landfill L01g (3 tries on kie.ai, $0.27): try 2 passed every question except "the trail widens as it goes down" (a
+  degree); the extra sentence for try 3 fixed the trail but reshaped the pit floor into a square slab → don't ask for a
+  shape degree ("widening"); ask for what a viewer reads ("one unbroken dark trail from the pit to the blue band").
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
