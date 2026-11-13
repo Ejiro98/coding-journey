@@ -172,6 +172,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - The test ran Seedance at 480p, so the paid test clip couldn't be used in the 720p video → run
   hard-shot tests at the video's resolution; the winning clip then IS the real clip (copy
   `compare/<model>/<clip>.mp4` to `clips/<clip>.mp4`) and nothing is paid twice.
+- Landfill C01/C02 ($0.68, both failed): C01 was a hold clip with no end still, so Kling invented the NEXT story beat
+  (a blue stream pouring from the pit through the soil into the groundwater) and lowered the truck bed like a rewind;
+  C02 is chained to C01's last frame, so it inherited the stream and had to make it vanish → a hold clip must say what
+  stays the same ("nothing else moves; no liquid anywhere"), or end on its own start still; and a failed clip means
+  re-checking the next chained clip too.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
