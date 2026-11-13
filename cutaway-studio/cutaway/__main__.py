@@ -139,7 +139,7 @@ def cmd_clips(p, args):
             print(f"note: {n}")
         for r in rows:
             print(f"{r['clip_id']}: {r['duration']}s on {r['model']} ({r['why']})  ${r['usd']:.3f}")
-        print(f"TOTAL ${total:.2f}  (spent so far ${ledger.spent(p):.2f}, cap ${data['budget']['cap_usd']:.2f})")
+        print(f"TOTAL ${ledger.cents_up(total):.2f}  (spent so far ${ledger.spent(p):.2f}, cap ${data['budget']['cap_usd']:.2f})")
         return 0
     made = clp.run(p, data, client, args.approve_usd, args.model, args.only, next_n=args.next)
     print(f"Made {len(made)} clip(s). {ledger.summary(p, data)}")
@@ -158,7 +158,7 @@ def cmd_compare(p, args):
         rows, total = cmp.estimate(p, data, client, models, args.clips)
         for r in rows:
             print(f"{r['clip']} on {r['model']}: {r['duration']}s  ${r['usd']:.3f}")
-        print(f"TOTAL ${total:.2f}. To run: add --approve-usd {total:.2f}")
+        print(f"TOTAL ${ledger.cents_up(total):.2f}. To run: add --approve-usd {ledger.cents_up(total):.2f}")
         return 0
     out = cmp.run(p, data, client, models, args.approve_usd, args.clips)
     print(f"Side by side (left to right {', '.join(models)}): {out}")

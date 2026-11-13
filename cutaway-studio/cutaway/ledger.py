@@ -8,6 +8,7 @@ Every estimate and spend is appended to projects/<slug>/ledger.jsonl.
 """
 
 import json
+import math
 import time
 
 
@@ -46,18 +47,23 @@ def spent(project):
     return round(total, 4)
 
 
+def cents_up(usd):
+    """Round a dollar amount UP to the cent, so an approval of the printed figure always covers it."""
+    return math.ceil(round(float(usd) * 100, 6)) / 100
+
+
 def guard(project, data, estimate_usd, approve_usd):
     """Raise BudgetError unless this spend is approved and within the cap."""
     cap = float(data.get("budget", {}).get("cap_usd", 0))
     already = spent(project)
     if approve_usd is None:
         raise BudgetError(
-            f"Estimated cost is ${estimate_usd:.2f}. Ask the viewer, then re-run with "
-            f"--approve-usd {estimate_usd:.2f} (or more) once they say yes."
+            f"Estimated cost is ${cents_up(estimate_usd):.2f}. Ask the viewer, then re-run with "
+            f"--approve-usd {cents_up(estimate_usd):.2f} (or more) once they say yes."
         )
     if estimate_usd > float(approve_usd) + 1e-9:
         raise BudgetError(
-            f"Estimate ${estimate_usd:.2f} is more than the approved ${float(approve_usd):.2f}. "
+            f"Estimate ${cents_up(estimate_usd):.2f} is more than the approved ${float(approve_usd):.2f}. "
             "Ask the viewer to approve the new amount."
         )
     if cap and already + estimate_usd > cap + 1e-9:

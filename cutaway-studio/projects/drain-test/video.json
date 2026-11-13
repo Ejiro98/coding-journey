@@ -2,7 +2,7 @@
   "slug": "drain-test",
   "title": "MODEL TEST ONLY - recreates two beats of Hidden By Design's drainage video. Never post.",
   "budget": {
-    "cap_usd": 3.0
+    "cap_usd": 3.35
   },
   "video": {
     "model": "wan3",

@@ -752,3 +752,12 @@ class PerClipModelTests(unittest.TestCase):
     def test_landfill_uses_kling_and_documents_the_hard_shot_test(self):
         self.assertEqual(LF["video"]["model"], "kling-o3")
         self.assertIn("--clips C08", LF["tests"][0]["command"])
+
+
+class CentsUpTests(unittest.TestCase):
+    def test_printed_approval_always_covers_the_estimate(self):
+        self.assertEqual(ledger.cents_up(1.234), 1.24)
+        self.assertEqual(ledger.cents_up(1.23), 1.23)
+        self.assertEqual(ledger.cents_up(0.6000000001), 0.6)
+        p, d = make_project()
+        self.assertTrue(ledger.guard(p, d, 1.234, ledger.cents_up(1.234)))
