@@ -728,7 +728,7 @@
       ],
       "from": "L02",
       "to": "L03",
-      "motion": "Gravel pours over the floor of the lined pit; white pipes full of holes are laid in it and joined to one white pipe that runs up the back-right corner to a small green pump box at the rim."
+      "motion": "An excavator bucket pours gravel over the floor of the lined pit. Then white pipes full of holes slide down the back-right slope into the gravel, joined to one white pipe up the back-right corner, and the small green pump box is lowered onto the rim. Every piece moves in from the edge; nothing appears from nowhere."
     },
     {
       "id": "C06",
@@ -737,7 +737,7 @@
       ],
       "from": "L03",
       "to": "L03b",
-      "motion": "Two yellow dump trucks drive up to the back rim and tip their trash into the lined pit, on top of the gravel and pipes, until the bottom third is covered; their beds stay raised."
+      "motion": "Two yellow dump trucks reverse up to the back rim and tip their beds toward the pit; trash slides off the back of each bed down onto the gravel at the back of the pit. Only the two trucks and the falling trash move. Nothing leaks: the liner, clay, soil and groundwater stay clean."
     },
     {
       "id": "C06b",
@@ -747,7 +747,7 @@
       "cue": "juice",
       "from": "L04pre",
       "to": "L04",
-      "motion": "Dark juice seeps down through the trash: the gravel around the white pipe slowly darkens and the pipe's holes turn dark. Nothing pours or streams.",
+      "motion": "From the first frame, the gravel around the white pipe slowly darkens from the top down, a dark brown stain spreading through the stones, and the pipe's holes turn dark. Nothing flows along or over the pipe; the pipe itself stays white.",
       "cut": true
     },
     {
@@ -758,7 +758,7 @@
       "cue": "blows",
       "from": "L05pre",
       "to": "L05",
-      "motion": "Wind lifts plastic bags out of the loose trash and blows them toward the houses; a flock of seagulls swoops in and circles low over the trash.",
+      "motion": "A light wind lifts three plastic bags off the top of the trash; they drift up over the rim toward the houses. White seagulls glide in from the sky at the top of the frame and land on the trash. The trash pile itself stays still.",
       "cut": true
     },
     {

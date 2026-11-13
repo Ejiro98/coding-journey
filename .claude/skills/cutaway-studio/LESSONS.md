@@ -209,6 +209,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   in the clip's length (one bucketful per scoop); for a 1.5 s beat, a still-to-still fade may tell it better than a clip.
 - Landfill C04b: the plastic roll faded in at 0.2 s on a cut → a free `clips trim --start` removed it; check the first
   half-second of every cut clip for pop-ins.
+- Landfill C05-C07 run ($3.81): Kling turned "pipes are laid" into pipes growing out of the gravel, and "bags lift in the
+  wind" into the whole pile erupting; Seedance failed C05 too (ghost pipe, dissolving gravel) but passed C07 after free
+  trims of an 8 px snap at each end. Several clips also started late (nothing moving for ~2 s), fixed for free with
+  clips trim --start when the assembly's 1.25x slow-down still fills the beat → expect late starts; trim before remaking.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
