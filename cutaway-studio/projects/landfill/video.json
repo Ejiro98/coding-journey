@@ -10,7 +10,7 @@
     "#3DAnimation"
   ],
   "budget": {
-    "cap_usd": 17.0
+    "cap_usd": 18.5
   },
   "voice": {
     "provider": "elevenlabs",
@@ -768,8 +768,7 @@
       ],
       "from": "L05",
       "to": "L06",
-      "motion": "The plastic bags blow away. A yellow bulldozer drives down into the pit from the right rim, crushes the loose trash flat, then pushes a thick layer of brown soil over it; the seagulls fly off.",
-      "model": "seedance25"
+      "motion": "The plastic bags blow away. A yellow bulldozer drives down into the pit from the right rim, crushes the loose trash flat, then pushes a thick layer of brown soil over it; the seagulls fly off."
     },
     {
       "id": "C09",
@@ -800,7 +799,6 @@
       "from": "L07pre",
       "to": "L07",
       "motion": "The drilling rig at the back rim drills four holes into the trash; white pipes are lowered into them and a pipe laid on the soil joins them and runs to the left rim.",
-      "model": "seedance25",
       "cut": true
     },
     {
