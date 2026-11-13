@@ -53,6 +53,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   (the model drew juice leaking through the liner) → a still that shows only part of its line gets
   `line_part`; questions only ask about parts that would really be visible; before adding a
   failed answer to a prompt, check it isn't asking for something impossible.
+- Landfill L06 try 2: asked for "a pipe up the side slope", the model drew a second pipe up the
+  front cut face that ends in mid-air → pin every part to a place in a named still ("ONE riser at the
+  BACK-RIGHT corner, exactly where it is in L03") and add "MUST BE NO: any other pipe?".
+- Landfill L01g: the question demanded a shape ("wider at the bottom") no viewer would miss → only
+  require what matters to the story (liquid goes DOWN from the pit INTO the water).
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
