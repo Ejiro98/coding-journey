@@ -144,6 +144,22 @@ def cmd_clips(p, args):
     return 0
 
 
+def cmd_compare(p, args):
+    from . import compare as cmp
+    data = p.load()
+    models = [m.strip() for m in args.models.split(",")]
+    client = hf.Client()
+    if args.estimate or args.approve_usd is None:
+        rows, total = cmp.estimate(p, data, client, models, args.clips)
+        for r in rows:
+            print(f"{r['clip']} on {r['model']}: {r['duration']}s  ${r['usd']:.3f}")
+        print(f"TOTAL ${total:.2f}. To run: add --approve-usd {total:.2f}")
+        return 0
+    out = cmp.run(p, data, client, models, args.approve_usd, args.clips)
+    print(f"Side by side (left to right {', '.join(models)}): {out}")
+    return 0
+
+
 def cmd_assemble(p, args):
     data = p.load()
     rep = asm.assemble(p, data, draft=args.draft)
@@ -292,6 +308,11 @@ def main(argv=None):
     sp.add_argument("--only", help="comma-separated clip ids, e.g. C01,C02")
     sp.add_argument("--next", type=int, help="make only the next N clips in order (review, then continue)")
     sp.add_argument("--approve-usd", type=float)
+    sp = with_slug("compare", "same clips on several models, side by side")
+    sp.add_argument("--models", default="wan3,seedance2,seedance25")
+    sp.add_argument("--clips", help="clip ids (default: the first two)")
+    sp.add_argument("--estimate", action="store_true")
+    sp.add_argument("--approve-usd", type=float)
     sp = with_slug("assemble", "build the MP4")
     sp.add_argument("--draft", action="store_true", help="ignore clips; stills only (free preview)")
     sp = sub.add_parser("quota", help="Flow free-image counter")
@@ -310,6 +331,7 @@ def main(argv=None):
         return {
             "lint": cmd_lint, "status": cmd_status, "ledger": cmd_ledger, "voice": cmd_voice,
             "timing": cmd_timing, "frames": cmd_frames, "clips": cmd_clips, "assemble": cmd_assemble,
+            "compare": cmd_compare,
         }[args.cmd](p, args)
     except (ProjectError, ledger.BudgetError, ValueError) as e:
         print(f"Stopped: {e}", file=sys.stderr)

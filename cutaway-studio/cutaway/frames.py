@@ -45,6 +45,12 @@ def prompt_for(data, frame):
                   + "; ".join(missing) + ".")
     if not frame.get("refs"):
         return f"{style} {body}{extra}".strip()
+    first_ref = frame_map(data).get(frame["refs"][0], {})
+    if frame.get("view") and first_ref.get("view") and frame["view"] != first_ref["view"]:
+        moved = (f"Use the reference image(s) as the same scene a moment later. Keep every object, material, "
+                 f"colour and the lighting identical, but the camera has moved: "
+                 f"{frame.get('camera', 'closer to the subject')}. Then: ")
+        return f"{style} {moved}{body}{extra}".strip()
     return f"{style} {CONSISTENCY}{body}{extra}".strip()
 
 

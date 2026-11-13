@@ -581,3 +581,50 @@ class LedgerBreakdownTests(unittest.TestCase):
         self.assertIn("C02      2x  $ 0.900", out)
         self.assertIn("0.0750", out)                              # $/sec for C02
         self.assertIn("$0.75 first attempts + $0.45 remakes", out)
+
+
+DT = json.loads((STUDIO / "projects" / "drain-test" / "video.json").read_text())
+
+
+class ShotCheckTests(unittest.TestCase):
+    def test_drain_test_shots_pass(self):
+        rep = lint.check_shots(DT)
+        self.assertFalse(any(l == "error" for l, _ in rep), rep)
+
+    def test_big_zoom_and_missing_move_are_errors(self):
+        d = copy.deepcopy(DT)
+        d["frames"][3]["zoom"] = 5
+        d["clips"][1].pop("move")
+        msgs = " ".join(m for l, m in lint.check_shots(d) if l == "error")
+        self.assertIn("zooms 5.0x", msgs)
+        self.assertIn("has no 'move'", msgs)
+
+    def test_moved_frame_prompt_says_camera_moved(self):
+        d04 = next(f for f in DT["frames"] if f["id"] == "D04")
+        p = frames.prompt_for(DT, d04)
+        self.assertIn("the camera has moved", p)
+        self.assertNotIn("same camera position", p)
+
+
+@unittest.skipUnless(HAS_FFMPEG, "ffmpeg not installed")
+class CompareTests(unittest.TestCase):
+    def test_two_models_side_by_side_with_own_chains(self):
+        from cutaway import compare
+        fake = FakeHiggsfield()
+        old, http.transport = http.transport, fake
+        try:
+            p, d = make_project(DT)
+            for fid in ("D02", "D03", "D04"):
+                _png(p.path("frames", f"{fid}.png"))
+            client = hf.Client("id", "secret", sleep=lambda s: None)
+            rows, total = compare.estimate(p, d, client, ["wan3", "seedance2"])
+            self.assertEqual(len(rows), 4)
+            with self.assertRaises(ledger.BudgetError):
+                compare.run(p, d, client, ["wan3", "seedance2"], approve_usd=None)
+            out = compare.run(p, d, client, ["wan3", "seedance2"], approve_usd=total, log=lambda *_: None)
+            self.assertTrue(out.exists())
+            self.assertTrue((p.dir / "compare" / "seedance2" / "T2.mp4").exists())
+            self.assertTrue((p.dir / "compare" / "wan3" / "T2_start.png").exists())   # chained per model
+            self.assertAlmostEqual(ledger.spent(p), total)
+        finally:
+            http.transport = old

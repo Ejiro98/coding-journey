@@ -22,8 +22,8 @@ REGIONAL_PHRASES = {
     r"\bgas station\b": "fine for the US; UK says petrol station. OK if the caption covers both",
 }
 
-TARGET_WORDS = (290, 315)
-HARD_WORDS = (250, 340)
+TARGET_WORDS = (250, 300)   # their videos: 235-327 words, newest 235-287
+HARD_WORDS = (230, 330)
 HOOK_MAX_WORDS_WARN = 16
 HOOK_MAX_WORDS_ERROR = 18
 
@@ -78,27 +78,23 @@ def check(data):
     # 3. Length
     total = len(all_words)
     if not (HARD_WORDS[0] <= total <= HARD_WORDS[1]):
-        err(f"{total} words. Aim for {TARGET_WORDS[0]}-{TARGET_WORDS[1]} (about 75-85s, over the 60s Creator Rewards minimum).")
+        err(f"{total} words. Aim for {TARGET_WORDS[0]}-{TARGET_WORDS[1]} (about 65-80s, over the 60s Creator Rewards minimum).")
     elif not (TARGET_WORDS[0] <= total <= TARGET_WORDS[1]):
         warn(f"{total} words; the sweet spot is {TARGET_WORDS[0]}-{TARGET_WORDS[1]}.")
     else:
         ok(f"{total} words")
 
     # 4. The But/So chain
-    starts = [l["text"].strip().split()[0].strip(",").lower() for l in lines if l["text"].strip()]
-    buts = sum(1 for s in starts if s == "but")
-    sos = sum(1 for s in starts if s == "so")
-    if buts < 5 or sos < 5:
-        warn(f"{buts} lines start with 'But' and {sos} with 'So'; their videos run 5-8 pairs.")
+    problems = [l for l in lines if l.get("role", "").upper().startswith("PROBLEM")]
+    fixes = [l for l in lines if l.get("role", "").upper().startswith("FIX")]
+    if len(problems) < 4 or len(fixes) < 4:
+        warn(f"{len(problems)} problems and {len(fixes)} fixes; their videos run 5-8 problem/fix pairs.")
     else:
-        ok(f"{buts} But / {sos} So pairs")
-    for l in lines:
-        role = l.get("role", "").upper()
-        t = l["text"].strip().lower()
-        if role.startswith("PROBLEM") and not t.startswith(("but", "and")):
+        ok(f"{len(problems)} problems / {len(fixes)} fix lines")
+    for l in problems:
+        if not l["text"].strip().lower().startswith(("but", "and")):
             warn(f"Line {l['id']} is a PROBLEM but doesn't start with 'But'.")
-        if role.startswith("FIX") and not t.startswith(("so", "that", "if", "then", "and")):
-            warn(f"Line {l['id']} is a FIX but doesn't start with 'So'.")
+    # Fixes may start "So you…", or with a plain verb ("Give it a slope", "Add a pump") like theirs.
 
     # 5. Ending
     if not any("congratulations" in l["text"].lower() for l in lines[-3:]):
@@ -123,6 +119,60 @@ def check(data):
 
     # 8. Every part is built before it's used
     report.extend(check_build_order(data))
+    # 9. Shots follow their animation method
+    report.extend(check_shots(data))
+    return report
+
+
+MOVES = ("dolly-in", "pull-back", "pan", "follow")
+
+
+def check_shots(data):
+    """Their method (measured): ~3 s beats, one change per clip, camera locked for most
+    clips, moves only moderate (about 2x closer, or following the object), back to the
+    master view. Big jumps in one clip make the model cut instead of moving."""
+    report = []
+    frames = {f["id"]: f for f in data.get("frames", [])}
+    clips = data.get("clips", [])
+    if not clips:
+        return report
+    if frames and not all("view" in f for f in frames.values()):
+        report.append(("warn", "Frames have no 'view'/'zoom', so camera moves can't be checked."))
+        return report
+    run = 0
+    for c in clips:
+        a, b = frames.get(c["from"], {}), frames.get(c.get("to") or "", {})
+        moving = bool(b) and a.get("view") != b.get("view")
+        if moving:
+            za, zb = float(a.get("zoom", 1)), float(b.get("zoom", 1))
+            ratio = max(za, zb) / max(min(za, zb), 0.01)
+            if c.get("move") not in MOVES:
+                report.append(("error", f"Clip {c['id']} changes view ({a.get('view')} -> {b.get('view')}) "
+                                        f"but has no 'move' ({', '.join(MOVES)})."))
+            if ratio > 2.2:
+                report.append(("error", f"Clip {c['id']} zooms {ratio:.1f}x in one clip; models cut instead "
+                                        "of moving. Add an in-between frame (keep moves to about 2x)."))
+            run += 1
+            if run == 3:
+                report.append(("warn", f"Three camera moves in a row ending at {c['id']}; their camera "
+                                       "settles on a view for several beats."))
+        else:
+            run = 0
+        m = c.get("motion", "")
+        if len(words(m)) > 45 or m.lower().count(" then ") > 1:
+            report.append(("warn", f"Clip {c['id']} motion is long ({len(words(m))} words); "
+                                   "their clips show ONE change each."))
+    try:
+        from . import timing
+        segs, _ = timing.segments(data, timing.estimated_words(data, 230), 0.8)
+        for sg in segs:
+            if sg["seconds"] > 7.5:
+                report.append(("warn", f"Clip {sg['clip']} runs ~{sg['seconds']:.1f}s; their beats are ~3-4 s. "
+                                       "Split the line into two clips (use a cue word)."))
+    except ValueError as e:
+        report.append(("error", str(e)))
+    if not any(lvl == "error" for lvl, _ in report):
+        report.append(("ok", "Shots follow the method (moderate moves, one change per clip)"))
     return report
 
 
