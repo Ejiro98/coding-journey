@@ -199,12 +199,12 @@
       "refs": [
         "L01"
       ],
-      "shows": "Exactly the same scene as the reference, but now rain is falling, the sky is grey, and the truck has gone. In the cut-away front of the pit, rainwater is soaking down through the trash and turning black: the lowest part of the trash is soaked dark, and a shallow pool of black liquid sits at the very bottom of the pit, on the bare dirt. The soil below the pit is still clean brown, and the groundwater band is still clean light blue.",
+      "shows": "Exactly the same scene as the reference, but now rain is falling, the sky is grey, and the truck has gone. Rainwater has run down through the trash and collected as a shallow pool of shiny black liquid at the very bottom of the pit, under the trash, clearly visible at the front edge of the cut-away. The soil below the pit is still clean brown, and the groundwater band is still clean light blue.",
       "checks": [
-        "Is rain clearly falling and the sky grey?",
-        "In the cut-away, is the bottom of the trash soaked dark with a shallow pool of black liquid at the very bottom of the pit?",
-        "MUST BE NO: has any black liquid gone below the pit into the soil, or into the blue band?",
-        "Is the pit still bare dirt with no lining, and the trash at the same level as L01?"
+        "Is rain clearly falling and the sky grey, with the truck gone?",
+        "At a normal phone size, can you see a black pool at the very bottom of the pit, under the trash?",
+        "MUST BE NO: is any black liquid dripping out below the pit into the soil, or in the blue band?",
+        "Is the pit still bare dirt with no lining, with about the same amount of trash as L01?"
       ]
     },
     {

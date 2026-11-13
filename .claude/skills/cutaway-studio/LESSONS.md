@@ -43,6 +43,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Landfill L06/L07: the maker passed its own stills ("a little fuller than half", pipe link not
   checked) → a separate reviewer agent answers `frames check` questions; specific yes/no questions
   per still, written before the still is made, not a general checklist.
+- Landfill L01r (3 failed tries): the questions asked for a degree ("bottom of the trash soaked
+  dark") that image models can't draw reliably, and one try leaked liquid below the pit early →
+  ask only for things a viewer can point at ("a black pool at the bottom"); put one change in each
+  still and save the next change for the next still (the leak belongs in L01g).
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
