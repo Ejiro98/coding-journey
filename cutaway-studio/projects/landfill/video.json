@@ -217,7 +217,7 @@
         "L01r",
         "L01"
       ],
-      "shows": "Same scene, still raining. Black liquid has dripped out of the bottom of the pit and soaked down through the soil below it in a dark, spreading trail, wider at the bottom, like an upside-down ink stain. The trail reaches the light-blue groundwater band, where a dark grey cloud is spreading sideways along the band toward the houses.",
+      "shows": "Same scene, still raining. Black liquid has dripped out of the bottom of the pit and soaked down through the soil below it in a dark, spreading trail, wider at the bottom, like an upside-down ink stain. The trail reaches the light-blue groundwater band, where a dark grey cloud is spreading sideways along the band toward the houses. Both yellow bulldozers stay parked exactly where they are in L01r. The dark stain spreads out like ink soaking into the soil: soft blurry edges, wider at the bottom than at the top, never a straight-edged column.",
       "checks": [
         "Does one continuous dark trail run from the bottom of the pit down through the soil to the blue band?",
         "Is there a dark cloud spreading sideways inside the blue band, toward the houses?",
@@ -265,7 +265,7 @@
         "L02",
         "L01"
       ],
-      "shows": "A layer of grey gravel now covers the bottom of the lined pit, with white pipes full of small holes running through the gravel to a pump pipe at the edge."
+      "shows": "A thick, even layer of grey gravel now covers the whole floor of the lined pit, lying on top of the black plastic sheet. White pipes full of small holes lie in the gravel and join into one solid pipe that climbs up the inside slope of the pit, over the rim, to a small pump box on the ground at the pit's edge. No pipe goes through the black sheet or down into the soil. The grey clay band under the black sheet is still visible where the front of the pit is cut away."
     },
     {
       "id": "L03b",
@@ -277,7 +277,7 @@
         "L03",
         "L01"
       ],
-      "shows": "The lined pit now has a layer of loose trash covering the bottom third, lying on top of the gravel and pipes; the gravel, the white pipes and the liner are still visible in the cut-away below the trash. Two garbage trucks stand at the rim, their beds tipped up and empty. No plastic bags in the air, no seagulls yet.",
+      "shows": "The lined pit now has a layer of loose trash covering the bottom third, lying on top of the gravel and pipes; the gravel, the white pipes and the liner are still visible in the cut-away below the trash. Two garbage trucks stand at the rim, their beds tipped up and empty. No plastic bags in the air, no seagulls yet. Copy the reference L03 exactly (same camera, houses, road, bulldozer, pit outline, pump box and the light-blue groundwater band); only add the trash and the two trucks. Thin dark streaks of juice run down through the trash and stop in the gravel; the black liner below stays whole, with clean clay and soil under it. The white pipe in the gravel turns up at the right corner and, fully visible, climbs the slope into the green box.",
       "checks": [
         "Is only the bottom third filled with trash, with the gravel, white pipes and liner still visible below it in the cut-away?",
         "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?",
@@ -293,8 +293,8 @@
       "refs": [
         "L03b"
       ],
-      "camera": "it has moved down and about twice as close to the bottom of the pit, with the pipes still running left to right exactly as before",
-      "shows": "Trash now fills the lower part of the lined pit. Dark liquid trickles down through the trash into the gravel and into the holes of a white drainage pipe, flowing away along it."
+      "camera": "it has moved down and twice as close: now the lower half of the pit and its cut-away front face fill the whole picture, the houses, road and sky are out of frame above, and the pipes still run left to right exactly as before",
+      "shows": "Trash bags and loose trash now cover the whole gravel floor of the lined pit. The cut-away front face shows, from top to bottom: trash, grey gravel with the white pipe full of holes in it, the black plastic sheet, the grey clay, then brown soil. Thin drips of dark brown liquid trickle down between the trash bags, soak into the gravel and run into the holes of the white pipe; dark liquid is visible inside the pipe, flowing to the right. No liquid on top of the gravel, and the black sheet, clay and soil below stay completely dry. The black sheet lies smoothly against the pit walls."
     },
     {
       "id": "L05",
@@ -306,7 +306,7 @@
         "L03b",
         "L01"
       ],
-      "shows": "The lined pit is one third full of loose trash. Plastic bags are blowing up out of it toward the houses, and a flock of seagulls circles and lands on the trash."
+      "shows": "The lined pit is one third full of loose trash, piled on top of the gravel. The white pipes stay buried in the gravel under the trash, with only the solid pipe still climbing the right-hand slope to the green pump box. The cut-away front face still shows, from top to bottom: loose trash, grey gravel, the black plastic sheet, the grey clay band, then brown soil. A few plastic bags are blowing up out of the pit toward the houses, and a flock of white seagulls circles and lands on the trash."
     },
     {
       "id": "L06",
@@ -319,7 +319,7 @@
         "L03",
         "L01"
       ],
-      "shows": "The pit is only half full: the soil top is about halfway down, and the black liner wall shows clearly above it all the way round. Its ENTIRE top surface is now a smooth, flat layer of brown soil: no trash is visible anywhere on the surface, no plastic bags, no seagulls. A yellow bulldozer, small compared to the pit, is smoothing the last strip of soil at one corner. In the cut-away front of the pit the layers are clearly visible: flattened trash, then a band of brown soil, then flattened trash, then soil on top, like a layered cake, resting on the gravel and drainage pipes at the bottom.",
+      "shows": "The pit is only half full: the soil top is about halfway down, and the black liner wall shows clearly above it all the way round. Its ENTIRE top surface is now a smooth, flat layer of brown soil: no trash is visible anywhere on the surface, no plastic bags, no seagulls. A yellow bulldozer, small compared to the pit, is smoothing the last strip of soil at one corner. In the cut-away front of the pit the layers are clearly visible: flattened trash, then a band of brown soil, then flattened trash, then soil on top, like a layered cake, resting on the gravel and drainage pipes at the bottom. At the right end of the cut-away, the white pipe is visible the whole way: it rises from the gravel up through the layers to the surface, then over the rim into the green box. Crisp, sharp detail like L01, with no smeared or painterly areas.",
       "checks": [
         "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?",
         "Is the soil top clearly below the rim, with the black liner wall showing above the soil all the way round?",
