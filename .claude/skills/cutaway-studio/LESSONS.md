@@ -199,6 +199,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   in the stills, not the clip: give the start still the same sky as the end still and let the clip add only the rain.
 - Landfill C03: the end still L01g has drip streaks and a narrow column under the pit, so the model streamed liquid
   down the soil despite "seeps only" → an end still for seepage must show a soft-edged stain, no drips or columns.
+- Landfill C04/C04b ($0.41, both failed): 3-second clips each carried 3-5 changes (rain stops + sky clears + machines
+  arrive + pit emptied + stain clears; machines leave + clay + sheet). Kling dissolved the trash and the excavator,
+  turned the drip into a waterfall, and laid the sheet before the clay → count the changes per clip in the plan: more
+  than one (two at most for a 4-5 s clip) means a new still in between or a cut. Weather and machines arriving or
+  leaving are changes too.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
