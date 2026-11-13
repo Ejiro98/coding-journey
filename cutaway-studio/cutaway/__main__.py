@@ -185,14 +185,16 @@ def cmd_clips(p, args):
             print()
         return 0
     if args.action == "trim":
-        if not (args.only and args.end):
-            print("Usage: clips trim <slug> --only C01 --end 3.2   (free; keeps the first 3.2 s)")
+        if not (args.only and (args.end or args.start)):
+            print("Usage: clips trim <slug> --only C01 [--start 1.5] [--end 3.2]   (free)")
             return 2
-        dest, beat = clp.trim(p, data, args.only, args.end)
-        warn = "" if args.end >= 0.8 * beat else (f"  WARNING: the beat is {beat:.1f}s, so this will be slowed "
-                                                  "down or frozen; a remake is usually better.")
-        print(f"{args.only}: kept the first {args.end:.1f}s (original saved as {args.only}.untrimmed). "
-              f"The next chained clip is now out of date.{warn}")
+        dest, beat = clp.trim(p, data, args.only, args.end, args.start)
+        kept = (args.end or clp._duration(p.dir / "clips" / f"{args.only}.untrimmed.mp4")) - args.start
+        warn = "" if kept >= 0.8 * beat else (f"  WARNING: the beat is {beat:.1f}s, so this will be slowed "
+                                              "down or frozen; a remake is usually better.")
+        note = " The next chained clip is now out of date." if args.end else " Its last frame is unchanged."
+        print(f"{args.only}: kept {args.start:.1f}s to {args.end or 'the end'} ({kept:.1f}s; original saved as "
+              f"{args.only}.untrimmed).{note}{warn}")
         return 0
     client = hf.Client()
     if args.action == "estimate":
@@ -378,7 +380,8 @@ def main(argv=None):
     sp.add_argument("--only", help="comma-separated clip ids, e.g. C01,C02")
     sp.add_argument("--next", type=int, help="make only the next N clips in order (review, then continue)")
     sp.add_argument("--approve-usd", type=float)
-    sp.add_argument("--end", type=float, help="trim: keep the first N seconds")
+    sp.add_argument("--end", type=float, help="trim: keep up to N seconds")
+    sp.add_argument("--start", type=float, default=0.0, help="trim: cut the first N seconds")
     sp = with_slug("compare", "same clips on several models, side by side")
     sp.add_argument("--models", default="wan3,kling-o3,seedance2,seedance25")
     sp.add_argument("--resolution", default="480p",

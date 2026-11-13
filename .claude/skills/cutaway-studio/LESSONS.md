@@ -192,6 +192,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   froze → the hook needs a REAL change between two different stills (L00 truck bed down → L01 tipping).
   Clips are reliable when they move between two different pictures.
 
+- Landfill C02 (2 tries): the truck had to leave AND the rain start in one clip, so the rain came
+  2-3 s late → when something must leave between two beats, use a cut at a sentence break ("…a
+  landfill. | But…") from a still where it has already gone; a cut reads as time passing.
+
 ## Money
 - Elevator v1 ($15) and v2 ($20+): money spent before the story was right → free draft first,
   then 2 clips at a time with the estimate approved each time. Never skip.

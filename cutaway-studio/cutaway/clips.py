@@ -293,8 +293,8 @@ def _duration(path):
     return float(out or 0)
 
 
-def trim(project, data, clip_id, end_s):
-    """FREE: keep only the first `end_s` seconds of a clip (when the model went wrong near the end).
+def trim(project, data, clip_id, end_s=None, start_s=0.0):
+    """FREE: keep the part of a clip from `start_s` to `end_s` (cut a slow start, or an end that went wrong).
     Only worth it if what's left still fills most of the beat, or the assembly slows it down or
     freezes it. The next chained clip becomes out of date (it must start from the new last frame)."""
     src = project.clip_file(clip_id)
@@ -306,6 +306,7 @@ def trim(project, data, clip_id, end_s):
     keep = src.with_name(f"{clip_id}.untrimmed{src.suffix}")
     if not keep.exists():
         src.replace(keep)
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(keep), "-t", f"{end_s:.3f}", "-an",
+    span = ["-ss", f"{start_s:.3f}"] + (["-t", f"{end_s - start_s:.3f}"] if end_s else [])
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(keep), *span, "-an",
                     "-c:v", "libx264", "-pix_fmt", "yuv420p", str(src)], check=True)
     return src, beat

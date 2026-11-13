@@ -217,6 +217,24 @@
       "shows": "A plain dug pit of bare brown dirt, with no lining, half full of loose garbage bags and trash. A garbage truck at the rim is tipping more trash in."
     },
     {
+      "id": "L01d",
+      "view": "pit",
+      "zoom": 1,
+      "state": "1",
+      "wide": true,
+      "refs": [
+        "L01"
+      ],
+      "shows": "Exactly the same scene as the reference, a little later: the garbage truck has gone, and no trash is falling. The trash in the pit is the same. Same sunny sky, town, camera, soil and blue band.",
+      "checks": [
+        "Has the truck gone, with no trash falling?",
+        "Is everything else identical to L01: same pit, same trash, same town, sky, camera, soil and blue band?",
+        "MUST BE NO: is there any rain, liquid, or anything in the soil or the blue band?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "(a moment later: the dump is done and the truck has left)"
+    },
+    {
       "id": "L01r",
       "view": "pit",
       "zoom": 1,
@@ -543,9 +561,10 @@
         "2"
       ],
       "cue": "rains",
-      "from": "L01",
+      "from": "L01d",
       "to": "L01r",
-      "motion": "Rain starts at once and the sky darkens. The bottom of the trash darkens and black liquid collects on the pit floor. Nothing leaves the pit, and the truck doesn't move."
+      "motion": "Rain starts at once and the sky darkens. The bottom of the trash darkens and black liquid collects on the pit floor. Nothing leaves the pit.",
+      "cut": true
     },
     {
       "id": "C03",

@@ -361,6 +361,8 @@ class AssembleTests(unittest.TestCase):
         dest, beat = clips.trim(p, d, "C01", 2.0)
         self.assertAlmostEqual(assemble.probe_duration(dest), 2.0, delta=0.15)
         self.assertTrue(p.path("clips", "C01.untrimmed.mp4").exists())
+        dest, _ = clips.trim(p, d, "C01", None, 1.5)                 # cut the start of the original
+        self.assertAlmostEqual(assemble.probe_duration(dest), 3.5, delta=0.15)
 
     def test_caption_words_are_cleaned(self):
         ass = assemble.captions_ass([{"w": "rope,", "s": 0, "e": 0.3}, {"w": "snaps?", "s": 0.3, "e": 0.6}],
