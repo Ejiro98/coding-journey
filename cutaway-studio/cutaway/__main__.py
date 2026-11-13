@@ -87,7 +87,12 @@ def cmd_timing(p, args):
     print(timing.table(segs))
     reqs = [(c, s["seconds"], model) for c, s in zip(data["clips"], segs)]
     plan, unknown = clp.planning_total(reqs)
-    print(f"Planning cost for all clips on {model}: ~${plan:.2f}" + (f" (+ {len(unknown)} unpriced)" if unknown else ""))
+    print(f"Planning cost for all clips on {model} (price table): ~${plan:.2f}" + (f" (+ {len(unknown)} unpriced)" if unknown else ""))
+    rate = ledger.observed_rate(p, model)
+    if rate:
+        real = sum(hf.clip_duration(model, s) for _, s, _ in reqs) * rate
+        print(f"Using what you've really been charged (${rate}/s): ~${real:.2f} before any remakes")
+    print("The exact figure always comes from `clips estimate` (Higgsfield's own price).")
     return 0
 
 
@@ -248,6 +253,8 @@ def cmd_quota(args):
 
 def cmd_ledger(p, args):
     print(ledger.summary(p, p.load()))
+    print()
+    print(ledger.breakdown(p))
     return 0
 
 

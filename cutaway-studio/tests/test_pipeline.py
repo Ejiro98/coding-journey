@@ -566,3 +566,18 @@ class KieTests(unittest.TestCase):
         http.transport = FakeKie()
         from cutaway import kie
         self.assertEqual(kie.credits(), 1000.0)
+
+
+class LedgerBreakdownTests(unittest.TestCase):
+    def test_breakdown_separates_remakes(self):
+        p, d = make_project()
+        ledger.append(p, "spend", "higgsfield", "C01", 0.30)
+        ledger.append(p, "spend", "higgsfield", "C02", 0.45)
+        ledger.append(p, "spend", "higgsfield", "C02", 0.45)    # remade once
+        st = p.load_state()
+        st["clips"]["C02"] = {"model": "wan3", "body": {"duration": 6}}
+        p.save_state(st)
+        out = ledger.breakdown(p)
+        self.assertIn("C02      2x  $ 0.900", out)
+        self.assertIn("0.0750", out)                              # $/sec for C02
+        self.assertIn("$0.75 first attempts + $0.45 remakes", out)
