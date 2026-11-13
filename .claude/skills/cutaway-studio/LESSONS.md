@@ -106,6 +106,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   gravel, drain pipe and clay, and grew a stray pipe) → a big change in fill level is the still's ONE change: lead the
   prompt with it, keep the rest to "everything else exactly as in L08", and don't stack fix sentences. If it still
   won't move, split it into two stills (three-quarters full, then full).
+- Landfill L08b (3 failed tries): the standard "keep everything identical, change ONLY…" prompt
+  fights a BIG change (half full → full to the rim): the model kept L08's fill level or lost other
+  parts → mark such stills `"big_change": true` (the prompt then names what stays and says the
+  change is the point), lead with the change in one short sentence, and drop extras (wet streaks,
+  machines leaving) that add risk. If it still won't change, add an in-between reference still.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

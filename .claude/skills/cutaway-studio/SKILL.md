@@ -128,6 +128,9 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
 
 ## Step 4: Keyframes in Google Flow (free) (approval 3)
 `python3 -m cutaway frames prompts <slug>` prints each frame's prompt and the reference files.
+- **Big changes** (a pit filling up, a mound appearing): set `"big_change": true` on that still, lead its
+  `shows` with the change in one sentence, and keep extras out. Otherwise the usual "keep everything
+  identical" prompt makes the model refuse the change.
 - **The first still sets the shape every later still must copy, so keep it simple:** one clean
   box-shaped space with straight edges and a clear cut face, few vehicles, nothing that isn't in the
   story. Awkward steps and corners in it cause failed tries for the rest of the video.

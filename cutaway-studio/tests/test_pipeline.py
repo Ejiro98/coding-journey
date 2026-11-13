@@ -687,6 +687,14 @@ class LandfillPlanTests(unittest.TestCase):
         self.assertIn("when the trash goes back in", first)
         self.assertNotIn("pumped away", first)
 
+    def test_big_change_frame_does_not_say_keep_identical(self):
+        f = next(f for f in LF["frames"] if f["id"] == "L08b")
+        prompt = frames.prompt_for(LF, f)
+        self.assertIn("changes a lot", prompt)
+        self.assertNotIn("Change ONLY", prompt)
+        small = next(f for f in LF["frames"] if f["id"] == "L08")
+        self.assertIn("Change ONLY", frames.prompt_for(LF, small))
+
     def test_import_refused_without_review(self):
         from cutaway.__main__ import main
         import io, contextlib

@@ -28,6 +28,16 @@ CLOSE_STYLE = (
 )
 
 
+# For a still that changes a LOT (the pit fills to the rim, a mound appears). "Keep everything
+# identical" makes image models refuse the big change (landfill L08b: three tries kept the old fill
+# level), so this names what stays and lets the main subject change.
+BIG_CHANGE = (
+    "Use the reference image(s) for the same place: same camera position and angle, same town, houses, "
+    "road, fields, buildings, machines, pipes, lighting and style. But the main subject changes a lot, "
+    "and this change is the point of the picture: "
+)
+
+
 def build_state(data, frame):
     """Which parts exist in this frame, from the script line whose state it shows."""
     parts = data.get("parts", {})
@@ -63,6 +73,8 @@ def prompt_for(data, frame):
                  f"colour and the lighting identical, but the camera has moved: "
                  f"{frame.get('camera', 'closer to the subject')}. Then: ")
         return f"{style} {moved}{body}{extra}".strip()
+    if frame.get("big_change"):
+        return f"{style} {BIG_CHANGE}{body}{extra}".strip()
     return f"{style} {CONSISTENCY}{body}{extra}".strip()
 
 

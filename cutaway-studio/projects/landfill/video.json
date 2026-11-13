@@ -389,18 +389,17 @@
         "L08",
         "L01"
       ],
-      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the LEFT edge, with its line of power poles to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top. The drilling rig has gone. The flat white pipe from L08 still lies on the new soil top, joining all four stubs and running left over the rim to the grey drum and the engine building. The soil has been raised to the rim: no black liner wall shows above the soil anywhere, only the liner's thin top edge around the flat soil.",
+      "shows": "The pit is now filled right up to the rim: its flat brown soil top is level with the ground all round, and no black liner wall shows above the soil anywhere. Rain is falling. On the new soil top: the same four short white pipe stubs, and the same flat white pipe joining them to the grey drum at the left rim. Everything else exactly as in L08.",
       "checks": [
-        "Is the pit filled right up to the rim, the soil top level with the ground around it?",
-        "Is rain falling, with dark wet streaks soaking down into the top layers in the cut-away?",
-        "MUST BE NO: is there any clay layer or black plastic sheet ON TOP of the trash?",
-        "Do the four gas pipes still stick up knee-high above the new surface, joined by the horizontal pipe into the engine building?",
-        "Are the engine building, chimney and line of power poles still there, unchanged?",
-        "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
-        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
-        "MUST BE NO: is the drilling rig still there?",
-        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
-      ]
+        "Is the pit filled right up to the rim, with NO black liner wall showing above the soil anywhere?",
+        "Is rain clearly falling?",
+        "Are the four knee-high stubs on the new top, joined by the flat pipe to the grey drum at the left rim?",
+        "In the cut-away: are the gravel with the drain pipe, the black liner and the clay band still at the bottom, with trash and soil layers above them right up to the top?",
+        "Are the engine building, chimney, drum, power poles, green pump box and riser unchanged from L08?",
+        "MUST BE NO: is there any dark streak or stain outside the liner, or any new pipe that wasn't in L08?",
+        "MUST BE NO: is there any clay layer or black plastic sheet ON TOP of the soil?"
+      ],
+      "big_change": true
     },
     {
       "id": "L09",
@@ -423,7 +422,8 @@
         "MUST BE NO: is it raining, or is there any grass yet?",
         "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
         "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
-      ]
+      ],
+      "big_change": true
     },
     {
       "id": "L10",
