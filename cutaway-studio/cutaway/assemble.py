@@ -111,6 +111,20 @@ def _segment_from_still(img, dst, seg_secs, w, h, fps):
           "-vf", vf, "-frames:v", str(frames), *video_codec("draft"), "-pix_fmt", "yuv420p", str(dst)])
 
 
+def _segment_from_two_stills(a, b, dst, seg_secs, w, h, fps):
+    """Draft stand-in for a clip that changes something: hold the start still briefly, fade to the
+    end still over most of the beat, then hold it, so the draft shows each change on its words
+    instead of one beat late."""
+    frames = max(int(round(seg_secs * fps)), 1)
+    fit = f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},fps={fps},setsar=1,format=yuv420p"
+    offset, fade = seg_secs * 0.15, max(seg_secs * 0.55, 0.1)
+    graph = (f"[0:v]{fit}[a];[1:v]{fit}[b];"
+             f"[a][b]xfade=transition=fade:duration={fade:.3f}:offset={offset:.3f}[v]")
+    _run(["ffmpeg", "-y", "-v", "error", "-loop", "1", "-t", f"{seg_secs + 1:.3f}", "-i", str(a),
+          "-loop", "1", "-t", f"{seg_secs + 1:.3f}", "-i", str(b), "-filter_complex", graph, "-map", "[v]",
+          "-frames:v", str(frames), *video_codec("draft"), "-pix_fmt", "yuv420p", str(dst)])
+
+
 def _placeholder(dst, seg_secs, w, h, fps, label):
     base = ["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i",
             f"color=c=0x1d2533:s={w}x{h}:r={fps}:d={seg_secs:.3f}"]
@@ -213,7 +227,13 @@ def assemble(project, data, draft=False, log=print):
             _segment_from_clip(cfile, out, seg["seconds"], w, h, fps)
             used["clip"] += 1
         elif project.frame_file(clip["from"]):
-            _segment_from_still(project.frame_file(clip["from"]), out, seg["seconds"], w, h, fps)
+            start, end = project.frame_file(clip["from"]), project.frame_file(clip["to"]) if clip.get("to") else None
+            try:
+                if end is None:
+                    raise RuntimeError("no end still")
+                _segment_from_two_stills(start, end, out, seg["seconds"], w, h, fps)
+            except RuntimeError:   # hold clip, or an ffmpeg without xfade: one still with a slow push-in
+                _segment_from_still(start, out, seg["seconds"], w, h, fps)
             used["still"] += 1
         else:
             _placeholder(out, seg["seconds"], w, h, fps, f"{clip['id']} needs {clip['from']}")

@@ -329,6 +329,29 @@ class AssembleTests(unittest.TestCase):
         self.assertIn("Dialogue:", ass)
         self.assertIn(",IF", ass)
 
+    def test_draft_fades_from_start_still_to_end_still(self):
+        p, d = make_project()
+        d["lines"] = d["lines"][:1]
+        d["clips"] = [{"id": "C01", "lines": ["1"], "from": "F01", "to": "F02", "motion": "x"}]
+        d["settings"] = {"video_width": 360, "video_height": 640}
+        p.save(d)
+        _png(p.path("frames", "F01.png"), "0x2244cc")    # blue start
+        _png(p.path("frames", "F02.png"), "0xcc4422")    # red end
+        words = timing.estimated_words(d, 230)
+        p.words_file().write_text(json.dumps(words))
+        assemble.assemble(p, d, draft=True, log=lambda *_: None)
+        seg = p.dir / "build" / "seg000.mp4"
+
+        def rgb_at(t):
+            raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", str(t), "-i", str(seg), "-frames:v", "1",
+                                  "-vf", "scale=1:1", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                                 capture_output=True, check=True).stdout
+            return raw[0], raw[2]
+        r0, b0 = rgb_at(0)
+        r1, b1 = rgb_at(max(assemble.probe_duration(seg) - 0.1, 0))
+        self.assertGreater(b0, r0)     # starts on the start still
+        self.assertGreater(r1, b1)     # ends on the end still
+
     def test_caption_words_are_cleaned(self):
         ass = assemble.captions_ass([{"w": "rope,", "s": 0, "e": 0.3}, {"w": "snaps?", "s": 0.3, "e": 0.6}],
                                     1080, 1920, "Arial", 96)

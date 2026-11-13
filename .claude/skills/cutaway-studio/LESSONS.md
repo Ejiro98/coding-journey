@@ -139,6 +139,12 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Landfill L10 try 2 (kie.ai): asking the edit model to pull the camera back made it invent everything outside the old
   frame (a different town, cartoon style, pump box gone) → an edit model can't widen a view. Keep the end still at the
   same framing and let the clip do the camera move, or make the wide still from L01 (which already shows the town).
+- Landfill L10 (2 tries + 1 repair): the gate and path kept cutting the gas pipe because the plan put
+  the gate at the front, right where the pipe runs → don't place new things on top of existing ones;
+  move the new thing (gate to the back by the road) instead of asking the model to work around it.
+- Landfill L02/L04/L05: stills added later in the plan (L01b, L03b) put vehicles in that older stills
+  don't have → after inserting a still, re-check the stills after it; let vehicles leave in a clip's
+  motion ("drive away") or out of frame (a real 2x close-up), rather than remaking a chain of stills.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

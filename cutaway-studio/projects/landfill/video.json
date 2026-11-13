@@ -309,8 +309,16 @@
       "refs": [
         "L03b"
       ],
-      "camera": "it has moved down and twice as close: now the lower half of the pit and its cut-away front face fill the whole picture, the houses, road and sky are out of frame above, and the pipes still run left to right exactly as before",
-      "shows": "Trash bags and loose trash now cover the whole gravel floor of the lined pit. The cut-away front face shows, from top to bottom: trash, grey gravel with the white pipe full of holes in it, the black plastic sheet, the grey clay, then brown soil. Thin drips of dark brown liquid trickle down between the trash bags, soak into the gravel and run into the holes of the white pipe; dark liquid is visible inside the pipe, flowing to the right. No liquid on top of the gravel, and the black sheet, clay and soil below stay completely dry. The black sheet lies smoothly against the pit walls."
+      "camera": "it has moved down and twice as close: the lower half of the pit and its cut-away front face fill the whole picture; the rim, trucks, houses, road and sky are all out of frame above; the pipes still run left to right exactly as before",
+      "shows": "Trash bags and loose trash now cover the whole gravel floor of the lined pit. The cut-away front face shows, from top to bottom: trash, grey gravel with the white pipe full of holes in it, the black plastic sheet, the grey clay, then brown soil. Thin drips of dark brown liquid trickle down between the trash bags, soak into the gravel and run into the holes of the white pipe; dark liquid is visible inside the pipe, flowing to the right. No liquid on top of the gravel, and the black sheet, clay and soil below stay completely dry. The black sheet lies smoothly against the pit walls.",
+      "checks": [
+        "Is the camera clearly about twice as close as L03b: the lower pit and cut face fill the picture, with NO rim, trucks, houses or sky visible?",
+        "Does dark liquid drip down through the trash and gravel and go INTO the holes of the white pipe?",
+        "Is dark liquid visible INSIDE the pipe, flowing along it (toward the right)?",
+        "MUST BE NO: does any liquid drip OUT of the pipe, or sit under the black sheet, in the clay or in the soil?",
+        "Do the pipes still run left to right, as in L03b?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ]
     },
     {
       "id": "L05",
@@ -486,16 +494,17 @@
         "L09",
         "L01"
       ],
-      "shows": "The mound is now a green park hill with grass, winding paths, wooden benches and a few young trees. An open gate at the front edge lets people in; people walk dogs and jog on the hill. The short gas pipe heads still poke out of the grass, and the small engine building with its line of power poles is still at the LEFT edge. The cross-section below the hill still shows the cap, the layers of trash and soil, and the liner and gravel at the bottom. The camera is clearly further back than in L09, with more town and fields around the hill, and the gas pipe still runs unbroken from all four heads to the grey drum, the path curving around it.",
+      "shows": "The domed cap is now a green park hill: grass all over it, one path looping over the top, two wooden benches and a few young trees, with people walking a dog and a jogger. People come in through an open gate at the BACK of the hill, beside the road. At the front, the four short white gas pipe heads and the white pipe joining them to the grey drum at the left stay exactly as in L09, uncovered and unbroken, with grass around them; no path or gate touches them. The cut-away face still shows, from the top: soil, black sheet, grey clay, then the layers of trash and soil, the liner and gravel at the bottom. Everything else exactly as in L09.",
       "checks": [
-        "Is the mound now a green grassy hill with paths, benches and a few young trees?",
-        "Is there an open gate at the front with people walking in, and people walking dogs or jogging on the hill?",
-        "Do the short gas pipe heads still poke out of the grass?",
-        "Are the engine building and its line of power poles still at the LEFT edge?",
-        "In the cut-away under the hill: the cap layers, the trash and soil layers, the liner and gravel still visible?",
+        "Is the dome now a grassy hill with a path, benches, a few young trees and people on it?",
+        "Is the open gate at the BACK of the hill by the road, with people walking in?",
+        "Does the white gas pipe run UNBROKEN from the grey drum at the left past all four pipe heads, with no path or gate crossing it?",
+        "At the top of the cut face, are the cap bands (soil, black sheet, grey clay) still visible above the trash layers?",
+        "Are the engine building, drum, power poles, green pump box and riser unchanged from L09?",
         "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?",
-        "Does the white gas pipe run UNBROKEN from the grey drum at the left past all four pipe heads (paths and gate do not cut it)?"
-      ]
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "big_change": true
     }
   ],
   "clips": [
@@ -545,7 +554,7 @@
       "cue": "hole",
       "from": "L01b",
       "to": "L02",
-      "motion": "A grey clay layer and then a black plastic sheet are spread over the empty pit's floor and walls."
+      "motion": "The excavator and truck drive away along the back road; a grey clay layer, then a black plastic sheet, are spread over the empty pit."
     },
     {
       "id": "C05",
@@ -682,7 +691,7 @@
       ],
       "from": "L09",
       "to": "L10",
-      "motion": "Grass spreads over the mound, a path and benches appear and a few young trees grow; the gate at the front opens and people walk in."
+      "motion": "Grass spreads over the mound, a path and benches appear and a few young trees grow; the gate at the back opens and people walk in."
     },
     {
       "id": "C17",
