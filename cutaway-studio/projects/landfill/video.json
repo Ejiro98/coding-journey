@@ -190,6 +190,24 @@
   },
   "frames": [
     {
+      "id": "L00",
+      "view": "pit",
+      "zoom": 1,
+      "state": "1",
+      "wide": true,
+      "refs": [
+        "L01"
+      ],
+      "shows": "Exactly the same scene as the reference, a moment earlier: the yellow garbage truck is parked at the same spot on the rim with its bed DOWN, flat and closed. No trash is falling; the trash already in the pit is the same.",
+      "checks": [
+        "Is the truck's bed down, flat and closed, with no trash falling?",
+        "Is everything else identical to L01: same pit, same trash in it, same town, camera, soil and blue band?",
+        "MUST BE NO: is there any liquid, rain, or anything in the soil or the blue band?",
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+      ],
+      "line_part": "If you dump your trash in a hole outside town (the moment before the truck tips)"
+    },
+    {
       "id": "L01",
       "view": "pit",
       "zoom": 1,
@@ -515,10 +533,9 @@
       "lines": [
         "1"
       ],
-      "from": "L01",
-      "to": null,
-      "motion": "Only the truck moves: its tipped bed keeps pouring trash into the pit. Nothing else changes: no liquid anywhere, nothing in the soil or the blue band, and the bed stays tipped.",
-      "hold": true
+      "from": "L00",
+      "to": "L01",
+      "motion": "The truck's bed tips up and trash slides out and tumbles down into the pit. Nothing else changes: no liquid anywhere, nothing in the soil or the blue band."
     },
     {
       "id": "C02",
@@ -712,7 +729,7 @@
       ],
       "from": "L10",
       "to": null,
-      "motion": "Gentle hold on the park and the town as the sun lowers slightly.",
+      "motion": "People keep strolling and jogging over the green hill and the young trees sway gently in the breeze; nothing else changes.",
       "hold": true
     }
   ],

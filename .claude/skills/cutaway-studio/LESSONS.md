@@ -183,6 +183,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
+- Landfill C01 (2 tries, $0.68): as a hold it first invented the leak, then (ending on its own still)
+  froze → the hook needs a REAL change between two different stills (L00 truck bed down → L01 tipping).
+  Clips are reliable when they move between two different pictures.
+
 ## Money
 - Elevator v1 ($15) and v2 ($20+): money spent before the story was right → free draft first,
   then 2 clips at a time with the estimate approved each time. Never skip.

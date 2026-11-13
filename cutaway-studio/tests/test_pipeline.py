@@ -905,7 +905,7 @@ class PerClipModelTests(unittest.TestCase):
         d = copy.deepcopy(LF)
         next(c for c in d["clips"] if c["id"] == "C08")["model"] = "seedance25"
         p, d = make_project(d)
-        for fid in ("L01", "L02", "L03", "L04", "L05", "L06"):
+        for fid in ("L00", "L01", "L02", "L03", "L04", "L05", "L06"):
             _png(p.path("frames", f"{fid}.png"))
         todo, _ = clips.plan(p, d, only="C01,C08")
         self.assertEqual([(t["clip"]["id"], t["model"]) for t in todo],

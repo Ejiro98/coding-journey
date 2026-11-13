@@ -232,7 +232,9 @@ Then repeat until all clips are made:
    previous clip, matches its end still, camera, nothing appearing/vanishing/morphing, rules, no text).
    A NEW subagent answers them from the sheet and the end still at full size; any doubt is FAIL. Show
    the viewer the two clips with the answers and the running total.
-   **Hold clips now end on their own still** (automatic), so the model can't invent the next story beat.
+   **Hold clips now end on their own still** (automatic), so the model can't invent the next story beat;
+   their motion must be continuous (rain falling, people walking), or the model freezes. **The hook clip
+   (C01) is never a hold:** give it a start still just before the action (truck bed down → tipping).
    **Trim instead of remaking** (`clips trim <slug> --only C05 --end 3.2`, free) only when the clean part
    covers at least ~80% of the beat; otherwise the assembly slows or freezes it and a remake is better.
 4. If a clip fails the check: delete `clips/<ID>.mp4`, make its `motion` text more specific, and
