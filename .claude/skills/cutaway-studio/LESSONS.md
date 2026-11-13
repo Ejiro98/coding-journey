@@ -185,6 +185,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   dump and driving the truck off, so the rain started 2-3 s after its cue word → the end still may differ from the
   start still ONLY in what the motion describes. Check every pair of stills a clip joins for extra differences
   (vehicles, weather, objects) before paying for it.
+- Landfill C02 try 3 ($0.34): with consistent stills, "black liquid collects on the pit floor" became a black waterfall
+  pouring in over the rim from outside → the stills lesson holds for clips too: describe liquid as a colour change
+  spreading through something already there ("the trash darkens from the bottom up; the dark patch at the bottom
+  turns glossy") and say "nothing pours, nothing flows over the ground or down the walls".
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
