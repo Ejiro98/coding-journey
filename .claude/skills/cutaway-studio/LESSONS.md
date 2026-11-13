@@ -47,6 +47,12 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   dark") that image models can't draw reliably, and one try leaked liquid below the pit early →
   ask only for things a viewer can point at ("black liquid collected at the bottom, under the trash"); put one change in each
   still and save the next change for the next still (the leak belongs in L01g).
+- Landfill L03b/L06 (5 failed tries): the questions asked for things the still can't show: the
+  whole line ("juice gets pumped away") when that half belongs to the close-up, and a pipe joint
+  that is really buried under the fill. Adding the failed answer to the remake made it worse
+  (the model drew juice leaking through the liner) → a still that shows only part of its line gets
+  `line_part`; questions only ask about parts that would really be visible; before adding a
+  failed answer to a prompt, check it isn't asking for something impossible.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

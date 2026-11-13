@@ -74,7 +74,11 @@ def checklist(data, frame):
     fmap = frame_map(data)
     first = data["frames"][0]["id"] if data.get("frames") else None
     qs = []
-    if frame.get("state") and str(frame["state"]) in lines:
+    if frame.get("line_part"):
+        # The still shows only part of a line (the rest is in another still, e.g. a close-up).
+        qs.append(f"With the sound off, does the picture SHOW this (and only this part of the story): "
+                  f"\"{frame['line_part']}\"?")
+    elif frame.get("state") and str(frame["state"]) in lines:
         qs.append(f"With the sound off, does the picture SHOW what this line says has happened: "
                   f"\"{lines[str(frame['state'])]}\"?")
     for c in frame.get("checks", []):

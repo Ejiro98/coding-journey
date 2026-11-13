@@ -146,6 +146,9 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
 - **Every still is reviewed by a separate reviewer before it is used. Never mark your own work.**
   The maker wants the still to pass, so it explains faults away ("a little fuller than half").
   After each still is generated:
+  0. Before making a still, read its questions: each must be answerable from this picture (nothing
+     buried, nothing that belongs to another still; use `line_part` when the still shows only part of
+     its line). Fix a bad question first: it will fail every try and push the remakes the wrong way.
   1. `python3 -m cutaway frames check <slug> <ID>` prints that still's yes/no questions (its line,
      its own `checks`, every part that must be there or must not, continuity, sharpness).
   2. Start a NEW subagent (Agent tool) as the reviewer. Give it ONLY: the image path, the paths of

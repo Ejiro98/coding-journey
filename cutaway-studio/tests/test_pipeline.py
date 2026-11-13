@@ -681,6 +681,12 @@ class LandfillPlanTests(unittest.TestCase):
         self.assertIn("next to L06", joined)                            # continuity
         self.assertTrue(qs[-1].startswith("Is it as sharp"))
 
+    def test_line_part_replaces_full_line_question(self):
+        f = next(f for f in LF["frames"] if f["id"] == "L03b")
+        first = frames.checklist(LF, f)[0]
+        self.assertIn("when the trash goes back in", first)
+        self.assertNotIn("pumped away", first)
+
     def test_import_refused_without_review(self):
         from cutaway.__main__ import main
         import io, contextlib

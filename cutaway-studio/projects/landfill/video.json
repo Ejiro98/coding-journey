@@ -141,7 +141,7 @@
         "pipes full of holes"
       ],
       "built_in": "5",
-      "looks": "a gravel layer with perforated drainage pipes at the bottom of the pit, joined to a solid white pipe that runs up the pit's side slope and over the rim into the small green pump box at the right edge"
+      "looks": "a gravel layer with perforated drainage pipes at the bottom of the pit, and a solid white riser pipe that runs up the pit's side slope on top of the liner and over the rim into the small green pump box at the right edge (once the pit is filled, only the top of the riser shows, coming up out of the fill)"
     },
     "daily cover": {
       "aliases": [
@@ -241,7 +241,8 @@
         "Is the pit bare brown dirt: no clay, no black plastic sheet, no gravel, no pipes?",
         "Is there a yellow excavator at the rim and a loaded truck beside it?",
         "Has the rain stopped, the dark trail gone, and the groundwater band light blue again?"
-      ]
+      ],
+      "line_part": "So scoop the trash back out (the pit is empty again)"
     },
     {
       "id": "L02",
@@ -280,10 +281,12 @@
       "shows": "The lined pit now has a layer of loose trash covering the bottom third, lying on top of the gravel and pipes; the gravel, the white pipes and the liner are still visible in the cut-away below the trash. Two garbage trucks stand at the rim, their beds tipped up and empty. No plastic bags in the air, no seagulls yet.",
       "checks": [
         "Is only the bottom third filled with trash, with the gravel, white pipes and liner still visible below it in the cut-away?",
-        "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?",
+        "Can you see the white riser pipe running up the right side slope and over the rim into the green pump box?",
         "MUST BE NO: are there plastic bags in the air or seagulls anywhere?",
-        "Are the two trucks at the rim with their beds tipped up and empty?"
-      ]
+        "Are the two trucks at the rim with their beds tipped up and empty?",
+        "MUST BE NO: is any dark liquid shown outside the liner or under the pit?"
+      ],
+      "line_part": "when the trash goes back in (the juice is shown in the close-up L04, not here)"
     },
     {
       "id": "L04",
@@ -306,7 +309,8 @@
         "L03b",
         "L01"
       ],
-      "shows": "The lined pit is one third full of loose trash. Plastic bags are blowing up out of it toward the houses, and a flock of seagulls circles and lands on the trash."
+      "shows": "The lined pit is one third full of loose trash. Plastic bags are blowing up out of it toward the houses, and a flock of seagulls circles and lands on the trash.",
+      "line_part": "But loose trash blows all over town, and the seagulls move in for a buffet."
     },
     {
       "id": "L06",
@@ -321,7 +325,7 @@
       ],
       "shows": "The pit is only half full: the soil top is about halfway down, and the black liner wall shows clearly above it all the way round. Its ENTIRE top surface is now a smooth, flat layer of brown soil: no trash is visible anywhere on the surface, no plastic bags, no seagulls. A yellow bulldozer, small compared to the pit, is smoothing the last strip of soil at one corner. In the cut-away front of the pit the layers are clearly visible: flattened trash, then a band of brown soil, then flattened trash, then soil on top, like a layered cake, resting on the gravel and drainage pipes at the bottom.",
       "checks": [
-        "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?",
+        "Does the white riser pipe come up out of the fill along the right side slope and run over the rim INTO the green pump box? (The part buried under the fill can't be seen and doesn't need to be.)",
         "Is the soil top clearly below the rim, with the black liner wall showing above the soil all the way round?",
         "MUST BE NO: is any trash, bag or seagull visible on the top surface?",
         "In the cut-away, do you see, from the bottom up: liner, gravel with pipe, trash, a soil band, trash, soil on top?",
@@ -345,7 +349,7 @@
         "Does each pipe stick up only knee-high above the soil (not tall like goalposts), with the horizontal pipe lying on or just above the soil?",
         "MUST BE NO: does any vertical pipe reach down into the gravel or touch the liner?",
         "Is the fill level exactly the same as L06 (liner wall still showing above the soil)?",
-        "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?",
+        "Does the white riser pipe come up out of the fill along the right side slope and run over the rim INTO the green pump box? (The part buried under the fill can't be seen and doesn't need to be.)",
         "MUST BE NO: is the bulldozer still there?"
       ]
     },
@@ -365,7 +369,7 @@
         "Does the horizontal gas pipe run into the engine building?",
         "Do power poles and wires run from the engine building toward the houses?",
         "Are the four knee-high gas pipes and the fill level exactly as in L07?",
-        "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?"
+        "Does the white riser pipe come up out of the fill along the right side slope and run over the rim INTO the green pump box? (The part buried under the fill can't be seen and doesn't need to be.)"
       ]
     },
     {
@@ -385,7 +389,7 @@
         "MUST BE NO: is there any clay layer or black plastic sheet ON TOP of the trash?",
         "Do the four gas pipes still stick up knee-high above the new surface, joined by the horizontal pipe into the engine building?",
         "Are the engine building, chimney and power lines still there, unchanged?",
-        "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?"
+        "Does the white riser pipe come up out of the fill along the right side slope and run over the rim INTO the green pump box? (The part buried under the fill can't be seen and doesn't need to be.)"
       ]
     },
     {
@@ -405,7 +409,7 @@
         "Do the four gas pipes poke up through the cap as short pipe heads, still joined to the engine building?",
         "Are the engine building, chimney and power lines still there, unchanged?",
         "Is the whole buried stack still visible below: trash and soil layers, liner, gravel and pipe?",
-        "Follow the white pipe from the gravel at the bottom: does it run up the side slope, over the rim and INTO the green pump box, with no gap?",
+        "Does the white riser pipe come up out of the fill along the right side slope and run over the rim INTO the green pump box? (The part buried under the fill can't be seen and doesn't need to be.)",
         "MUST BE NO: is it raining, or is there any grass yet?"
       ]
     },
