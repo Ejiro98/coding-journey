@@ -14,9 +14,9 @@
   },
   "voice": {
     "provider": "elevenlabs",
-    "voice_id": null,
+    "voice_id": "ktkP7Nsj67dw2zcplQYt",
     "model_id": "eleven_multilingual_v2",
-    "speed": 1.1,
+    "speed": 1.2,
     "stability": 0.45,
     "similarity_boost": 0.75
   },
