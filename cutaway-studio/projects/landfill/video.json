@@ -31,7 +31,8 @@
     "Liquids and gas obey gravity and pressure: liquid drips and flows down, gas rises.",
     "Everything already built stays exactly in place.",
     "The town, road, fields and houses at the top stay the same.",
-    "The camera stays still unless the motion says it moves."
+    "The camera stays still unless the motion says it moves.",
+    "A clip only shows what its motion describes; the pit's fill level, the pipes and the buildings never change unless the motion says so."
   ],
   "lines": [
     {
@@ -187,7 +188,7 @@
       "state": "1",
       "wide": true,
       "refs": [],
-      "shows": "A bare dug pit, simply holes in the dirt, half full of loose garbage bags and trash. A garbage truck at the rim is tipping more trash in."
+      "shows": "A plain dug pit of bare brown dirt, with no lining, half full of loose garbage bags and trash. A garbage truck at the rim is tipping more trash in."
     },
     {
       "id": "L02",
@@ -198,7 +199,7 @@
       "refs": [
         "L01"
       ],
-      "shows": "The same pit is now empty: the trash has been scooped out, and the pit's floor and walls are covered with a grey clay layer and a black heavy plastic sheet. The garbage truck is gone."
+      "shows": "The same pit is now empty: the trash has been scooped out, and the pit's floor and walls are covered with a layer of brown-grey earthy clay, with a heavy black plastic sheet laid over the clay. The garbage truck is gone."
     },
     {
       "id": "L03",
@@ -257,7 +258,7 @@
         "L06",
         "L01"
       ],
-      "shows": "The pit is two thirds full of layered trash and soil. Several vertical pipes have been drilled down into the pile and are joined at the top by a horizontal pipe running to the edge of the pit."
+      "shows": "The pit is still half full with the same smooth brown soil on top and the same layers in the cross-section. Now four vertical white pipes have been drilled down through the soil into the trash, reaching close to the bottom, and they are joined at the top by one horizontal pipe running to the right edge of the pit."
     },
     {
       "id": "L08",
@@ -269,7 +270,19 @@
         "L07",
         "L01"
       ],
-      "shows": "At the right edge of the pit stands a small engine building with a short chimney, fed by the gas pipe, and power lines run from it toward the town."
+      "shows": "Everything as before (pit half full, smooth soil top, the four vertical gas pipes and the horizontal pipe). Added: at the right edge of the pit, a small grey engine building with a short chimney, connected to the horizontal gas pipe, and a line of power poles with wires running from it toward the houses."
+    },
+    {
+      "id": "L08b",
+      "view": "pit",
+      "zoom": 1,
+      "state": "13",
+      "wide": true,
+      "refs": [
+        "L08",
+        "L01"
+      ],
+      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the right edge, with its power lines to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top."
     },
     {
       "id": "L09",
@@ -278,10 +291,10 @@
       "state": "14",
       "wide": true,
       "refs": [
-        "L08",
+        "L08b",
         "L01"
       ],
-      "shows": "The pit is full and rounded into a low mound, sealed on top with a layer of clay, a black plastic sheet and a thick layer of brown soil, all clearly visible in the cross-section; short gas pipe heads stick out of the soil."
+      "shows": "The pit is now full to the rim and rounded into a low mound. It is sealed on top, and the cross-section shows the cap clearly from bottom to top: a grey-brown clay layer, a black plastic sheet, then a thick layer of brown soil. The four gas pipes now reach up through the cap and end in short pipe heads on the surface, still joined to the engine building at the right edge, with its power lines to the town. The layers of trash and soil and the liner and gravel at the bottom are still visible in the cross-section."
     },
     {
       "id": "L10",
@@ -294,7 +307,7 @@
         "L01"
       ],
       "camera": "it has pulled back to show the whole mound and more of the town around it",
-      "shows": "The mound is now a green park hill with grass, winding paths, benches and a few trees; people walk dogs and jog on it. The cross-section below still shows the layers of trash and soil and the liner under the hill."
+      "shows": "The mound is now a green park hill with grass, winding paths, wooden benches and a few young trees. An open gate at the front edge lets people in; people walk dogs and jog on the hill. The short gas pipe heads still poke out of the grass, and the small engine building with its power lines is still at the right edge. The cross-section below the hill still shows the cap, the layers of trash and soil, and the liner and gravel at the bottom."
     }
   ],
   "clips": [
@@ -315,7 +328,7 @@
       "cue": "rains",
       "from": "L01",
       "to": null,
-      "motion": "Rain falls on the pit; dark liquid drips out of the bottom of the trash into the soil below."
+      "motion": "Rain starts falling on the pit. In the cut-away soil directly beneath the pit, black liquid begins dripping out of the bottom of the trash."
     },
     {
       "id": "C03",
@@ -324,7 +337,7 @@
       ],
       "from": "L01",
       "to": null,
-      "motion": "Dark liquid drips out of the bottom of the trash and soaks down through the soil until it reaches the blue groundwater band."
+      "motion": "The black liquid spreads down through the cut-away soil in a dark trail and the first of it reaches the blue groundwater band, where a small dark cloud starts to spread."
     },
     {
       "id": "C04",
@@ -333,7 +346,7 @@
       ],
       "from": "L01",
       "to": null,
-      "motion": "An excavator scoops the trash back out of the pit and loads it into trucks until the pit is empty."
+      "motion": "An excavator at the rim scoops the trash, together with the darkened soil just under it, back out of the pit and loads it into two trucks waiting beside the pit, until the pit is empty bare dirt."
     },
     {
       "id": "C04b",
@@ -361,7 +374,7 @@
       ],
       "from": "L03",
       "to": null,
-      "motion": "Trucks tip the trash back into the lined pit on top of the gravel and pipes."
+      "motion": "The two trucks tip the trash back into the lined pit, on top of the gravel and pipes, until the bottom third is filled."
     },
     {
       "id": "C06b",
@@ -372,7 +385,7 @@
       "from": "L03",
       "to": "L04",
       "move": "dolly-in",
-      "motion": "The camera moves down closer as dark liquid trickles through the gravel into the pipe holes and flows away along the pipes."
+      "motion": "The camera moves down closer as black liquid trickles down through the trash and gravel, into the holes of the white pipe, and flows along the pipe toward the pump at the edge."
     },
     {
       "id": "C07",
@@ -401,7 +414,7 @@
       ],
       "from": "L06",
       "to": null,
-      "motion": "Wind blows across the soil-covered pit and nothing lifts; the last seagulls fly away."
+      "motion": "A gust of wind blows a little dust across the smooth soil but nothing lifts. One seagull lands, pecks at the bare soil, finds nothing and flies away."
     },
     {
       "id": "C10",
@@ -411,7 +424,7 @@
       "cue": "methane",
       "from": "L06",
       "to": null,
-      "motion": "Faint wisps of gas rise through cracks in the soil layers from the trash below."
+      "motion": "A faint shimmering haze, like heat haze, rises from thin cracks in the soil, and for a moment a small flame flickers up from one crack and goes out."
     },
     {
       "id": "C11",
@@ -420,7 +433,7 @@
       ],
       "from": "L06",
       "to": "L07",
-      "motion": "A drilling rig drills down into the pile and vertical pipes are lowered in, joined at the top by a horizontal pipe."
+      "motion": "A drilling rig bores down through the soil into the trash; four white pipes are lowered into the holes and joined at the top by a horizontal pipe."
     },
     {
       "id": "C12",
@@ -437,17 +450,17 @@
         "13"
       ],
       "from": "L08",
-      "to": null,
-      "motion": "Trucks fill the pit up to the top and rain falls, soaking into the top layer."
+      "to": "L08b",
+      "motion": "In a quick time-lapse, more flattened layers of trash and soil build up until the pit is full to the rim, the gas pipes growing up with them; then rain falls on the flat top and soaks in."
     },
     {
       "id": "C14",
       "lines": [
         "14"
       ],
-      "from": "L08",
+      "from": "L08b",
       "to": "L09",
-      "motion": "Clay, a black plastic sheet and a thick layer of soil are spread over the full mound, one layer after another."
+      "motion": "Layers are spread over the full pit one after another: grey-brown clay, a black plastic sheet, and a thick blanket of brown soil, rounding it into a low mound. The gas pipes stay poking up."
     },
     {
       "id": "C15",
@@ -456,7 +469,7 @@
       ],
       "from": "L09",
       "to": null,
-      "motion": "Rain falls on the mound and runs off its sloped sides into ditches at the edge."
+      "motion": "Rain falls on the sealed mound and runs off down its sloped sides in little streams instead of soaking in."
     },
     {
       "id": "C16",
@@ -466,7 +479,7 @@
       "from": "L09",
       "to": "L10",
       "move": "pull-back",
-      "motion": "Grass spreads over the mound, paths and benches appear, and the camera pulls back as people walk in."
+      "motion": "Grass spreads over the mound, paths and benches appear and a few young trees grow; a gate at the front opens and people walk in as the camera pulls back."
     },
     {
       "id": "C17",
@@ -475,7 +488,7 @@
       ],
       "from": "L10",
       "to": null,
-      "motion": "People walk dogs and jog on the green hill above the hidden layers of garbage."
+      "motion": "People walk dogs and jog over the green hill while, in the cross-section below them, the buried layers of trash stay still."
     },
     {
       "id": "C18",
