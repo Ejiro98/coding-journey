@@ -59,6 +59,12 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   on kie.ai, attach the single closest reference first.
 - Landfill (kie.ai): each remake overwrote the previous try (same filename), so failed tries had to be fetched back from
   kie.ai by task id → keep every try (tries/<ID>_tryN) until the still passes.
+- Landfill L03b (3 failed tries on kie.ai, $0.27) and L06 (2 failed tries): the questions asked a WIDE still to show the
+  juice going into the pipes, and to follow the pipe from the gravel to the pump box "with no gap" after trash or soil had
+  covered the joint. Every try that drew juice leaked it through the liner; the try without juice failed the line
+  question; and the buried joint can never be seen → a wide still only asks what is visible at that scale (liquid into a
+  pipe belongs to the close-up, L04); once fill covers a connection, ask for its visible ends (pipe in the gravel at the
+  cut face, riser coming out at the corner and into the box), not the hidden middle.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
