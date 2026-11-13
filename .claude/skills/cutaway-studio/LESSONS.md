@@ -177,6 +177,9 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   C02 is chained to C01's last frame, so it inherited the stream and had to make it vanish → a hold clip must say what
   stays the same ("nothing else moves; no liquid anywhere"), or end on its own start still; and a failed clip means
   re-checking the next chained clip too.
+- Landfill C01 try 2 ($0.34): with the hold clip ending on its own start still, Kling froze the picture: the trash
+  stream hung in mid-air for 4.5 s → a hold clip that ends on its start still needs motion that LOOPS back to the
+  same picture (falling trash replaced by more falling trash, birds circling, dust drifting), stated as continuous.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 
