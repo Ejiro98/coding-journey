@@ -195,7 +195,7 @@ two beats of their drainage video for exactly this purpose (never post it).
 camera move with no cuts; Kling is the cheapest at 720p). **Hard shots** (several objects doing a
 physical action, e.g. a bulldozer crushing and covering trash): a clip can set `"model":
 "seedance25"` (and optionally `"resolution"`) to override the video's model. Only do that after the
-project's hard-shot test (see `tests` in video.json, e.g. `compare landfill --models
+project's hard-shot test, run at the video's resolution (`--resolution 720p`) so the winning clip can go straight into the video (see `tests` in video.json, e.g. `compare landfill --models
 kling-o3,seedance25 --clips C08`) shows Seedance is clearly better, and only for 2-3 clips.
 Real 720p prices (Higgsfield, Nov 2026, per output second): Kling O3 std $0.068, Wan 3.0 $0.075,
 Seedance 2.0 $0.174, Seedance 2.5 $0.265. A ~70 s video costs ~$5 on Kling O3 or Wan 3.0, ~$12

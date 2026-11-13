@@ -106,6 +106,14 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   reviewed still unless it is a `hold`; the hook/problem clips (C02, C03) got their own stills. [lint]
 - Drain test: Seedance failed twice with no reason saved → keep the failure reason
   (`error.json`), first and last frames the same size (done automatically).
+- Landfill bulldozer test ($0.93): Kling skipped the crushing step and turned white gulls into dark
+  birds; Seedance 2.5 showed both steps → Seedance for clips where a machine does a multi-step job
+  (C08, C11), Kling for the rest. Both models popped the bulldozer in from nowhere → a machine must
+  be in the start still (parked at the rim) or the motion says where it drives in from; once it
+  arrives it stays parked in later stills until a time-lapse clip removes it.
+- The test ran Seedance at 480p, so the paid test clip couldn't be used in the 720p video → run
+  hard-shot tests at the video's resolution; the winning clip then IS the real clip (copy
+  `compare/<model>/<clip>.mp4` to `clips/<clip>.mp4`) and nothing is paid twice.
 - Any clip: the action must start on its cue word, and the thing named must be on screen when
   the word is spoken ("say it, see it").
 

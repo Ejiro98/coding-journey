@@ -343,7 +343,7 @@
         "L06",
         "L01"
       ],
-      "shows": "Same pit, same fill level and same smooth brown soil top as before; the bulldozer has gone. Added: four white gas pipes drilled straight down through the soil into the trash, in a row from left to right. Each pipe stops inside the trash, well above the gravel, and sticks up only knee-high above the soil. One horizontal white pipe lies on top of the soil and connects to the top of ALL FOUR pipes, the leftmost included, then runs to the right edge of the pit. In the cut-away, the pipes are seen going down through the layers of trash and soil. Clean sharp image, same quality as the reference.",
+      "shows": "Same pit, same fill level and same smooth brown soil top as before; the bulldozer has gone. Added: four white gas pipes drilled straight down through the soil into the trash, in a row from left to right. Each pipe stops inside the trash, well above the gravel, and sticks up only knee-high above the soil. One horizontal white pipe lies on top of the soil and connects to the top of ALL FOUR pipes, the leftmost included, then runs to the right edge of the pit. In the cut-away, the pipes are seen going down through the layers of trash and soil. Clean sharp image, same quality as the reference. The small yellow drilling rig that drilled them is parked at the back-left rim.",
       "checks": [
         "Count the vertical white pipes: exactly four?",
         "Does the horizontal pipe touch the top of EVERY one of the four, including the leftmost?",
@@ -352,7 +352,8 @@
         "Is the fill level exactly the same as L06 (liner wall still showing above the soil)?",
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
         "MUST BE NO: is the bulldozer still there?",
-        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?"
+        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
+        "Is a small yellow drilling rig parked at the back-left rim (outside the pit)?"
       ]
     },
     {
@@ -365,14 +366,15 @@
         "L07",
         "L01"
       ],
-      "shows": "Everything as before (pit half full, smooth soil top, the four vertical gas pipes and the horizontal pipe). Added: at the right edge of the pit, a small grey engine building with a short chimney, connected to the horizontal gas pipe, and a line of power poles with wires running from it toward the houses.",
+      "shows": "Everything as before (pit half full, smooth soil top, the four vertical gas pipes and the horizontal pipe). Added: at the right edge of the pit, a small grey engine building with a short chimney, connected to the horizontal gas pipe, and a line of power poles with wires running from it toward the houses. The small yellow drilling rig is still parked at the back-left rim.",
       "checks": [
         "Is there a small grey engine building with a short chimney at the right edge of the pit?",
         "Does the horizontal gas pipe run into the engine building?",
         "Do power poles and wires run from the engine building toward the houses?",
         "Are the four knee-high gas pipes and the fill level exactly as in L07?",
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
-        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?"
+        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
+        "Is the drilling rig still parked at the back-left rim, unchanged from L07?"
       ]
     },
     {
@@ -385,7 +387,7 @@
         "L08",
         "L01"
       ],
-      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the right edge, with its power lines to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top.",
+      "shows": "The pit is now filled right up to the rim with flattened layers of trash and soil, and its top is a flat layer of brown soil level with the ground around it. The four gas pipes have been extended up to this new surface and still join the horizontal pipe to the small engine building at the right edge, with its power lines to the town. Rain is falling, and in the cross-section dark wet streaks soak down from the soil top into the upper layers. The top is NOT sealed yet: no clay and no plastic sheet on top. The drilling rig has gone.",
       "checks": [
         "Is the pit filled right up to the rim, the soil top level with the ground around it?",
         "Is rain falling, with dark wet streaks soaking down into the top layers in the cut-away?",
@@ -393,7 +395,8 @@
         "Do the four gas pipes still stick up knee-high above the new surface, joined by the horizontal pipe into the engine building?",
         "Are the engine building, chimney and power lines still there, unchanged?",
         "Does ONE white riser pipe come up out of the fill at the BACK-RIGHT corner and run over the rim INTO the green pump box, as in L03? (The buried part can't be seen and doesn't need to be.)",
-        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?"
+        "MUST BE NO: is there any other pipe, especially one coming out of the cut face or ending in mid-air?",
+        "MUST BE NO: is the drilling rig still there?"
       ]
     },
     {
@@ -477,7 +480,7 @@
       ],
       "from": "L01g",
       "to": "L01b",
-      "motion": "The rain stops. An excavator at the rim scoops the trash and the darkened soil out of the pit and loads it into a truck, until the pit is empty bare dirt."
+      "motion": "The rain stops. An excavator and a truck drive up to the back rim along the dirt road; the excavator scoops the trash and the darkened soil out of the pit into the truck, until the pit is empty bare dirt."
     },
     {
       "id": "C04b",
@@ -536,7 +539,8 @@
       ],
       "from": "L05",
       "to": "L06",
-      "motion": "A bulldozer crushes the trash flat and spreads a layer of brown soil over it; the seagulls fly off."
+      "motion": "A yellow bulldozer drives down into the pit from the right rim, crushes the loose trash flat into a grey layer, then pushes a layer of brown soil over it; the seagulls fly off.",
+      "model": "seedance25"
     },
     {
       "id": "C09",
@@ -566,7 +570,8 @@
       ],
       "from": "L06",
       "to": "L07",
-      "motion": "A small drilling rig bores four holes down into the trash; a white pipe is lowered into each hole, and a pipe laid along the soil joins all four tops."
+      "motion": "A small yellow drilling rig drives in from the back-left rim, drills four holes down into the trash, and white pipes are lowered into them; a pipe laid along the soil joins all four tops. The rig stops at the back-left rim.",
+      "model": "seedance25"
     },
     {
       "id": "C12",
@@ -641,13 +646,14 @@
     {
       "name": "hard-shot model test (bulldozer)",
       "why": "Decide whether Seedance 2.5 is worth using for the 2-3 most complex shots of each video.",
-      "command": "python3 -m cutaway compare landfill --models kling-o3,seedance25 --clips C08 --estimate",
+      "command": "python3 -m cutaway compare landfill --models kling-o3,seedance25 --clips C08 --resolution 720p --estimate",
       "needs_frames": [
         "L05",
         "L06"
       ],
       "approx_cost": "~$0.95 (Kling 720p ~$0.34 + Seedance 2.5 at 480p ~$0.59); counts toward this video's cap",
-      "decide": "If Seedance 2.5 is clearly better at the physical action, set \"model\": \"seedance25\" on the 2-3 hardest clips only (each ~$1.30 at 720p). Otherwise keep Kling everywhere."
+      "decide": "If Seedance 2.5 is clearly better at the physical action, set \"model\": \"seedance25\" on the 2-3 hardest clips only (each ~$1.30 at 720p). Otherwise keep Kling everywhere.",
+      "result": "Done. Seedance 2.5 showed both steps (crush flat, then soil) and kept the gulls white; Kling jumped straight to the soil and turned the gulls into dark birds. Both popped the bulldozer in from nowhere. Decision: Seedance 2.5 for C08 and C11 (machines doing multi-step work), Kling for everything else. The test ran at 480p, so its clip could not be reused; future tests run at the video's resolution."
     }
   ]
 }
