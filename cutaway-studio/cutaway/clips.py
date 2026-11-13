@@ -42,6 +42,30 @@ def last_frame(src, dst):
     return dst
 
 
+def _size(path):
+    out = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+                          "stream=width,height", "-of", "csv=p=0", str(path)], capture_output=True, text=True).stdout
+    try:
+        w, h = (int(x) for x in out.strip().split(",")[:2])
+        return w, h
+    except ValueError:
+        return None
+
+
+def match_size(start, end):
+    """Some models (Seedance) refuse a first and last frame of different sizes. When a chained
+    clip starts from a video frame (e.g. 480x854) and ends on a keyframe (e.g. 768x1376), scale
+    the start image to the keyframe's exact size. Returns the image to upload."""
+    a, b = _size(start), _size(end)
+    if not a or not b or a == b:
+        return start
+    out = start.with_name(f"{start.stem}_{b[0]}x{b[1]}.png")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(start), "-vf",
+                    f"scale={b[0]}:{b[1]}:force_original_aspect_ratio=increase,crop={b[0]}:{b[1]}",
+                    str(out)], check=True)
+    return out
+
+
 def _sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
 
@@ -132,8 +156,11 @@ def _upload_cached(client, project, state, path):
 def _body(project, data, client, state, item, start_img):
     clip = item["clip"]
     res = data.get("video", {}).get("resolution", "720p")
+    end_img = project.frame_file(clip["to"]) if clip.get("to") else None
+    if end_img is not None:
+        start_img = match_size(start_img, end_img)
     start = _upload_cached(client, project, state, start_img)
-    end = _upload_cached(client, project, state, project.frame_file(clip["to"])) if clip.get("to") else None
+    end = _upload_cached(client, project, state, end_img) if end_img is not None else None
     return hf.clip_body(item["model"], start, end, clip_prompt(data, clip), item["seconds"], res)
 
 

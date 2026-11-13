@@ -16,7 +16,7 @@ import json
 import sys
 from pathlib import Path
 
-from . import assemble as asm, clips as clp, frames as frm, higgsfield as hf, ledger, lint, quota, timing
+from . import assemble as asm, clips as clp, http, frames as frm, higgsfield as hf, ledger, lint, quota, timing
 from .project import Project, ProjectError
 
 
@@ -340,8 +340,11 @@ def main(argv=None):
             "timing": cmd_timing, "frames": cmd_frames, "clips": cmd_clips, "assemble": cmd_assemble,
             "compare": cmd_compare,
         }[args.cmd](p, args)
-    except (ProjectError, ledger.BudgetError, ValueError) as e:
+    except (ProjectError, ledger.BudgetError, ValueError, hf.EstimateUnreadable) as e:
         print(f"Stopped: {e}", file=sys.stderr)
+        return 1
+    except http.ApiError as e:
+        print(f"Stopped: the API refused the request ({e.status}): {e.detail}", file=sys.stderr)
         return 1
 
 

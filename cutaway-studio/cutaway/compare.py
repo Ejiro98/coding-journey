@@ -6,6 +6,7 @@ exactly as a real video would. Outputs: projects/<slug>/compare/<model>/<clip>.m
 compare/side_by_side.mp4 (labelled columns). Every spend goes through the budget guard.
 """
 
+import json
 import subprocess
 
 from . import clips as clp, higgsfield as hf, http, ledger, timing
@@ -69,10 +70,18 @@ def run(project, data, client, models, approve_usd, ids=None, log=print):
             item = {"clip": c, "model": m, "seconds": secs[c["id"]]}
             body = clp._body(project, data, client, state, item, start)
             usd = next(r["usd"] for r in rows if r["clip"] == c["id"] and r["model"] == m)
-            sub = client.submit(hf.VIDEO_MODELS[m]["endpoint"], body, hf.new_idempotency_key())
+            try:
+                sub = client.submit(hf.VIDEO_MODELS[m]["endpoint"], body, hf.new_idempotency_key())
+            except http.ApiError as e:
+                log(f"{m} {c['id']}: Higgsfield refused the request ({e.status}): {e.detail}")
+                project.path("compare", m, f"{c['id']}.error.json").write_text(
+                    json.dumps({"status": e.status, "detail": str(e.detail), "body": body}, indent=2))
+                break
             res = client.wait(sub["status_url"])
             if res["status"] != "completed":
-                log(f"{m} {c['id']}: {res['status']} (not charged)")
+                reason = res.get("error") or res.get("detail") or "no reason given"
+                log(f"{m} {c['id']}: {res['status']} (not charged): {reason}")
+                project.path("compare", m, f"{c['id']}.error.json").write_text(json.dumps(res, indent=2))
                 break
             http.download(hf.output_url(res), out)
             ledger.append(project, "spend", "higgsfield", f"{c['id']}@{m}", usd, request_id=sub.get("request_id"))

@@ -212,8 +212,10 @@ def price_from_estimate(res, body):
         return float(res["usd"])
     text = res.get("pricing_description") or ""
     rates = {k.lower(): float(v) for k, v in re.findall(r"(\d+[pPkK]):\s*\$(\d+(?:\.\d+)?)", text)}
-    if "per video second" in text and rates and "duration" in body:
+    if re.search(r"per (video )?second", text) and rates and "duration" in body:
         resolution = str(body.get("resolution") or "720p").lower()
         if resolution in rates:
             return round(rates[resolution] * float(body["duration"]), 4)
-    raise EstimateUnreadable(f"Could not read a price from Higgsfield's estimate: {res}")
+    raise EstimateUnreadable(
+        "Could not read a price from Higgsfield's estimate, so nothing was generated (no guessing "
+        f"with your money). Send this text to Claude so the reader can be taught this format: {res}")

@@ -701,3 +701,38 @@ class EstimateParsingTest(unittest.TestCase):
         from cutaway import higgsfield as hf
         self.assertGreater(hf.planning_cost("wan3", 4, "720p"), hf.planning_cost("wan3", 4, "480p"))
         self.assertIsNone(hf.planning_cost("kling-o3", 4, "480p"))
+
+
+@unittest.skipUnless(HAS_FFMPEG, "ffmpeg not installed")
+class SeedanceSafetyTests(unittest.TestCase):
+    def test_start_frame_is_resized_to_match_end_frame(self):
+        tmp = Path(tempfile.mkdtemp())
+        start, end = tmp / "start.png", tmp / "end.png"
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "color=c=red:s=480x854",
+                        "-frames:v", "1", str(start)], check=True)
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "color=c=blue:s=768x1376",
+                        "-frames:v", "1", str(end)], check=True)
+        fixed = clips.match_size(start, end)
+        self.assertEqual(clips._size(fixed), (768, 1376))
+        self.assertEqual(clips.match_size(end, end), end)          # same size: untouched
+
+    def test_estimate_text_without_the_word_video(self):
+        res = {"type": "description", "pricing_description": "USD per second: 480p: $0.0804; 720p: $0.1735."}
+        self.assertAlmostEqual(hf.price_from_estimate(res, {"duration": 4, "resolution": "480p"}), 0.3216)
+
+    def test_compare_records_the_failure_reason(self):
+        from cutaway import compare
+        fake = FakeHiggsfield(final_status="failed")
+        old, http.transport = http.transport, fake
+        try:
+            p, d = make_project(DT)
+            for fid in ("D02", "D03", "D04"):
+                _png(p.path("frames", f"{fid}.png"))
+            client = hf.Client("id", "secret", sleep=lambda s: None)
+            logs = []
+            compare.run(p, d, client, ["seedance2"], approve_usd=1.0, log=logs.append)
+            self.assertTrue(any("not charged" in l for l in logs))
+            self.assertTrue((p.dir / "compare" / "seedance2" / "T1.error.json").exists())
+            self.assertEqual(ledger.spent(p), 0.0)
+        finally:
+            http.transport = old
