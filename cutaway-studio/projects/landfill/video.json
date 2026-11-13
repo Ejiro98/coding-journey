@@ -478,15 +478,14 @@
     },
     {
       "id": "L10",
-      "view": "park",
-      "zoom": 0.7,
+      "view": "pit",
+      "zoom": 1,
       "state": "16",
       "wide": true,
       "refs": [
         "L09",
         "L01"
       ],
-      "camera": "it has pulled back to show the whole mound and more of the town around it",
       "shows": "The mound is now a green park hill with grass, winding paths, wooden benches and a few young trees. An open gate at the front edge lets people in; people walk dogs and jog on the hill. The short gas pipe heads still poke out of the grass, and the small engine building with its line of power poles is still at the LEFT edge. The cross-section below the hill still shows the cap, the layers of trash and soil, and the liner and gravel at the bottom. The camera is clearly further back than in L09, with more town and fields around the hill, and the gas pipe still runs unbroken from all four heads to the grey drum, the path curving around it.",
       "checks": [
         "Is the mound now a green grassy hill with paths, benches and a few young trees?",
@@ -494,8 +493,8 @@
         "Do the short gas pipe heads still poke out of the grass?",
         "Are the engine building and its line of power poles still at the LEFT edge?",
         "In the cut-away under the hill: the cap layers, the trash and soil layers, the liner and gravel still visible?",
-        "Is it the same town (same houses, road and fields), just seen from further back?",
-        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?"
+        "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?",
+        "Does the white gas pipe run UNBROKEN from the grey drum at the left past all four pipe heads (paths and gate do not cut it)?"
       ]
     }
   ],
@@ -683,8 +682,7 @@
       ],
       "from": "L09",
       "to": "L10",
-      "move": "pull-back",
-      "motion": "Grass spreads over the mound, paths and benches appear and a few young trees grow; a gate at the front opens and people walk in as the camera pulls back."
+      "motion": "Grass spreads over the mound, a path and benches appear and a few young trees grow; the gate at the front opens and people walk in."
     },
     {
       "id": "C17",

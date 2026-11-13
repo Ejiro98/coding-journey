@@ -744,6 +744,13 @@ class LandfillPlanTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertIn("frames check landfill L07", buf.getvalue())
 
+    def test_pull_back_still_from_an_edit_is_flagged(self):
+        data = copy.deepcopy(LF)
+        f = next(f for f in data["frames"] if f["id"] == "L10")
+        f["zoom"], f["view"] = 0.7, "park"
+        msgs = [m for l, m in lint.check_shots(data) if l == "warn"]
+        self.assertTrue(any("L10" in m and "pulls back" in m for m in msgs), msgs)
+
     def test_landfill_passes_every_check(self):
         rep = lint.check(LF)
         self.assertFalse(lint.has_errors(rep), lint.format_report(rep))

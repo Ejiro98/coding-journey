@@ -90,6 +90,9 @@ show the viewer a table of claims (true / simplified). Present the script, wait 
   (master = 1). A clip that changes view needs a `move` (dolly-in, pull-back, pan, follow) and at
   most ~2x zoom; bigger jumps make the model cut. Return to the master view after a close look.
 - `lint` checks all of this (shot checks) and blocks oversized moves.
+- **Stills can zoom IN from a still, never pull back wider than any still made so far.** Edit models
+  invent whatever was outside the old picture (landfill L10 got a different town in a cartoon style).
+  A pull-back clip may only return to a view that already exists as a still; `lint` warns otherwise.
 - **A moved frame keeps the same objects in the same orientation**: say "the same pipe, still
   running left to right, camera twice as close", never "look along the pipe" (image models then
   turn the object to face the camera, as happened in the drainage test).

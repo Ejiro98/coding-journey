@@ -151,6 +151,11 @@ def check_shots(data):
     if frames and not all("view" in f for f in frames.values()):
         report.append(("warn", "Frames have no 'view'/'zoom', so camera moves can't be checked."))
         return report
+    for f in frames.values():
+        if f.get("refs") and float(f.get("zoom", 1)) < 1:
+            report.append(("warn", f"Frame {f['id']} pulls back wider than its reference. Image edit models can't "
+                                   "show what was outside the old picture and invent a new place (landfill L10). "
+                                   "Keep the framing, or make the wide still first and zoom IN from it."))
     run = 0
     for c in clips:
         a, b = frames.get(c["from"], {}), frames.get(c.get("to") or "", {})
