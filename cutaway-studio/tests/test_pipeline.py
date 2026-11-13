@@ -628,3 +628,18 @@ class CompareTests(unittest.TestCase):
             self.assertAlmostEqual(ledger.spent(p), total)
         finally:
             http.transport = old
+
+
+LF = json.loads((STUDIO / "projects" / "landfill" / "video.json").read_text())
+
+
+class LandfillPlanTests(unittest.TestCase):
+    def test_landfill_passes_every_check(self):
+        rep = lint.check(LF)
+        self.assertFalse(lint.has_errors(rep), lint.format_report(rep))
+        self.assertFalse([m for l, m in rep if l == "warn"], lint.format_report(rep))
+
+    def test_beats_are_short_like_theirs(self):
+        segs, total = timing.segments(LF, timing.estimated_words(LF, 230), 0.8)
+        self.assertTrue(all(2.0 <= s["seconds"] <= 7.5 for s in segs), segs)
+        self.assertGreater(total, 61)

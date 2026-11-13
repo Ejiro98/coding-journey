@@ -38,7 +38,7 @@ water-related first. Avoid pure fantasy escalation ("my house becomes a castle")
 Audience is US/UK (Creator Rewards pays most there): no region-only words.
 
 ## Step 2: Script (approval 1)
-Write `video.json` (copy `projects/elevator-v3/video.json` as the template). **Narrate like the
+Write `video.json` (copy `projects/landfill/video.json` as the template). **Narrate like the
 proven videos, not a new style** (read `cutaway-studio/README.md` and the transcripts first). The formula:
 - Line 1: **"If you [one crude physical action], you have a [thing]."** Words a 10-year-old knows.
 - First **"But"** within 16 words (~3.5 s), with an everyday trigger ("as soon as it rains",
@@ -57,14 +57,26 @@ proven videos, not a new style** (read `cutaway-studio/README.md` and the transc
   the button…"), then **"Congratulations! You've built a [thing] that…"** and a share line.
 - **Facts must survive a check**: every claim is physically true or a fair simplification; prefer
   the real mechanism (a drum or a counterweight is needed before a grooved wheel can lift anything).
-- 290-315 words (~78-85 s at their speed; over 60 s for Creator Rewards). Short sentences.
+- **250-300 words** (their videos: 235-327, newest 235-287). After the voice, the video must be
+  over 60 s for Creator Rewards: if it's under 61 s, lower `voice.speed` (e.g. 1.0) and remake it.
+- Fixes can start "So you…" or with a plain verb like theirs ("Give it a slight slope", "Add a
+  pumping station", "Build a footing"). Name parts: "This is a cofferdam." / "That's a dune."
+- Two proven story shapes: **build in place** (drainage, roof, bridge, beach, landfill: one master
+  view, layers added) or **follow the flow** (sewer, power grid: the camera travels with the water
+  or power). Pick the one that fits the topic.
 - **Every problem has a visible cause first** (the box can't swing until we've said nothing holds it
   steady). **Every mechanism with two ends shows both ends** (the governor rope is a loop between a
   top wheel and a bottom wheel, not a rope to nowhere).
 Then `python3 -m cutaway lint <slug>` must show no ERROR. Fact-check every claim with sources and
 show the viewer a table of claims (true / simplified). Present the script, wait for approval.
 
-## Shot plan rules (learned from the first elevator video; the viewer's notes)
+## Shot plan rules (measured from 7 Hidden By Design videos + the viewer's elevator notes)
+- **Beats of ~3-4 s, ONE change per clip** (~18-20 clips per video). One line ≈ one clip; split a
+  long line with a cue word. Motion text: one short sentence or two.
+- **Camera locked for most clips** on a "master" view. Give every frame a `view` name and a `zoom`
+  (master = 1). A clip that changes view needs a `move` (dolly-in, pull-back, pan, follow) and at
+  most ~2x zoom; bigger jumps make the model cut. Return to the master view after a close look.
+- `lint` checks all of this (shot checks) and blocks oversized moves.
 - **Setting, never white space**: the `style` puts the cutaway in a real place (street, neighbouring
   buildings, trees, cars, residents inside). Keep it identical in every wide frame.
 - **Parts can't appear early**: give every frame a `state` (the line whose result it shows) and every
@@ -131,8 +143,15 @@ Fix frames, motion text or line grouping now, while it's free.
 
 ## Step 6: Clips on Higgsfield (approval 5: spend, two clips at a time)
 `python3 -m cutaway timing <slug>` shows each clip's length and a planning cost.
-**Model test (only when trying a new model):** `--only C01` on each model, side by side; the viewer
-picks; set `video.model`.
+**Model test before the first full video on a model, and whenever trying a new one:**
+`python3 -m cutaway compare <slug> --models wan3,seedance2,seedance25 --estimate` → tell the viewer
+the total → on "yes": `... --approve-usd <TOTAL>`. It makes the first two clips (one locked-camera
+change, one camera move) on each model, each with its own chain, and joins them into
+`compare/side_by_side.mp4`. The viewer picks; set `video.model`. `projects/drain-test` recreates
+two beats of their drainage video for exactly this purpose (never post it).
+Cost check: `timing` also prices the video at the rate you've really been charged; Seedance 2.5
+(~$0.12/s) will not fit 18 clips under a $7 cap, so plan for Wan or Seedance 2.0 unless the
+viewer raises the cap.
 Then repeat until all clips are made:
 1. `python3 -m cutaway clips estimate <slug> --next 2` → tell the viewer the amount → on "yes":
 2. `python3 -m cutaway clips run <slug> --next 2 --approve-usd <AMOUNT>`

@@ -1,0 +1,473 @@
+{
+  "slug": "landfill",
+  "title": "How Do You Turn a Garbage Dump Into a Park?",
+  "caption": "Where does your trash actually go? 🗑️➡️🌳",
+  "hashtags": [
+    "#HowThingsWork",
+    "#Engineering",
+    "#LearnOnTikTok",
+    "#Landfill",
+    "#3DAnimation"
+  ],
+  "budget": {
+    "cap_usd": 7.0
+  },
+  "voice": {
+    "provider": "elevenlabs",
+    "voice_id": null,
+    "model_id": "eleven_multilingual_v2",
+    "speed": 1.1,
+    "stability": 0.45,
+    "similarity_boost": 0.75
+  },
+  "video": {
+    "model": "wan3",
+    "resolution": "720p",
+    "chain": true
+  },
+  "style": "Vertical 9:16 realistic 3D engineering cutaway illustration at the edge of a small town on a clear day: a row of houses with red roofs and a road run along the top of the frame, with green fields beside them, and a large landfill pit fills the middle of the frame. The ground in front is cut away to show a deep brown soil cross-section beneath the pit, with a light-blue band of groundwater near the bottom. Clear elevated view, natural materials, readable lighting, the main action large enough to see. No text, no labels, no arrows, no watermark.",
+  "rules": [
+    "Only physically possible events: nothing rewinds, teleports, glows or appears from nowhere; materials are poured, spread, laid, dumped or drilled in by machines.",
+    "Liquids and gas obey gravity and pressure: liquid drips and flows down, gas rises.",
+    "Everything already built stays exactly in place.",
+    "The town, road, fields and houses at the top stay the same.",
+    "The camera stays still unless the motion says it moves."
+  ],
+  "lines": [
+    {
+      "id": "1",
+      "role": "HOOK",
+      "text": "If you dump your trash in a hole outside town, you've built a landfill."
+    },
+    {
+      "id": "2",
+      "role": "PROBLEM",
+      "text": "But as soon as it rains, water soaks through the garbage and leaks out the bottom as a black, toxic juice."
+    },
+    {
+      "id": "3",
+      "role": "PROBLEM",
+      "text": "And it seeps down toward the water people drink."
+    },
+    {
+      "id": "4",
+      "role": "FIX",
+      "text": "So in the next hole, line the floor and walls with thick clay and a heavy plastic sheet."
+    },
+    {
+      "id": "5",
+      "role": "FIX",
+      "text": "Then cover the bottom with gravel and lay pipes full of holes through it."
+    },
+    {
+      "id": "6",
+      "role": "RESULT + NAME",
+      "text": "Now the juice drips into the pipes and gets pumped away to be cleaned. It's called leachate."
+    },
+    {
+      "id": "7",
+      "role": "PROBLEM",
+      "text": "But loose trash blows all over town, and the seagulls move in for a buffet."
+    },
+    {
+      "id": "8",
+      "role": "FIX",
+      "text": "So every day, bulldozers crush the garbage flat and bury it under a layer of soil."
+    },
+    {
+      "id": "9",
+      "role": "RESULT",
+      "text": "Now the wind has nothing to grab, and the birds have nothing to eat."
+    },
+    {
+      "id": "10",
+      "role": "PROBLEM",
+      "text": "But deep inside, the rotting garbage makes methane, a gas that can catch fire and even explode."
+    },
+    {
+      "id": "11",
+      "role": "FIX",
+      "text": "So drill pipes down into the pile and suck the gas out."
+    },
+    {
+      "id": "12",
+      "role": "FIX",
+      "text": "Then, instead of wasting it, burn it in engines that make electricity."
+    },
+    {
+      "id": "13",
+      "role": "PROBLEM",
+      "text": "But eventually the hole is full, and rain still soaks in from the top."
+    },
+    {
+      "id": "14",
+      "role": "FIX + NAME",
+      "text": "So seal it with more clay, another plastic sheet and a thick blanket of soil. This is the cap."
+    },
+    {
+      "id": "15",
+      "role": "RESULT",
+      "text": "Now the rain runs off instead of soaking in."
+    },
+    {
+      "id": "16",
+      "role": "BUILD COMPLETE",
+      "text": "Plant grass, add paths and benches, and open the gates."
+    },
+    {
+      "id": "17",
+      "role": "REVEAL",
+      "text": "That big grassy hill in your local park? It might be thirty years of garbage."
+    },
+    {
+      "id": "18",
+      "role": "ENDING",
+      "text": "Congratulations! You've turned a dump into a park."
+    }
+  ],
+  "parts": {
+    "liner": {
+      "aliases": [
+        "clay",
+        "plastic sheet"
+      ],
+      "built_in": "4",
+      "looks": "a clay layer and black plastic liner in the second pit"
+    },
+    "drainage": {
+      "aliases": [
+        "gravel",
+        "pipes full of holes"
+      ],
+      "built_in": "5",
+      "looks": "a gravel layer with perforated drainage pipes at the bottom of the second pit"
+    },
+    "daily cover": {
+      "aliases": [
+        "layer of soil"
+      ],
+      "built_in": "8",
+      "looks": "brown soil layers between flattened layers of trash"
+    },
+    "gas wells": {
+      "aliases": [
+        "drill"
+      ],
+      "built_in": "11",
+      "looks": "vertical gas pipes drilled into the trash pile"
+    },
+    "engines": {
+      "aliases": [
+        "engines"
+      ],
+      "built_in": "12",
+      "looks": "a small engine building with a chimney and power lines beside the pit"
+    },
+    "cap": {
+      "aliases": [
+        "cap"
+      ],
+      "built_in": "14",
+      "looks": "the sealed cap of clay, plastic sheet and soil over the full pit"
+    },
+    "park": {
+      "aliases": [
+        "benches",
+        "paths"
+      ],
+      "built_in": "16",
+      "looks": "park grass, paths and benches on top"
+    }
+  },
+  "frames": [
+    {
+      "id": "L01",
+      "view": "pit-A",
+      "zoom": 1,
+      "state": "1",
+      "wide": true,
+      "refs": [],
+      "shows": "A bare dug pit, simply holes in the dirt, half full of loose garbage bags and trash. A garbage truck at the rim is tipping more trash in."
+    },
+    {
+      "id": "L02",
+      "view": "pit-B",
+      "zoom": 1,
+      "state": "4",
+      "wide": true,
+      "refs": [
+        "L01"
+      ],
+      "camera": "it has panned to the right to centre on a second, freshly dug pit beside the first, which is now partly visible at the left edge",
+      "shows": "The second pit is empty, and its floor and walls are covered with a grey clay layer and a black heavy plastic sheet."
+    },
+    {
+      "id": "L03",
+      "view": "pit-B",
+      "zoom": 1,
+      "state": "5",
+      "wide": true,
+      "refs": [
+        "L02",
+        "L01"
+      ],
+      "shows": "A layer of grey gravel now covers the bottom of the lined pit, with white pipes full of small holes running through the gravel to a pump pipe at the edge."
+    },
+    {
+      "id": "L04",
+      "view": "pit-B-bottom",
+      "zoom": 2,
+      "state": "6",
+      "refs": [
+        "L03"
+      ],
+      "camera": "it has moved down and about twice as close to the bottom of the second pit",
+      "shows": "Trash now fills the lower part of the lined pit. Dark liquid trickles down through the trash into the gravel and into the holes of a white drainage pipe, flowing away along it."
+    },
+    {
+      "id": "L05",
+      "view": "pit-B",
+      "zoom": 1,
+      "state": "6",
+      "wide": true,
+      "refs": [
+        "L03",
+        "L01"
+      ],
+      "shows": "The lined second pit is one third full of loose trash. Plastic bags are blowing up out of it toward the houses, and a flock of seagulls circles and lands on the trash."
+    },
+    {
+      "id": "L06",
+      "view": "pit-B",
+      "zoom": 1,
+      "state": "8",
+      "wide": true,
+      "refs": [
+        "L05",
+        "L01"
+      ],
+      "shows": "The pit is half full of trash pressed into flat layers, each covered by a brown layer of soil, like a layered cake in the cross-section. A bulldozer spreads soil on top. No loose trash, no birds."
+    },
+    {
+      "id": "L07",
+      "view": "pit-B",
+      "zoom": 1,
+      "state": "11",
+      "wide": true,
+      "refs": [
+        "L06",
+        "L01"
+      ],
+      "shows": "The pit is two thirds full of layered trash and soil. Several vertical pipes have been drilled down into the pile and are joined at the top by a horizontal pipe running to the edge of the pit."
+    },
+    {
+      "id": "L08",
+      "view": "pit-B",
+      "zoom": 1,
+      "state": "12",
+      "wide": true,
+      "refs": [
+        "L07",
+        "L01"
+      ],
+      "shows": "At the right edge of the pit stands a small engine building with a short chimney, fed by the gas pipe, and power lines run from it toward the town."
+    },
+    {
+      "id": "L09",
+      "view": "pit-B",
+      "zoom": 1,
+      "state": "14",
+      "wide": true,
+      "refs": [
+        "L08",
+        "L01"
+      ],
+      "shows": "The pit is full and rounded into a low mound, sealed on top with a layer of clay, a black plastic sheet and a thick layer of brown soil, all clearly visible in the cross-section; short gas pipe heads stick out of the soil."
+    },
+    {
+      "id": "L10",
+      "view": "park",
+      "zoom": 0.7,
+      "state": "16",
+      "wide": true,
+      "refs": [
+        "L09",
+        "L01"
+      ],
+      "camera": "it has pulled back to show the whole mound and more of the town around it",
+      "shows": "The mound is now a green park hill with grass, winding paths, benches and a few trees; people walk dogs and jog on it. The cross-section below still shows the layers of trash and soil and the liner under the hill."
+    }
+  ],
+  "clips": [
+    {
+      "id": "C01",
+      "lines": [
+        "1"
+      ],
+      "from": "L01",
+      "to": null,
+      "motion": "The garbage truck tips its load and trash tumbles into the pit."
+    },
+    {
+      "id": "C02",
+      "lines": [
+        "2"
+      ],
+      "cue": "rains",
+      "from": "L01",
+      "to": null,
+      "motion": "Rain falls on the pit; dark liquid drips out of the bottom of the trash into the soil below."
+    },
+    {
+      "id": "C03",
+      "lines": [
+        "3"
+      ],
+      "from": "L01",
+      "to": null,
+      "motion": "The dark liquid slowly spreads down through the soil until it reaches the blue groundwater band."
+    },
+    {
+      "id": "C04",
+      "lines": [
+        "4"
+      ],
+      "from": "L01",
+      "to": "L02",
+      "move": "pan",
+      "motion": "The camera pans right to a second, empty pit, where a grey clay layer and a black plastic sheet are spread over its floor and walls."
+    },
+    {
+      "id": "C05",
+      "lines": [
+        "5"
+      ],
+      "from": "L02",
+      "to": "L03",
+      "motion": "Gravel pours over the bottom of the lined pit and white pipes full of holes are laid through it."
+    },
+    {
+      "id": "C06",
+      "lines": [
+        "6"
+      ],
+      "from": "L03",
+      "to": "L04",
+      "move": "dolly-in",
+      "motion": "Trucks dump trash into the lined pit while the camera moves down closer; dark liquid trickles through the gravel into the pipe holes and flows away."
+    },
+    {
+      "id": "C07",
+      "lines": [
+        "7"
+      ],
+      "cue": "blows",
+      "from": "L04",
+      "to": "L05",
+      "move": "pull-back",
+      "motion": "The camera pulls back to the whole pit as wind lifts plastic bags out of the loose trash and seagulls swoop in."
+    },
+    {
+      "id": "C08",
+      "lines": [
+        "8"
+      ],
+      "from": "L05",
+      "to": "L06",
+      "motion": "A bulldozer crushes the trash flat and spreads a layer of brown soil over it; the seagulls fly off."
+    },
+    {
+      "id": "C09",
+      "lines": [
+        "9"
+      ],
+      "from": "L06",
+      "to": null,
+      "motion": "Wind blows across the soil-covered pit and nothing lifts; the last seagulls fly away."
+    },
+    {
+      "id": "C10",
+      "lines": [
+        "10"
+      ],
+      "cue": "methane",
+      "from": "L06",
+      "to": null,
+      "motion": "Faint wisps of gas rise through cracks in the soil layers from the trash below."
+    },
+    {
+      "id": "C11",
+      "lines": [
+        "11"
+      ],
+      "from": "L06",
+      "to": "L07",
+      "motion": "A drilling rig drills down into the pile and vertical pipes are lowered in, joined at the top by a horizontal pipe."
+    },
+    {
+      "id": "C12",
+      "lines": [
+        "12"
+      ],
+      "from": "L07",
+      "to": "L08",
+      "motion": "A small engine building is set at the edge of the pit, the gas pipe connects to it, and a little exhaust rises from its chimney."
+    },
+    {
+      "id": "C13",
+      "lines": [
+        "13"
+      ],
+      "from": "L08",
+      "to": null,
+      "motion": "Trucks fill the pit up to the top and rain falls, soaking into the top layer."
+    },
+    {
+      "id": "C14",
+      "lines": [
+        "14"
+      ],
+      "from": "L08",
+      "to": "L09",
+      "motion": "Clay, a black plastic sheet and a thick layer of soil are spread over the full mound, one layer after another."
+    },
+    {
+      "id": "C15",
+      "lines": [
+        "15"
+      ],
+      "from": "L09",
+      "to": null,
+      "motion": "Rain falls on the mound and runs off its sloped sides into ditches at the edge."
+    },
+    {
+      "id": "C16",
+      "lines": [
+        "16"
+      ],
+      "from": "L09",
+      "to": "L10",
+      "move": "pull-back",
+      "motion": "Grass spreads over the mound, paths and benches appear, and the camera pulls back as people walk in."
+    },
+    {
+      "id": "C17",
+      "lines": [
+        "17"
+      ],
+      "from": "L10",
+      "to": null,
+      "motion": "People walk dogs and jog on the green hill above the hidden layers of garbage."
+    },
+    {
+      "id": "C18",
+      "lines": [
+        "18"
+      ],
+      "from": "L10",
+      "to": null,
+      "motion": "Gentle hold on the park and the town as the sun lowers slightly."
+    }
+  ],
+  "sfx": []
+}
