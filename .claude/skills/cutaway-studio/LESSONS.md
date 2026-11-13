@@ -30,6 +30,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   full", "engine building still at the right edge" into every later still.
 - Landfill L09/L10: the engine building and gas pipes would have vanished at the end → list
   everything already built that must stay; anything built never disappears.
+- Landfill L06: the drainage pipe lost its link to the pump box and the pit came out nearly
+  full instead of half → connections (pipe to pump, wires to town) go into the part's `looks`
+  so every later still repeats them; give the fill level a visible measure ("liner wall shows
+  above the soil all the way round"); attach the still where a connection is clearest as a reference.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
