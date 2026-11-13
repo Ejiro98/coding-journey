@@ -343,7 +343,7 @@
         "L06",
         "L01"
       ],
-      "shows": "Same pit, same fill level and same smooth brown soil top as the reference, with the same tall black liner wall showing above the soil; the bulldozer has gone. Added on the soil top only: four short white pipe stubs, each knee-high, standing in a row across the middle of the soil top, and one white pipe lying flat on the soil that joins the top of all four and runs to the LEFT rim and stops there, capped (nothing at the right side is connected to it). The cut-away face and everything else stay exactly as in the reference. Clean sharp image. The small yellow drilling rig that drilled them is parked outside the pit at the middle of the back rim.",
+      "shows": "Same pit, same fill level and same smooth brown soil top as the reference, with the same tall black liner wall showing above the soil; the bulldozer has gone. Added on the soil top only: four short white pipe stubs, each knee-high, standing in a row across the middle of the soil top, and one white pipe lying flat on the soil that joins the top of all four and runs to the LEFT rim and stops there, capped (nothing at the right side is connected to it). The cut-away face and everything else stay exactly as in the reference. Clean sharp image. The small yellow drilling rig that drilled them is parked outside the pit at the middle of the back rim. Each stub's top is closed: the flat pipe connects into the top of every stub, with no open pipe ends.",
       "checks": [
         "Count the vertical white pipes: exactly four?",
         "Does the horizontal pipe touch the top of EVERY one of the four, including the leftmost?",
