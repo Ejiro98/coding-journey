@@ -220,6 +220,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   the stills are approved, before the draft; fix with wording when the difference is part of the action,
   and with a cut from a start still made FROM the end still when it isn't (close-ups, pull-backs).
 
+- Landfill C02/C03 + precheck round 2: reviewers told "any doubt is FAIL" started failing clips for
+  faint rain and for showing the drip the script itself names, and flagged 10 pairs, most invisible
+  on a phone → strict (zoomed, any doubt) for wrong facts and invented events only; phone-size viewer
+  judgement for everything else.
+
 ## Money
 - Elevator v1 ($15) and v2 ($20+): money spent before the story was right → free draft first,
   then 2 clips at a time with the estimate approved each time. Never skip.

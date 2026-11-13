@@ -617,7 +617,7 @@
       ],
       "from": "L01g",
       "to": "L01b",
-      "motion": "The rain stops. An empty truck and an excavator drive up; the excavator scoops the trash and dirty soil into the truck, digging the pit a little deeper, and the dark stain in the soil and water fades."
+      "motion": "The rain stops and the clouds clear to a sunny sky. An empty truck and an excavator drive up; the excavator scoops the trash and dirty soil into the truck, digging the pit deeper, and the dark stain fades."
     },
     {
       "id": "C04b",
@@ -645,7 +645,7 @@
       ],
       "from": "L03",
       "to": "L03b",
-      "motion": "Two garbage trucks back up to the rim and tip their trash into the lined pit, on top of the gravel and pipes, until the bottom third is covered."
+      "motion": "Two yellow dump trucks drive up to the back rim and tip their trash into the lined pit, on top of the gravel and pipes, until the bottom third is covered; their beds stay raised."
     },
     {
       "id": "C06b",
@@ -666,7 +666,7 @@
       "cue": "blows",
       "from": "L05pre",
       "to": "L05",
-      "motion": "Wind lifts plastic bags out of the loose trash and blows them toward the houses; seagulls swoop down and land on the trash.",
+      "motion": "Wind lifts plastic bags out of the loose trash and blows them toward the houses; a flock of seagulls swoops in and circles low over the trash.",
       "cut": true
     },
     {
@@ -717,7 +717,7 @@
       ],
       "from": "L07",
       "to": "L08",
-      "motion": "A small engine building is set just outside the pit's left edge, the gas pipe connects to it, power poles are put up from it to the road, and a little exhaust rises from its chimney."
+      "motion": "A small engine building is set just outside the pit's left edge, the gas pipe connects to it, a line of power poles goes up from it to the road and beyond, and a little exhaust rises from its chimney."
     },
     {
       "id": "C13",

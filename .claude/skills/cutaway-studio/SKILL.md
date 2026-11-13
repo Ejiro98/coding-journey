@@ -229,6 +229,11 @@ on Seedance 2.0 and ~$19 on Seedance 2.5. Under the $7 cap only Kling O3 or Wan 
 Seedance needs the viewer to raise the cap first. `timing` prices at the project's resolution and
 at the rate actually charged; `clips estimate` is always the real number.
 Then repeat until all clips are made:
+**How strict to be (reviewers):** judge as a viewer watching ONCE on a phone. FAIL a clip or pair only for:
+   (1) an invented event or a wrong fact a viewer would notice (a waterfall from nowhere, a pipe to nowhere,
+   a leak through the liner), (2) a jump, cut, freeze or morph, (3) the line's key thing not visible on its
+   words. Note everything else (faint rain, a redrawn bush, a slight tint) but don't fail or remake for it.
+   What the SCRIPT says happens ("it drips out the bottom") is never a fault.
 0. **Free precheck before paying:** `python3 -m cutaway clips precheck <slug> --only C05,C06` puts each clip's
    start picture, end picture and their difference side by side. A NEW reviewer checks that every bright
    area in the difference is something the motion describes; anything else (a redrawn wall, a moved
