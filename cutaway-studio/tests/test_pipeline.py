@@ -580,6 +580,17 @@ class TidyTests(unittest.TestCase):
         self.assertAlmostEqual(b, 0x6a, delta=3)
         self.assertTrue(p.path("frames", "F02.pretidy.png").exists())
 
+    def test_tidy_uses_a_new_image_not_a_stale_original(self):
+        p, d = make_project(V3)
+        _png(p.path("frames", "F01.png"), "0x8a7a6a")
+        _png(p.path("frames", "F02.png"), "0x2244cc")      # first try (blue)
+        frames.tidy(p, "F02", "F01", sharpen=0)
+        frames.tidy(p, "F02", "F01", sharpen=0)             # re-tidy own output: still from the original
+        _png(p.path("frames", "F02.png"), "0xcc4422")      # a repair replaces it (red)
+        frames.tidy(p, "F02", "F01", sharpen=0)
+        r, g, b = (m for m, _ in frames._channel_stats(p.path("frames", "F02.pretidy.png")))
+        self.assertGreater(r, b)                            # the pretidy copy is the repair, not the old try
+
 
 class KieTests(unittest.TestCase):
     def setUp(self):

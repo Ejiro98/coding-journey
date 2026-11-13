@@ -310,15 +310,16 @@
         "L03b"
       ],
       "camera": "it has moved down and twice as close: the lower half of the pit and its cut-away front face fill the whole picture; the rim, trucks, houses, road and sky are all out of frame above; the pipes still run left to right exactly as before",
-      "shows": "Trash bags and loose trash now cover the whole gravel floor of the lined pit. The cut-away front face shows, from top to bottom: trash, grey gravel with the white pipe full of holes in it, the black plastic sheet, the grey clay, then brown soil. Thin drips of dark brown liquid trickle down between the trash bags, soak into the gravel and run into the holes of the white pipe; dark liquid is visible inside the pipe, flowing to the right. No liquid on top of the gravel, and the black sheet, clay and soil below stay completely dry. The black sheet lies smoothly against the pit walls. The cut-away slices the white pipe open lengthwise, so a dark stream of juice is seen flowing INSIDE it; the pipe's outside stays clean white with no drips.",
+      "shows": "Trash bags and loose trash cover the gravel floor of the lined pit. The cut-away front face shows, from top to bottom: trash, grey gravel with the white pipe full of small round holes lying in it, the black plastic sheet, the grey clay, then brown soil. The juice has soaked down through the trash: the gravel around and above the pipe is stained dark brown, and the pipe's holes look dark. No liquid is drawn falling or flowing anywhere. The outside of the pipe is clean white, and the black sheet, clay and soil below are completely clean and dry.",
       "checks": [
         "Is the camera clearly about twice as close as L03b: the lower pit and cut face fill the picture, with NO rim, trucks, houses or sky visible?",
-        "Does dark liquid drip down through the trash and gravel and go INTO the holes of the white pipe?",
-        "Is dark liquid visible INSIDE the pipe, flowing along it (toward the right)?",
-        "MUST BE NO: does any liquid drip OUT of the pipe, or sit under the black sheet, in the clay or in the soil?",
-        "Do the pipes still run left to right, as in L03b?",
+        "Is the gravel around and above the white pipe stained dark brown, with the pipe's holes looking dark?",
+        "Is the outside of the pipe clean white, with no liquid running down it?",
+        "MUST BE NO: is any liquid or stain under the black sheet, in the clay or in the soil, or pouring from a pipe end?",
+        "Do the pipes still run left to right, as in L03b, with no bent or open pipe ends?",
         "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
-      ]
+      ],
+      "line_part": "the juice drips into the pipes (shown as the dark-stained gravel around the pipe; the flowing is the clip's job)"
     },
     {
       "id": "L05",
@@ -494,7 +495,7 @@
         "L09",
         "L01"
       ],
-      "shows": "The domed cap is now a green park hill: grass all over it, one path looping over the top, two wooden benches and a few young trees, with people walking a dog and a jogger. People come in through an open gate at the BACK of the hill, beside the road. At the front, the four short white gas pipe heads and the white pipe joining them to the grey drum at the left stay exactly as in L09, uncovered and unbroken, with grass around them; no path or gate touches them. The cut-away face still shows, from the top: soil, black sheet, grey clay, then the layers of trash and soil, the liner and gravel at the bottom. Everything else exactly as in L09.",
+      "shows": "The domed cap is now a green park hill: grass all over it, one path looping over the top, two wooden benches and a few young trees, with people walking a dog and a jogger. People come in through an open gate at the BACK of the hill, beside the road. At the front, the four short white gas pipe heads and the white pipe joining them to the grey drum at the left stay exactly as in L09, uncovered and unbroken, with grass around them; no path or gate touches them. The cut-away face still shows, from the top: soil, black sheet, grey clay, then the layers of trash and soil, the liner and gravel at the bottom. Everything else exactly as in L09. The green pump box has only its one riser pipe at the back-right corner; no other pipe leaves it or runs down the slope.",
       "checks": [
         "Is the dome now a grassy hill with a path, benches, a few young trees and people on it?",
         "Is the open gate at the BACK of the hill by the road, with people walking in?",
@@ -502,7 +503,8 @@
         "At the top of the cut face, are the cap bands (soil, black sheet, grey clay) still visible above the trash layers?",
         "Are the engine building, drum, power poles, green pump box and riser unchanged from L09?",
         "MUST BE NO: is the gas pipe joined to the green pump box or to the riser at the back-right corner?",
-        "MUST BE NO: is there any writing, letters or text-like marks anywhere?"
+        "MUST BE NO: is there any writing, letters or text-like marks anywhere?",
+        "MUST BE NO: is there any other pipe, especially one running from the green pump box down the slope or ending at the cut face?"
       ],
       "big_change": true
     }
@@ -583,7 +585,7 @@
       "from": "L03b",
       "to": "L04",
       "move": "dolly-in",
-      "motion": "The camera moves down closer as black liquid trickles down through the trash and gravel, into the holes of the white pipe, and flows along the pipe toward the pump at the edge."
+      "motion": "The camera moves down closer as dark juice trickles down through the trash into the gravel and seeps into the holes of the white pipe, staining the gravel around it."
     },
     {
       "id": "C07",

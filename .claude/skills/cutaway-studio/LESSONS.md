@@ -145,6 +145,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
 - Landfill L02/L04/L05: stills added later in the plan (L01b, L03b) put vehicles in that older stills
   don't have → after inserting a still, re-check the stills after it; let vehicles leave in a clip's
   motion ("drive away") or out of frame (a real 2x close-up), rather than remaking a chain of stills.
+- Landfill L04 (2 tries) and earlier L01r/L03b: asking a STILL to show liquid moving (into holes,
+  along a pipe) made the model draw it leaking every time → a still shows the RESULT as a colour
+  (dark-stained gravel, dark holes, clean pipe outside); the clip shows the flow.
+- `frames tidy` once re-used a stale original and silently replaced a repaired still (fixed: it
+  now notices a new image) → after any tool step that writes frames/, look at the file it produced.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

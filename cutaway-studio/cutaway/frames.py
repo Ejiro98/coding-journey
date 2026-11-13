@@ -226,21 +226,32 @@ def tidy(project, frame_id, match_id, sharpen=0.6):
     src, ref = project.frame_file(frame_id), project.frame_file(match_id)
     if not src or not ref:
         raise ValueError(f"Need both {frame_id} and {match_id} in frames/.")
-    have, want = _channel_stats(src), _channel_stats(ref)
+    keep = src.with_name(f"{frame_id}.pretidy{src.suffix}")
+    mark = src.with_name(f"{frame_id}.tidy.sha")
+    # Re-tidying our own output starts again from the saved original; any OTHER image in frames/
+    # (a remake or repair since the last tidy) becomes the new original. (Bug fixed: a stale
+    # pretidy file once replaced a repaired L10 with an older try.)
+    own_output = mark.exists() and mark.read_text().strip() == _sha_file(src)
+    if not (keep.exists() and own_output):
+        shutil.copy2(src, keep)
+    have, want = _channel_stats(keep), _channel_stats(ref)
     expr = []
     for (m, sd), (m2, sd2) in zip(have, want):
         k = min(max(sd2 / sd, 0.8), 1.25) if sd >= 1 else 1.0
         expr.append(f"clip((val-{m:.2f})*{k:.4f}+{m2:.2f},0,255)")
-    keep = src.with_name(f"{frame_id}.pretidy{src.suffix}")
-    if not keep.exists():
-        shutil.copy2(src, keep)
     out = src.with_name(f"{frame_id}.tidy{src.suffix}")
     vf = f"lutrgb=r='{expr[0]}':g='{expr[1]}':b='{expr[2]}'"
     if sharpen:
         vf += f",unsharp=5:5:{sharpen}:5:5:0"
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(keep), "-vf", vf, str(out)], check=True)
     out.replace(src)
+    mark.write_text(_sha_file(src))
     return src, have, want
+
+
+def _sha_file(path):
+    import hashlib
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 REPAIR = (

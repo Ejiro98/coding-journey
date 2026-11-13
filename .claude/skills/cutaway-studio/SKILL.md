@@ -131,6 +131,9 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
 
 ## Step 4: Keyframes in Google Flow (free) (approval 3)
 `python3 -m cutaway frames prompts <slug>` prints each frame's prompt and the reference files.
+- **A still shows results, never motion.** Flowing liquid, rising gas or a moving machine in a still
+  gets drawn wrong (leaks, smears). Show the result instead (dark-stained gravel, a parked machine)
+  and let the clip show the movement.
 - **Big changes** (a pit filling up, a mound appearing): set `"big_change": true` on that still, lead its
   `shows` with the change in one sentence, and keep extras out. Otherwise the usual "keep everything
   identical" prompt makes the model refuse the change.
