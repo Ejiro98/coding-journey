@@ -111,6 +111,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   parts → mark such stills `"big_change": true` (the prompt then names what stays and says the
   change is the point), lead with the change in one short sentence, and drop extras (wet streaks,
   machines leaving) that add risk. If it still won't change, add an in-between reference still.
+- Landfill L09 (3 tries on kie.ai, $0.27): the cap (clay + sheet + soil + mound) was three changes in one still. Try 1
+  changed nothing; tries 2-3 put a mound only at the back, left the strip by the cut face open, and moved the gas pipes
+  down the cut face (once into the drain pipe) → one change per still: lay the clay and black sheet flat over the whole
+  top first, then the soil hump in the next still. The strip next to a cut-away is the hardest place to change.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
