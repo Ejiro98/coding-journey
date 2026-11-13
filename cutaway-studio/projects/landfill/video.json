@@ -433,7 +433,8 @@
         "Are the gravel, drain pipe, liner and clay band still at the bottom of the cut-away, unchanged?",
         "Are the engine building, drum, power poles, green pump box and riser unchanged from L08b?",
         "MUST BE NO: is there any writing, letters or text-like marks anywhere (for example on the pipes)?"
-      ]
+      ],
+      "line_part": "So seal it with more clay and another plastic sheet (the soil blanket comes in the next still)"
     },
     {
       "id": "L09",
