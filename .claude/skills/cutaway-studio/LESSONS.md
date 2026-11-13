@@ -92,6 +92,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   isn't in the story. It sets the shape for 15+ stills.
 - Judge single failed points at phone size: a sliver no viewer would notice (L06 step) or a soft edge
   (L01b) is not worth more tries; a wrong fact (pipe to nowhere, liquid through the liner) always is.
+- Landfill L07 (3 tries on kie.ai, $0.27): any mention of the gas pipes going down into the trash drew them as tall
+  goalposts standing in the open cut-away (tries 1-2, plus a fill-level jump and a dropped pipe). A short, visible-only
+  prompt ("four knee-high stubs on the soil top, one pipe lying flat joining them") fixed that, but the header was then
+  joined to the leachate riser, because both end at the right rim → describe only what shows above ground, and never
+  send two different systems (gas, leachate) to the same corner: give each its own side of the pit.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
