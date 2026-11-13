@@ -47,6 +47,13 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   dark") that image models can't draw reliably, and one try leaked liquid below the pit early →
   ask only for things a viewer can point at ("black liquid collected at the bottom, under the trash"); put one change in each
   still and save the next change for the next still (the leak belongs in L01g).
+- Landfill L01r (kie.ai, 3 tries, $0.27; the viewer accepted try 3): try 1 drew the black liquid as a flat black sheet
+  (reads as a liner), try 2 as a slab sticking out of the cut face and dripping into the soil (my fix had added "drips
+  running from the bags"). All three prompts said "a shallow pool of black liquid", and the accepted try 3 also said
+  "a shallow, glossy puddle", so the word "pool" was NOT the problem. What changed in try 3: it said where the liquid
+  stops ("INSIDE the pit, set back from the cut-away face, with a lip of brown dirt between it and the cut face; nothing
+  drips; the soil below is clean brown") and dropped the word "drips" → when a liquid must stay put, say where it stops
+  and what stays clean; don't mention drips or running unless the still should show them.
 - Landfill L03b try 2 (kie.ai): adding five sentences of fixes made the edit drift (camera moved, groundwater band and
   bulldozer vanished, juice leaked through the liner) → keep fixes to one or two short sentences per failed answer;
   on kie.ai, attach the single closest reference first.
