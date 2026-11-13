@@ -8,6 +8,7 @@ after 7 days, so we download immediately.
 """
 
 import math
+import re
 import mimetypes
 import random
 import time
@@ -19,7 +20,8 @@ BASE = "https://api.higgsfield.ai"
 TERMINAL = {"completed", "failed", "nsfw", "canceled"}
 
 # Video models that take a START frame and an END frame.
-# price_per_sec is only a planning hint; the /estimate endpoint is authoritative.
+# price_per_sec (USD per output second, by resolution) is only a planning hint;
+# the /estimate endpoint is authoritative. Kling o3 'std' mode renders 720p.
 VIDEO_MODELS = {
     "wan3": {
         "endpoint": "alibaba/wan-3.0/image-to-video",
@@ -27,7 +29,7 @@ VIDEO_MODELS = {
         "min": 2, "max": 30,
         "extra": {"aspect_ratio": "9:16", "generate_audio": False},
         "resolution_field": "resolution",
-        "price_per_sec": 0.0375,
+        "price_per_sec": {"480p": 0.0375, "720p": 0.075, "1080p": 0.15},
     },
     "seedance2": {
         "endpoint": "bytedance/seedance-2.0/image-to-video",
@@ -35,7 +37,7 @@ VIDEO_MODELS = {
         "min": 4, "max": 15,
         "extra": {"generate_audio": False},
         "resolution_field": "resolution",
-        "price_per_sec": 0.0804,
+        "price_per_sec": {"480p": 0.0804, "720p": 0.1735, "1080p": 0.4293},
     },
     "seedance25": {
         "endpoint": "bytedance/seedance-2.5/image-to-video",
@@ -43,7 +45,7 @@ VIDEO_MODELS = {
         "min": 4, "max": 30,
         "extra": {"generate_audio": False},
         "resolution_field": "resolution",
-        "price_per_sec": 0.1177,
+        "price_per_sec": {"480p": 0.1177, "720p": 0.2647, "1080p": 0.6518},
     },
     "kling-o3": {
         "endpoint": "kling-video/o3/first-last-frame",
@@ -51,7 +53,7 @@ VIDEO_MODELS = {
         "min": 3, "max": 15,
         "extra": {"aspect_ratio": "9:16", "sound": "off", "mode": "std", "multi_shots": False},
         "resolution_field": None,
-        "price_per_sec": None,
+        "price_per_sec": {"720p": 0.0683, "1080p": 0.086},
     },
 }
 
@@ -121,7 +123,7 @@ class Client:
     # ---------- generation ----------
     def estimate(self, endpoint, body):
         res = http.request_json("POST", f"{self.base}/estimate/{endpoint}", headers=self._auth(), json_body=body)
-        return float(res["usd"])
+        return price_from_estimate(res, body)
 
     def submit(self, endpoint, body, idempotency_key):
         headers = self._auth()
@@ -185,8 +187,33 @@ def output_url(result):
     raise ValueError(f"No output URL in result: {list(result.keys())}")
 
 
-def planning_cost(model_name, seconds):
-    m = VIDEO_MODELS[model_name]
-    if m["price_per_sec"] is None:
+def planning_cost(model_name, seconds, resolution="720p"):
+    rate = VIDEO_MODELS[model_name]["price_per_sec"].get(resolution)
+    if rate is None:
         return None
-    return round(clip_duration(model_name, seconds) * m["price_per_sec"], 4)
+    return round(clip_duration(model_name, seconds) * rate, 4)
+
+
+class EstimateUnreadable(RuntimeError):
+    pass
+
+
+def price_from_estimate(res, body):
+    """Turn an /estimate reply into USD.
+
+    Higgsfield answers either {"usd": ...} or, as of Nov 2026, a text price list:
+    {"type": "description", "pricing_description": "... per video second: 480p: $0.0375;
+    720p: $0.0750; ... Total price = selected rate x output duration in seconds."}
+    For the text form we take the rate for the request's resolution (720p when the
+    model has no resolution field) times body["duration"]. Anything else is refused
+    rather than guessed, so the spend guard never runs on a made-up number.
+    """
+    if "usd" in res:
+        return float(res["usd"])
+    text = res.get("pricing_description") or ""
+    rates = {k.lower(): float(v) for k, v in re.findall(r"(\d+[pPkK]):\s*\$(\d+(?:\.\d+)?)", text)}
+    if "per video second" in text and rates and "duration" in body:
+        resolution = str(body.get("resolution") or "720p").lower()
+        if resolution in rates:
+            return round(rates[resolution] * float(body["duration"]), 4)
+    raise EstimateUnreadable(f"Could not read a price from Higgsfield's estimate: {res}")

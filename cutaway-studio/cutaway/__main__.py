@@ -86,8 +86,10 @@ def cmd_timing(p, args):
     print(f"Timing from {source}; total {total:.1f}s; model {model}")
     print(timing.table(segs))
     reqs = [(c, s["seconds"], model) for c, s in zip(data["clips"], segs)]
-    plan, unknown = clp.planning_total(reqs)
-    print(f"Planning cost for all clips on {model} (price table): ~${plan:.2f}" + (f" (+ {len(unknown)} unpriced)" if unknown else ""))
+    res = data.get("video", {}).get("resolution", "720p")
+    plan, unknown = clp.planning_total(reqs, res)
+    print(f"Planning cost for all clips on {model} at {res} (price table): ~${plan:.2f}"
+          + (f" (+ {len(unknown)} unpriced)" if unknown else ""))
     rate = ledger.observed_rate(p, model)
     if rate:
         real = sum(hf.clip_duration(model, s) for _, s, _ in reqs) * rate
@@ -147,6 +149,9 @@ def cmd_clips(p, args):
 def cmd_compare(p, args):
     from . import compare as cmp
     data = p.load()
+    if args.resolution:
+        # Motion and instruction-following are what's being compared; 480p costs about half.
+        data.setdefault("video", {})["resolution"] = args.resolution
     models = [m.strip() for m in args.models.split(",")]
     client = hf.Client()
     if args.estimate or args.approve_usd is None:
@@ -309,7 +314,9 @@ def main(argv=None):
     sp.add_argument("--next", type=int, help="make only the next N clips in order (review, then continue)")
     sp.add_argument("--approve-usd", type=float)
     sp = with_slug("compare", "same clips on several models, side by side")
-    sp.add_argument("--models", default="wan3,seedance2,seedance25")
+    sp.add_argument("--models", default="wan3,kling-o3,seedance2,seedance25")
+    sp.add_argument("--resolution", default="480p",
+                    help="test resolution (default 480p: half price; kling-o3 always renders 720p)")
     sp.add_argument("--clips", help="clip ids (default: the first two)")
     sp.add_argument("--estimate", action="store_true")
     sp.add_argument("--approve-usd", type=float)

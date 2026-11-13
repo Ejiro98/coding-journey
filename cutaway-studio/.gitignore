@@ -12,3 +12,5 @@ __pycache__/
 *.pyc
 .env
 keys.env
+projects/*/model-test/
+projects/*/rejected/

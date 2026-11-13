@@ -144,14 +144,17 @@ Fix frames, motion text or line grouping now, while it's free.
 ## Step 6: Clips on Higgsfield (approval 5: spend, two clips at a time)
 `python3 -m cutaway timing <slug>` shows each clip's length and a planning cost.
 **Model test before the first full video on a model, and whenever trying a new one:**
-`python3 -m cutaway compare <slug> --models wan3,seedance2,seedance25 --estimate` → tell the viewer
+`python3 -m cutaway compare <slug> --estimate` (default: wan3, kling-o3, seedance2, seedance25 at
+480p, ~$2.40 for 2 clips each; motion is what's tested, 480p is half price) → tell the viewer
 the total → on "yes": `... --approve-usd <TOTAL>`. It makes the first two clips (one locked-camera
 change, one camera move) on each model, each with its own chain, and joins them into
 `compare/side_by_side.mp4`. The viewer picks; set `video.model`. `projects/drain-test` recreates
 two beats of their drainage video for exactly this purpose (never post it).
-Cost check: `timing` also prices the video at the rate you've really been charged; Seedance 2.5
-(~$0.12/s) will not fit 18 clips under a $7 cap, so plan for Wan or Seedance 2.0 unless the
-viewer raises the cap.
+Real 720p prices (Higgsfield, Nov 2026, per output second): Kling O3 std $0.068, Wan 3.0 $0.075,
+Seedance 2.0 $0.174, Seedance 2.5 $0.265. A ~70 s video costs ~$5 on Kling O3 or Wan 3.0, ~$12
+on Seedance 2.0 and ~$19 on Seedance 2.5. Under the $7 cap only Kling O3 or Wan 3.0 fit, so
+Seedance needs the viewer to raise the cap first. `timing` prices at the project's resolution and
+at the rate actually charged; `clips estimate` is always the real number.
 Then repeat until all clips are made:
 1. `python3 -m cutaway clips estimate <slug> --next 2` → tell the viewer the amount → on "yes":
 2. `python3 -m cutaway clips run <slug> --next 2 --approve-usd <AMOUNT>`

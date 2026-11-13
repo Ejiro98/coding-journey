@@ -14,9 +14,9 @@
   },
   "voice": {
     "provider": "elevenlabs",
-    "voice_id": null,
+    "voice_id": "ktkP7Nsj67dw2zcplQYt",
     "model_id": "eleven_multilingual_v2",
-    "speed": 1.1,
+    "speed": 1.15,
     "stability": 0.45,
     "similarity_boost": 0.75
   },
@@ -234,7 +234,7 @@
         "F03",
         "F01"
       ],
-      "shows": "On the other end of the ropes, on the far side of the shaft, hangs a tall stack of dark iron weights. The box is at the third floor and the counterweight is at the second floor."
+      "shows": "On the other end of the ropes, on the far side of the shaft, hangs a tall stack of dark iron weights. The six steel ropes now run from the top of the box up over the big wheel and straight down the other side to the top of the iron weight stack; the box hangs only from the ropes on its own side. The box is at the third floor. The counterweight hangs a full floor lower, at the second floor, against the far right wall of the shaft, clearly separate from the box with a gap between them. Keep the exact framing of the first reference image: same zoom, the building occupies exactly the same part of the picture, the same amount of sky, street and soil is visible. The pit at the bottom of the shaft stays empty bare concrete with nothing in it. The worker is gone; no workers anywhere."
     },
     {
       "id": "F05",
@@ -252,7 +252,8 @@
       "refs": [
         "F05"
       ],
-      "shows": "Close-up of one side of the box: a steel guide clip on the box hugs the vertical steel guide rail, and the bolts fixing the rail into the concrete wall are clearly visible. Same materials and lighting."
+      "shows": "Close-up of one side of the box: a steel guide clip on the box hugs the vertical steel guide rail, and the bolts fixing the rail into the concrete wall are clearly visible. Same materials and lighting.",
+      "close": true
     },
     {
       "id": "F06",
@@ -270,7 +271,8 @@
       "refs": [
         "F06"
       ],
-      "shows": "Close-up of the small governor wheel at the top of the shaft: two weighted arms have swung outward and hooked into a notched steel ring around the wheel, locking it. The thin rope over the wheel is still. Same materials and lighting."
+      "shows": "Close-up of the small governor wheel at the top of the shaft: two weighted arms have swung outward and hooked into a notched steel ring around the wheel, locking it. The thin rope over the wheel is still. Same materials and lighting.",
+      "close": true
     },
     {
       "id": "G2",
@@ -278,7 +280,8 @@
       "refs": [
         "F06"
       ],
-      "shows": "Medium shot of the box stopped between the second and third floors: two steel claws on the sides of the box are clamped onto the guide rails with a few fading sparks, the thin governor rope is taut above the lever, and the broken main ropes hang slack. Same street, materials and lighting."
+      "shows": "Medium shot of the box stopped between the second and third floors: two steel claws on the sides of the box are clamped onto the guide rails with a few fading sparks, the thin governor rope is taut above the lever, and the broken main ropes hang slack. Same street, materials and lighting. The counterweight has dropped all the way down and lies at the bottom of the shaft in the pit on the far side, its ropes slack.",
+      "close": true
     },
     {
       "id": "F08a",
@@ -286,7 +289,8 @@
       "refs": [
         "F01"
       ],
-      "shows": "Front view of a hallway on one floor of the same building: warm wooden floor, a framed picture on the wall, and an open doorway gap with no doors leading straight into the dark, empty elevator shaft. A young man with a backpack walks down the hallway toward the gap, looking down at his phone, mid-stride."
+      "shows": "Camera behind and slightly to the side of a young man with a backpack in a hallway of the same building, looking past him down the hallway: warm wooden floor, a framed picture on the wall. At the end of the hallway is an open doorway gap with no doors, and through it you can see straight into the dark, empty elevator shaft: bare concrete walls, steel guide rails and hanging steel ropes, and a deep drop down to the pit far below. The young man walks toward the gap, his back to the camera, head down looking at his phone, mid-stride, only two steps from the edge.",
+      "close": true
     },
     {
       "id": "F08",
@@ -294,7 +298,8 @@
       "refs": [
         "F08a"
       ],
-      "shows": "The same hallway, now with closed brushed-steel elevator doors filling the gap and a small lit call button beside them. The young man has stepped back and looks up from his phone, surprised."
+      "shows": "The same hallway, now with closed brushed-steel elevator doors filling the gap and a small lit call button beside them. The young man has stepped back and looks up from his phone, surprised.",
+      "close": true
     },
     {
       "id": "F09",
@@ -302,7 +307,8 @@
       "refs": [
         "F08"
       ],
-      "shows": "Inside the elevator car: brushed steel walls, five people standing close together, and a sixth person squeezing in through the open doors with a large bag. A small red overload light above the doors."
+      "shows": "Inside the elevator car: brushed steel walls, five people standing close together, and a sixth person squeezing in through the open doors with a large bag. A small red overload light above the doors.",
+      "close": true
     },
     {
       "id": "F10b",
@@ -310,7 +316,8 @@
       "refs": [
         "F08"
       ],
-      "shows": "Close-up of a finger pressing a glowing round elevator call button on a brushed steel panel."
+      "shows": "Close-up of a finger pressing a glowing round elevator call button on a brushed steel panel.",
+      "close": true
     },
     {
       "id": "F10",
@@ -331,7 +338,7 @@
       ],
       "from": "F01",
       "to": null,
-      "motion": "The worker pulls the rope hand over hand and the box rises steadily from the second floor toward the third floor. The camera pushes in slowly."
+      "motion": "Static locked-off camera, no zoom, no camera movement. The worker pulls the rope hand over hand and the one grey box rises slowly and steadily from the second floor to just below the third floor. There is only ever one box in the shaft."
     },
     {
       "id": "C02",
@@ -358,8 +365,8 @@
         "4"
       ],
       "from": "F02",
-      "to": null,
-      "motion": "The worker pulls hard on the steel ropes, his feet slide on the floor and he falls onto his backside. The box does not move at all."
+      "to": "F02",
+      "motion": "Static camera. The worker leans back and heaves on the steel ropes with all his strength, straining and red-faced, his boots sliding on the pavement. The heavy grey box stays sitting on the concrete pit floor and does not lift at all."
     },
     {
       "id": "C05",
@@ -368,7 +375,7 @@
       ],
       "from": "F02",
       "to": "F03",
-      "motion": "The worker walks away. The camera tilts up the shaft as a big grooved wheel and an electric motor assemble at the top, the steel ropes wrap over the wheel, and the motor starts turning, lifting the box slowly to the first floor."
+      "motion": "The worker walks away. The camera tilts up to the top of the shaft as a big grooved wheel and an electric motor appear and the steel ropes wrap over the wheel, then tilts back down to the same wide view as at the start. The motor turns slowly and lifts the box only a short way, from the pit floor up to the first floor, where it stops and hangs still for the rest of the clip."
     },
     {
       "id": "C06",
@@ -378,7 +385,7 @@
       "cue": "hauls",
       "from": "F03",
       "to": null,
-      "motion": "The motor shakes and strains, glowing red hot with small sparks, as it slowly drags the heavy box upward."
+      "motion": "Static camera. The motor at the top shakes and strains, glowing red hot with small sparks, as it slowly drags the heavy box. The box crawls upward only a tiny bit and stays at the third floor."
     },
     {
       "id": "C07",
@@ -386,8 +393,8 @@
         "7"
       ],
       "from": "F03",
-      "to": "F04",
-      "motion": "A tall stack of iron weights lowers onto the other end of the ropes on the far side of the shaft. Then the box rises while the counterweight descends at the same speed, and the motor cools down and turns easily."
+      "to": null,
+      "motion": "Static camera. In the first two seconds a tall stack of dark iron weights lowers into place on the other end of the ropes, on the far right side of the shaft, while the box hangs still. Then the box rises steadily up the shaft while the iron counterweight sinks down at exactly the same speed, and the red glow fades from the motor as it turns easily."
     },
     {
       "id": "C08",
@@ -397,7 +404,7 @@
       "cue": "swings",
       "from": "F04",
       "to": null,
-      "motion": "As the box keeps rising (and the counterweight keeps descending), the box starts swinging from side to side like a pendulum, wider and wider, and smashes into the shaft walls, chipping off concrete."
+      "motion": "Static camera. The big wheel and motor stay bolted in place at the top of the shaft and never move. The box hangs from its ropes near the top floor and starts swaying from side to side like a pendulum, wider and wider, banging into the left and right shaft walls and chipping off small bits of concrete. The box stays at the same height and does not fall."
     },
     {
       "id": "C09",
@@ -405,8 +412,8 @@
         "9a"
       ],
       "from": "F04",
-      "to": null,
-      "motion": "Two steel rails rise up both shaft walls from bottom to top and bolts drive into the concrete with small puffs of dust. The box slows its swinging and hangs between the rails."
+      "to": "F05",
+      "motion": "Static camera. The big grooved wheel and motor are fixed at the very top of the shaft and never move; the iron counterweight stays hanging on the far side. Two steel rails rise up both shaft walls from bottom to top and bolts drive into the concrete with small puffs of dust. The box stops swinging, slides a little up to the third floor and hangs still between the rails."
     },
     {
       "id": "C10",
@@ -424,7 +431,8 @@
       ],
       "from": "F05",
       "to": null,
-      "motion": "The camera pulls back to the whole shaft with the box near the top floor. All six steel ropes snap at the same moment above the box and the box starts to fall."
+      "motion": "Static wide camera on the whole building, no camera movement. The big wheel and motor stay fixed at the top. All six steel ropes snap at the same moment just above the box, the cut ends whip upward, and the box starts to fall down the shaft between the rails.",
+      "cut": true
     },
     {
       "id": "C12",

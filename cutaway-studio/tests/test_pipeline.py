@@ -223,6 +223,22 @@ class ClipRunTests(unittest.TestCase):
         self.assertEqual(again, [])
         self.assertAlmostEqual(ledger.spent(p), 0.60)
 
+    def test_failed_clip_gets_a_new_idempotency_key_for_the_retry(self):
+        p, d = make_project()
+        for fid in ("F01", "F02"):
+            _png(p.path("frames", f"{fid}.png"))
+        client = hf.Client("id", "secret", sleep=lambda s: None)
+        self.fake.final_status = "failed"
+        self.assertEqual(clips.run(p, d, client, approve_usd=0.60, only="C01", log=lambda *_: None), [])
+        self.assertAlmostEqual(ledger.spent(p), 0.0)
+        self.fake.final_status = "completed"
+        self.assertEqual(clips.run(p, d, client, approve_usd=0.60, only="C01", log=lambda *_: None), ["C01"])
+        subs = [c for c in self.fake.calls
+                if c[0] == "POST" and c[1].endswith("image-to-video") and "/estimate/" not in c[1]]
+        keys = [c[2]["Idempotency-Key"] for c in subs]
+        self.assertEqual(len(keys), 2)
+        self.assertNotEqual(keys[0], keys[1])
+
     def test_remaking_a_clip_marks_later_chained_clips_out_of_date(self):
         p, d = make_project()
         for fid in ("F01", "F02"):
@@ -434,6 +450,16 @@ class V2PlanTests(unittest.TestCase):
         for thing in ("guide rails", "electric motor", "counterweight", "governor", "elevator doors"):
             self.assertIn(thing, prompt.split("NOT BUILT YET")[1])
 
+    def test_close_frame_skips_the_wide_building_style(self):
+        f05c = next(f for f in V2["frames"] if f["id"] == "F05c")
+        prompt = frames.prompt_for(V2, f05c)
+        self.assertTrue(prompt.startswith(frames.CLOSE_STYLE))
+        self.assertNotIn(V2["style"], prompt)
+        self.assertNotIn("same camera position", prompt)
+        self.assertIn("NOT BUILT YET", prompt)
+        f04 = next(f for f in V2["frames"] if f["id"] == "F04")
+        self.assertTrue(frames.prompt_for(V2, f04).startswith(V2["style"]))
+
     def test_later_frame_lists_built_parts_and_forbids_only_later_ones(self):
         f05 = next(f for f in V2["frames"] if f["id"] == "F05")
         built, missing = frames.build_state(V2, f05)
@@ -643,3 +669,35 @@ class LandfillPlanTests(unittest.TestCase):
         segs, total = timing.segments(LF, timing.estimated_words(LF, 230), 0.8)
         self.assertTrue(all(2.0 <= s["seconds"] <= 7.5 for s in segs), segs)
         self.assertGreater(total, 61)
+
+class EstimateParsingTest(unittest.TestCase):
+    TEXT = {"type": "description", "pricing_description":
+            "Standard self-serve rates in USD per video second: 480p: $0.0375; 720p: $0.0750; "
+            "1080p: $0.1500. Total price = selected rate \u00d7 output duration in seconds."}
+
+    def test_numeric_reply(self):
+        from cutaway import higgsfield as hf
+        self.assertEqual(hf.price_from_estimate({"usd": "0.20"}, {}), 0.2)
+
+    def test_text_reply_uses_resolution_and_duration(self):
+        from cutaway import higgsfield as hf
+        self.assertAlmostEqual(hf.price_from_estimate(self.TEXT, {"duration": 4, "resolution": "720p"}), 0.3)
+        self.assertAlmostEqual(hf.price_from_estimate(self.TEXT, {"duration": 4, "resolution": "1080p"}), 0.6)
+
+    def test_text_reply_without_resolution_means_720p(self):
+        from cutaway import higgsfield as hf
+        self.assertAlmostEqual(hf.price_from_estimate(self.TEXT, {"duration": 5}), 0.375)
+
+    def test_unreadable_reply_is_refused(self):
+        from cutaway import higgsfield as hf
+        with self.assertRaises(hf.EstimateUnreadable):
+            hf.price_from_estimate({"type": "description", "pricing_description": "Ask sales"}, {"duration": 4})
+        with self.assertRaises(hf.EstimateUnreadable):
+            hf.price_from_estimate(self.TEXT, {"duration": 4, "resolution": "4k"})
+        with self.assertRaises(hf.EstimateUnreadable):
+            hf.price_from_estimate(self.TEXT, {"prompt": "image, no duration"})
+
+    def test_planning_cost_is_resolution_aware(self):
+        from cutaway import higgsfield as hf
+        self.assertGreater(hf.planning_cost("wan3", 4, "720p"), hf.planning_cost("wan3", 4, "480p"))
+        self.assertIsNone(hf.planning_cost("kling-o3", 4, "480p"))

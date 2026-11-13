@@ -47,12 +47,17 @@ four approvals per video: script, voice, frames, spend.
 | `python3 -m cutaway quota [add N / limit-hit]` | Flow free-image counter | free |
 
 ## Video models (start + end frame), Higgsfield API, Nov 2026
-| `--model` | Endpoint | Length | Planning price |
-|---|---|---|---|
-| `wan3` (default) | alibaba/wan-3.0/image-to-video | 2-30 s | $0.0375/s |
-| `seedance2` | bytedance/seedance-2.0/image-to-video | 4-15 s | $0.0804/s |
-| `seedance25` | bytedance/seedance-2.5/image-to-video | 4-30 s | $0.1177/s |
-| `kling-o3` | kling-video/o3/first-last-frame | 3-15 s | use `clips estimate` |
+| `--model` | Endpoint | Length | 480p | 720p |
+|---|---|---|---|---|
+| `kling-o3` | kling-video/o3/first-last-frame | 3-15 s | n/a | $0.068/s |
+| `wan3` (default) | alibaba/wan-3.0/image-to-video | 2-30 s | $0.0375/s | $0.075/s |
+| `seedance2` | bytedance/seedance-2.0/image-to-video | 4-15 s | $0.080/s | $0.174/s |
+| `seedance25` | bytedance/seedance-2.5/image-to-video | 4-30 s | $0.118/s | $0.265/s |
+
+A ~70 s video at 720p: ~$5 (Kling O3 / Wan 3.0), ~$12 (Seedance 2.0), ~$19 (Seedance 2.5).
+`compare <slug>` tests all four at 480p on two clips for ~$2.40 before committing to one.
+Higgsfield's `/estimate` now answers with a text price list; the client reads the rate for the
+request's resolution and refuses to guess if it can't.
 
 The `/estimate` endpoint is always used for the real number before anything is paid for.
 

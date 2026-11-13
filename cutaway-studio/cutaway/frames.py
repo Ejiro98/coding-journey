@@ -17,6 +17,16 @@ CONSISTENCY = (
     "same box. Change ONLY the following: "
 )
 
+# Close-ups and indoor shots ("close": true) must not start with the video's wide-shot
+# style (it describes the whole building from across the street, and image models then
+# redraw the wide shot). They keep the look of the reference but take a new camera shot.
+CLOSE_STYLE = (
+    "Vertical 9:16 realistic 3D engineering illustration in exactly the same style, materials, "
+    "colours and lighting as the reference image(s), but a new, closer camera shot exactly as "
+    "described here, not the wide view of the whole building. No text, no labels, no arrows, "
+    "no watermark. The shot: "
+)
+
 
 def build_state(data, frame):
     """Which parts exist in this frame, from the script line whose state it shows."""
@@ -43,6 +53,8 @@ def prompt_for(data, frame):
     if missing:
         extra += (" NOT BUILT YET, do not draw any of these anywhere in the image: "
                   + "; ".join(missing) + ".")
+    if frame.get("close"):
+        return f"{CLOSE_STYLE}{body}{extra}".strip()
     if not frame.get("refs"):
         return f"{style} {body}{extra}".strip()
     first_ref = frame_map(data).get(frame["refs"][0], {})

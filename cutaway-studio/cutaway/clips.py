@@ -110,10 +110,10 @@ def build_requests(project, data, model=None, only=None, words=None):
     return [(t["clip"], t["seconds"], t["model"]) for t in todo]
 
 
-def planning_total(reqs):
+def planning_total(reqs, resolution="720p"):
     total, unknown = 0.0, []
     for clip, secs, model in reqs:
-        c = hf.planning_cost(model, secs)
+        c = hf.planning_cost(model, secs, resolution)
         if c is None:
             unknown.append(clip["id"])
         else:
@@ -185,6 +185,9 @@ def run(project, data, client, approve_usd, model=None, only=None, log=print, ne
         rec["status"] = res["status"]
         if res["status"] != "completed":
             rec.pop("status_url", None)  # allow a fresh attempt next run
+            # A failed request is never charged, and reusing its idempotency key would make
+            # Higgsfield replay the same failure (e.g. "credit balance too low" after a top-up).
+            rec["idempotency_key"] = hf.new_idempotency_key()
             state["clips"][cid] = rec
             project.save_state(state)
             log(f"{cid}: {res['status']} (not charged) {res.get('error', '')}")
