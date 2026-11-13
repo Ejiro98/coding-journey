@@ -785,6 +785,20 @@ class LandfillPlanTests(unittest.TestCase):
         msgs = [m for l, m in lint.check_shots(data) if l == "warn"]
         self.assertTrue(any("L10" in m and "pulls back" in m for m in msgs), msgs)
 
+    def test_clip_checklist_covers_cue_line_chain_end_and_camera(self):
+        c = next(c for c in LF["clips"] if c["id"] == "C08")
+        qs = " ".join(clips.checklist(LF, c))
+        self.assertIn("crushes the loose trash flat", qs)        # its motion
+        self.assertIn("every day, bulldozers", qs)               # say it, see it
+        self.assertIn("last frame of C07", qs)                   # chained
+        self.assertIn("end still L06", qs)
+        self.assertIn("stay completely still", qs)               # no move
+        self.assertIn("white gulls turning into dark birds", qs)
+        c2 = next(c for c in LF["clips"] if c["id"] == "C07")
+        qs2 = " ".join(clips.checklist(LF, c2))
+        self.assertIn("pull-back smoothly", qs2)
+        self.assertIn("start right away", qs2)
+
     def test_landfill_passes_every_check(self):
         rep = lint.check(LF)
         self.assertFalse(lint.has_errors(rep), lint.format_report(rep))

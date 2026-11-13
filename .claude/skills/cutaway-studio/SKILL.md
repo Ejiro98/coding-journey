@@ -226,10 +226,12 @@ at the rate actually charged; `clips estimate` is always the real number.
 Then repeat until all clips are made:
 1. `python3 -m cutaway clips estimate <slug> --next 2` → tell the viewer the amount → on "yes":
 2. `python3 -m cutaway clips run <slug> --next 2 --approve-usd <AMOUNT>`
-3. **Check both clips yourself before continuing** (last frame + a few frames each): the action
-   happens on its cue word; it continues smoothly from the previous clip; physics rules hold
-   (counterweight opposite the box, nothing impossible); people move; nothing built disappears;
-   no part from the NOT BUILT YET list appears. Show the viewer the two clips.
+3. **Each clip is reviewed by a separate reviewer before the next pair is paid for.**
+   `python3 -m cutaway clips check <slug> --only C01,C02` makes a sheet of each clip's frames (4 per
+   second) and prints its yes/no questions (its motion, say it/see it, cue timing, smooth start from the
+   previous clip, matches its end still, camera, nothing appearing/vanishing/morphing, rules, no text).
+   A NEW subagent answers them from the sheet and the end still at full size; any doubt is FAIL. Show
+   the viewer the two clips with the answers and the running total.
 4. If a clip fails the check: delete `clips/<ID>.mp4`, make its `motion` text more specific, and
    re-run step 1. Because the next clips aren't made yet, only that clip is paid for again.
    Add a lesson to `LESSONS.md` for every remade clip (what went wrong, what it cost, the fix).

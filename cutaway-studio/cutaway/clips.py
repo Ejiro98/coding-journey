@@ -235,3 +235,55 @@ def run(project, data, client, approve_usd, model=None, only=None, log=print, ne
         log(f"{cid}: done -> clips/{dest.name}")
         made.append(cid)
     return made
+
+
+def checklist(data, clip):
+    """Yes/no questions a SEPARATE reviewer answers from the clip's frames (see review_sheet).
+    Any 'no' (or 'yes' on a MUST-BE-NO question) means remake that clip before making the next."""
+    lines = {str(l["id"]): l["text"] for l in data.get("lines", [])}
+    idx = [c["id"] for c in data["clips"]].index(clip["id"])
+    qs = [f"Does the clip show exactly this, as ONE smooth change: \"{clip['motion'].strip()}\"?"]
+    if clip.get("cue"):
+        qs.append(f"Does the action start right away (first half second), since it starts on the word "
+                  f"\"{clip['cue']}\"?")
+    for lid in clip.get("lines", []):
+        if str(lid) in lines:
+            qs.append(f"Say it, see it: while \"{lines[str(lid)]}\" is spoken, is what it names on screen?")
+    if chain_on(data) and idx > 0 and not clip.get("cut"):
+        qs.append(f"Does the first frame continue smoothly from the last frame of {data['clips'][idx - 1]['id']} "
+                  "(no jump in camera, colour or objects)?")
+    if clip.get("to"):
+        qs.append(f"Does the last frame match the end still {clip['to']} (same objects, places and levels)?")
+    if clip.get("move"):
+        qs.append(f"Does the camera {clip['move']} smoothly, by no more than about 2x, with no cut?")
+    else:
+        qs.append("Does the camera stay completely still the whole time?")
+    qs.append("MUST BE NO: does anything appear from nowhere, vanish, teleport, melt, morph or change kind "
+              "(e.g. white gulls turning into dark birds, a machine fading in, pipes changing number)?")
+    qs.append("MUST BE NO: is there a cut, flash, freeze or sudden jump anywhere?")
+    if data.get("rules"):
+        qs.append("MUST BE NO: does anything break these rules: " + " ".join(data["rules"]))
+    qs.append("MUST BE NO: is there any text, letters, logo or watermark?")
+    return qs
+
+
+def review_sheet(project, clip_id, fps=4, cols=6):
+    """Frames from the clip at `fps`, tiled into one image for the reviewer, plus the previous
+    clip's last frame. Returns (sheet path, previous-last-frame path or None)."""
+    import math
+    src = project.clip_file(clip_id)
+    if not src:
+        raise ValueError(f"{clip_id} has no clip yet.")
+    n = max(1, math.ceil(_duration(src) * fps))
+    rows = math.ceil(n / cols)
+    out = project.path("build", "review", f"{clip_id}_sheet.png")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-vf",
+                    f"fps={fps},scale=320:-2,tile={cols}x{rows}", "-frames:v", "1", str(out)], check=True)
+    return out
+
+
+def _duration(path):
+    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
+                          str(path)], capture_output=True, text=True).stdout.strip()
+    return float(out or 0)

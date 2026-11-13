@@ -165,6 +165,25 @@ def cmd_frames(p, args):
 
 def cmd_clips(p, args):
     data = p.load()
+    if args.action == "check":
+        ids = [c.strip() for c in (args.only or "").split(",") if c.strip()]
+        if not ids:
+            print("Usage: clips check <slug> --only C01,C02")
+            return 2
+        by = {c["id"]: c for c in data["clips"]}
+        for cid in ids:
+            if cid not in by:
+                print(f"Unknown clip {cid}")
+                return 2
+            print(f"== {cid}: a NEW reviewer answers every question from the frames. One wrong answer = remake.")
+            if p.clip_file(cid):
+                print(f"  frames (4 per second): {clp.review_sheet(p, cid)}")
+            if by[cid].get("to"):
+                print(f"  end still: {p.frame_file(by[cid]['to'])}")
+            for i, q in enumerate(clp.checklist(data, by[cid]), 1):
+                print(f"  {i}. {q}")
+            print()
+        return 0
     client = hf.Client()
     if args.action == "estimate":
         rows, total, notes = clp.estimate(p, data, client, args.model, args.only, args.next)
@@ -343,7 +362,7 @@ def main(argv=None):
     sp.add_argument("--fix", help="repair: the ONE thing to change in the try image")
     sp.add_argument("--reviewed", action="store_true", help="the still passed `frames check` by a separate reviewer")
     sp = sub.add_parser("clips", help="Higgsfield clips")
-    sp.add_argument("action", choices=["estimate", "run"])
+    sp.add_argument("action", choices=["estimate", "run", "check"])
     sp.add_argument("slug")
     sp.add_argument("--model", choices=sorted(hf.VIDEO_MODELS))
     sp.add_argument("--only", help="comma-separated clip ids, e.g. C01,C02")
