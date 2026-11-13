@@ -155,7 +155,7 @@
         "drill"
       ],
       "built_in": "11",
-      "looks": "vertical gas pipes drilled into the trash pile"
+      "looks": "four vertical gas pipes drilled down into the trash (stopping above the gravel), each sticking up only knee-high above the surface, all four joined by one horizontal pipe lying on the surface"
     },
     "engines": {
       "aliases": [
@@ -283,7 +283,7 @@
         "L06",
         "L01"
       ],
-      "shows": "The pit is still half full with the same smooth brown soil on top and the same layers in the cross-section. Now four vertical white pipes have been drilled down through the soil into the trash, reaching close to the bottom, and they are joined at the top by one horizontal pipe running to the right edge of the pit."
+      "shows": "Same pit, same fill level and same smooth brown soil top as before; the bulldozer has gone. Added: four white gas pipes drilled straight down through the soil into the trash, in a row from left to right. Each pipe stops inside the trash, well above the gravel, and sticks up only knee-high above the soil. One horizontal white pipe lies on top of the soil and connects to the top of ALL FOUR pipes, the leftmost included, then runs to the right edge of the pit. In the cut-away, the pipes are seen going down through the layers of trash and soil. Clean sharp image, same quality as the reference."
     },
     {
       "id": "L08",
@@ -458,7 +458,7 @@
       ],
       "from": "L06",
       "to": "L07",
-      "motion": "A drilling rig bores down through the soil into the trash; four white pipes are lowered into the holes and joined at the top by a horizontal pipe."
+      "motion": "A small drilling rig bores four holes down into the trash; a white pipe is lowered into each hole, and a pipe laid along the soil joins all four tops."
     },
     {
       "id": "C12",

@@ -34,6 +34,12 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   full instead of half → connections (pipe to pump, wires to town) go into the part's `looks`
   so every later still repeats them; give the fill level a visible measure ("liner wall shows
   above the soil all the way round"); attach the still where a connection is clearest as a reference.
+- Landfill L07 (2 failed tries): "joined at the top by a horizontal pipe" became tall goalposts
+  with one pipe left unconnected, and the pipes went down into the gravel → give heights against
+  something visible ("knee-high above the soil"), say where things stop ("well above the gravel"),
+  and say ALL for connections ("connects to ALL FOUR pipes, the leftmost included").
+- Landfill L07: the image turned grainy after several stills made from stills → always attach the
+  clean first still (L01) as a reference too, and remake any still that has lost sharpness.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
