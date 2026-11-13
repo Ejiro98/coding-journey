@@ -367,7 +367,7 @@
         "L07",
         "L01"
       ],
-      "shows": "Everything as before (same fill level, smooth soil top, the four knee-high gas pipe stubs and the pipe joining them). Added: just outside the pit's LEFT edge, a small grey engine building with a short chimney, which the gas pipe runs into, and a line of power poles with wires running from it to the houses. The green pump box and its riser at the back-right corner stay separate and unchanged. The small yellow drilling rig is still parked at the middle of the back rim.",
+      "shows": "Everything as before (same fill level, smooth soil top, the four knee-high gas pipe stubs and the pipe joining them). Added: just outside the pit's LEFT edge, a small grey engine building with a short chimney, which the gas pipe runs into, and a line of power poles with wires running from it to the houses. The green pump box and its riser at the back-right corner stay separate and unchanged. The small yellow drilling rig is still parked at the middle of the back rim. A new wooden pole stands right against the engine building, a thick black cable runs from the building's wall up to it, and from it wires run pole to pole to the houses. The town, road and roadside poles stay exactly as in L07. A thin wisp of grey exhaust rises from the chimney. The drain pipe in the cut keeps its plain round holes, with no marks.",
       "checks": [
         "Is there a small grey engine building with a short chimney at the LEFT edge of the pit?",
         "Does the horizontal gas pipe run into the engine building?",

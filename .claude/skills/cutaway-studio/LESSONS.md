@@ -97,6 +97,10 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   prompt ("four knee-high stubs on the soil top, one pipe lying flat joining them") fixed that, but the header was then
   joined to the leachate riser, because both end at the right rim → describe only what shows above ground, and never
   send two different systems (gas, leachate) to the same corner: give each its own side of the pit.
+- Landfill L08 (3 tries on kie.ai, $0.27): every try drew the engine building and new poles, but never wires between
+  them, even when asked for "a thick black cable from the wall to a pole right against the building" → power wires are
+  too thin to draw or see at this scale; show electricity with something big (a row of poles from the building to the
+  houses, or a transformer box) and don't make a still pass or fail on wires.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
