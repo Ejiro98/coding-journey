@@ -58,6 +58,27 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   BACK-RIGHT corner, exactly where it is in L03") and add "MUST BE NO: any other pipe?".
 - Landfill L01g: the question demanded a shape ("wider at the bottom") no viewer would miss → only
   require what matters to the story (liquid goes DOWN from the pit INTO the water).
+- Landfill L01r (kie.ai, 3 tries, $0.27; the viewer accepted try 3): try 1 drew the black liquid as a flat black sheet
+  (reads as a liner), try 2 as a slab sticking out of the cut face and dripping into the soil (my fix had added "drips
+  running from the bags"). All three prompts said "a shallow pool of black liquid", and the accepted try 3 also said
+  "a shallow, glossy puddle", so the word "pool" was NOT the problem. What changed in try 3: it said where the liquid
+  stops ("INSIDE the pit, set back from the cut-away face, with a lip of brown dirt between it and the cut face; nothing
+  drips; the soil below is clean brown") and dropped the word "drips" → when a liquid must stay put, say where it stops
+  and what stays clean; don't mention drips or running unless the still should show them.
+- Landfill L03b try 2 (kie.ai): adding five sentences of fixes made the edit drift (camera moved, groundwater band and
+  bulldozer vanished, juice leaked through the liner) → keep fixes to one or two short sentences per failed answer;
+  on kie.ai, attach the single closest reference first.
+- Landfill (kie.ai): each remake overwrote the previous try (same filename), so failed tries had to be fetched back from
+  kie.ai by task id → keep every try (tries/<ID>_tryN) until the still passes.
+- Landfill L03b (3 failed tries on kie.ai, $0.27) and L06 (2 failed tries): the questions asked a WIDE still to show the
+  juice going into the pipes, and to follow the pipe from the gravel to the pump box "with no gap" after trash or soil had
+  covered the joint. Every try that drew juice leaked it through the liner; the try without juice failed the line
+  question; and the buried joint can never be seen → a wide still only asks what is visible at that scale (liquid into a
+  pipe belongs to the close-up, L04); once fill covers a connection, ask for its visible ends (pipe in the gravel at the
+  cut face, riser coming out at the corner and into the box), not the hidden middle.
+- Landfill L01g (3 tries on kie.ai, $0.27): try 2 passed every question except "the trail widens as it goes down" (a
+  degree); the extra sentence for try 3 fixed the trail but reshaped the pit floor into a square slab → don't ask for a
+  shape degree ("widening"); ask for what a viewer reads ("one unbroken dark trail from the pit to the blue band").
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
