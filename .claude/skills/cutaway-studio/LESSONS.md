@@ -128,6 +128,11 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   one stray pipe; tries 3+ regenerated from L08b and lost the cap again → when one try is almost
   right, `frames repair` that try with one fix instead of rerolling. The continuity question also
   failed every try for the rig and rain that were MEANT to go → list them in `removes`.
+- Landfill L09a/L09 (kie.ai): each still made from the previous kie still, plus each repair, lost sharpness and added
+  artefacts (pink cast, dotted texture, letter-like marks on pipes and in the water band). After L08b, L09a, two repairs
+  and L09, the reviewer failed sharpness every time, and a repair asked to add cap bands rewrote the cut face (swapped a
+  trash layer for clay) → limit chains: make late stills from the cleanest still plus L01, keep repairs to one per
+  still, and prefer Flow (free, sharper) for late stills when its daily allowance is back.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)
