@@ -545,6 +545,19 @@ class FakeKie:
         raise AssertionError(f"unexpected {method} {url}")
 
 
+@unittest.skipUnless(HAS_FFMPEG, "needs ffmpeg")
+class TidyTests(unittest.TestCase):
+    def test_tidy_moves_colours_toward_the_clean_still_and_keeps_original(self):
+        p, d = make_project(V3)
+        _png(p.path("frames", "F01.png"), "0x8a7a6a")      # clean, warm
+        _png(p.path("frames", "F02.png"), "0x8a6a8a")      # pink cast
+        frames.tidy(p, "F02", "F01", sharpen=0)
+        r, g, b = (m for m, _ in frames._channel_stats(p.frame_file("F02")))
+        self.assertAlmostEqual(g, 0x7a, delta=3)
+        self.assertAlmostEqual(b, 0x6a, delta=3)
+        self.assertTrue(p.path("frames", "F02.pretidy.png").exists())
+
+
 class KieTests(unittest.TestCase):
     def setUp(self):
         os.environ["KIE_API_KEY"] = "test-key"

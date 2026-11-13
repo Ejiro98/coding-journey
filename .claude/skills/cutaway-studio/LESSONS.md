@@ -133,6 +133,9 @@ tell the viewer so a `lint` check can be added (several below are already enforc
   and L09, the reviewer failed sharpness every time, and a repair asked to add cap bands rewrote the cut face (swapped a
   trash layer for clay) → limit chains: make late stills from the cleanest still plus L01, keep repairs to one per
   still, and prefer Flow (free, sharper) for late stills when its daily allowance is back.
+- Landfill L09a/L09: after ~10 kie.ai stills in a chain plus repairs, the colours drifted pink
+  (G 128→123, B 114→119) and went soft; in the video that is a colour shift halfway through →
+  `frames tidy --match <clean still>` fixes the colour for free (no AI); keep repairs to one per still.
 - Check every still before making the next (a bad still poisons every frame built on it).
 
 ## Clips (where the money goes)

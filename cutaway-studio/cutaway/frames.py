@@ -203,6 +203,46 @@ def make_with_kie(project, data, frame_id, approve_usd, kie_mod=None, sleep=None
     return dest
 
 
+def _channel_stats(path):
+    """Mean and spread of R, G, B (from a small copy; ffmpeg only, no extra libraries)."""
+    import subprocess
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-vf", "scale=256:-2", "-f", "rawvideo",
+                          "-pix_fmt", "rgb24", "-"], capture_output=True, check=True).stdout
+    out = []
+    for c in range(3):
+        vals = raw[c::3]
+        n = len(vals)
+        mean = sum(vals) / n
+        var = sum((v - mean) ** 2 for v in vals) / n
+        out.append((mean, var ** 0.5))
+    return out
+
+
+def tidy(project, frame_id, match_id, sharpen=0.6):
+    """FREE: undo the colour drift that builds up over a chain of AI edits (a pink cast, washed-out
+    contrast) by matching each colour channel's average and spread to a clean still, then sharpen a
+    little. Deterministic, nothing is redrawn. The original is kept as <ID>.pretidy.png."""
+    import subprocess
+    src, ref = project.frame_file(frame_id), project.frame_file(match_id)
+    if not src or not ref:
+        raise ValueError(f"Need both {frame_id} and {match_id} in frames/.")
+    have, want = _channel_stats(src), _channel_stats(ref)
+    expr = []
+    for (m, sd), (m2, sd2) in zip(have, want):
+        k = min(max(sd2 / sd, 0.8), 1.25) if sd >= 1 else 1.0
+        expr.append(f"clip((val-{m:.2f})*{k:.4f}+{m2:.2f},0,255)")
+    keep = src.with_name(f"{frame_id}.pretidy{src.suffix}")
+    if not keep.exists():
+        shutil.copy2(src, keep)
+    out = src.with_name(f"{frame_id}.tidy{src.suffix}")
+    vf = f"lutrgb=r='{expr[0]}':g='{expr[1]}':b='{expr[2]}'"
+    if sharpen:
+        vf += f",unsharp=5:5:{sharpen}:5:5:0"
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(keep), "-vf", vf, str(out)], check=True)
+    out.replace(src)
+    return src, have, want
+
+
 REPAIR = (
     "Edit this image. Change ONLY this one thing: {fix} Keep everything else exactly as it is: same "
     "camera, layout, objects, colours, lighting and detail. No text, letters or labels anywhere."

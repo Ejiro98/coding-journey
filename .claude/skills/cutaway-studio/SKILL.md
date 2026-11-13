@@ -174,6 +174,11 @@ Ask the viewer to listen once and approve. Redo only if they flag something.
      front-right of the cut face." --approve-usd 0.09`, then review the result as usual.
      Stills that remove things on purpose list them in `removes`, so the continuity question doesn't
      fail them for it.
+  3c. **Colour drift (free fix).** Long chains of AI edits drift pink/washed-out. Before reviewing a late
+     still, compare its colours with an earlier clean still in the same light (sunny with sunny, rain
+     with rain); if it has drifted, run `python3 -m cutaway frames tidy <slug> <ID> --match <clean ID>`
+     (no AI, no cost: matches colour and sharpens slightly; the original is kept as <ID>.pretidy).
+     Allow at most ONE repair per still: each AI edit costs sharpness.
   4. Three failed tries on one still → stop. First ask: is the QUESTION the problem? Image models
      can't draw degrees ("soaked", "slightly", "half") or fine detail reliably; rewrite such a
      question as something visible ("black liquid collected at the bottom", "liner wall showing all round").

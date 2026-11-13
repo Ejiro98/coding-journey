@@ -138,6 +138,15 @@ def cmd_frames(p, args):
     if args.action == "kie":
         print(frm.make_with_kie(p, data, args.frame, args.approve_usd))
         return 0
+    if args.action == "tidy":
+        if not (args.frame and args.match):
+            print("Usage: frames tidy <slug> <ID> --match <clean still ID>   (free)")
+            return 2
+        dest, have, want = frm.tidy(p, args.frame, args.match)
+        fmt = lambda st: " ".join(f"{c}={m:.0f}" for c, (m, _) in zip("RGB", st))  # noqa: E731
+        print(f"{args.frame}: colours {fmt(have)} -> matched to {args.match} ({fmt(want)}), lightly sharpened. "
+              f"Original kept as {args.frame}.pretidy. Review it again with frames check.")
+        return 0
     if args.action == "repair":
         if not (args.frame and args.file and args.fix):
             print("Usage: frames repair <slug> <ID> <try image> --fix \"Remove the ...\" --approve-usd 0.09")
@@ -323,13 +332,14 @@ def main(argv=None):
     sp = with_slug("timing", "clip lengths from the voice")
     sp.add_argument("--model")
     sp = sub.add_parser("frames", help="keyframes")
-    sp.add_argument("action", choices=["prompts", "check", "import", "kie", "repair", "gemini", "higgsfield"])
+    sp.add_argument("action", choices=["prompts", "check", "import", "kie", "repair", "tidy", "gemini", "higgsfield"])
     sp.add_argument("slug")
     sp.add_argument("frame", nargs="?")
     sp.add_argument("file", nargs="?")
     sp.add_argument("--source", default="flow")
     sp.add_argument("--approve-usd", type=float)
     sp.add_argument("--all", action="store_true")
+    sp.add_argument("--match", help="tidy: the clean still to match colours to (e.g. L08b)")
     sp.add_argument("--fix", help="repair: the ONE thing to change in the try image")
     sp.add_argument("--reviewed", action="store_true", help="the still passed `frames check` by a separate reviewer")
     sp = sub.add_parser("clips", help="Higgsfield clips")
